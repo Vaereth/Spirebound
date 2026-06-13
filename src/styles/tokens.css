@@ -1,0 +1,59 @@
+/* =====================================================================
+   SPIREBOUND — Design Tokens
+   Palette grounded in the game's world: floor-1 fields (sky, verdant,
+   gold light), with Eluvain's rune-cyan as the one disciplined accent.
+   ===================================================================== */
+:root {
+  /* Core palette */
+  --sky:      #5BA3D0;
+  --sky-deep: #2E5F86;
+  --summit:   #F4E4B8;
+  --gold:     #E8B954;
+  --verdant:  #5E9C68;
+  --verdant-deep: #3C6B48;
+  --stone:    #2A2E3A;
+  --ink:      #0E1016;
+  --ink-2:    #161922;
+  --ink-3:    #1E2230;
+  --rune:     #60E8DC;
+  --rune-dim: #2D7E78;
+  --bone:     #E7E3D6;
+  --bone-dim: #9A968A;
+  --blood:    #C2502F;
+
+  /* Typography */
+  --font-display: 'Cinzel', Georgia, serif;
+  --font-body:    'Spectral', Georgia, serif;
+  --font-util:    'Inter', system-ui, sans-serif;
+
+  --t-hero:  clamp(3.5rem, 13vw, 11rem);
+  --t-h1:    clamp(2.2rem, 5vw, 4rem);
+  --t-h2:    clamp(1.6rem, 3vw, 2.6rem);
+  --t-h3:    clamp(1.15rem, 2vw, 1.5rem);
+  --t-body:  clamp(1rem, 1.15vw, 1.18rem);
+  --t-small: 0.85rem;
+  --t-label: 0.72rem;
+
+  /* Spacing */
+  --sp-1: 0.5rem;  --sp-2: 1rem;   --sp-3: 1.5rem;  --sp-4: 2.5rem;
+  --sp-5: 4rem;    --sp-6: 6.5rem; --sp-7: 10rem;
+
+  /* Effects */
+  --glow-rune: 0 0 12px rgba(96,232,220,0.55), 0 0 40px rgba(96,232,220,0.18);
+  --glow-gold: 0 0 16px rgba(232,185,84,0.4);
+  --edge: 1px solid rgba(231,227,214,0.10);
+  --edge-rune: 1px solid rgba(96,232,220,0.30);
+  --radius: 4px;
+  --radius-lg: 12px;
+  --maxw: 1200px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

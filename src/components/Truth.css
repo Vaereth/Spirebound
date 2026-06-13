@@ -1,0 +1,73 @@
+.truth {
+  position: relative;
+  padding: var(--sp-7) 0;
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgba(46,95,134,0.18) 0%, transparent 60%),
+    var(--ink);
+  border-top: var(--edge);
+}
+.truth__inner { display: grid; gap: var(--sp-3); max-width: 920px; }
+
+.truth__head {
+  font-size: var(--t-h1);
+  color: var(--bone);
+  margin-top: var(--sp-1);
+}
+.truth__head-sub {
+  display: block;
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-family: var(--font-body);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--bone-dim);
+  margin-top: var(--sp-2);
+  line-height: 1.4;
+}
+
+.truth__lead { color: var(--bone-dim); max-width: 64ch; }
+
+.truth__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--sp-3);
+  margin-top: var(--sp-3);
+}
+.truth__card {
+  position: relative;
+  padding: var(--sp-4) var(--sp-3) var(--sp-3);
+  background: linear-gradient(180deg, var(--ink-2), var(--ink));
+  border: var(--edge);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform 0.5s var(--ease), border-color 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+.truth__card::before {
+  content: ''; position: absolute; inset: 0 0 auto 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--rune), transparent);
+  opacity: 0; transition: opacity 0.5s var(--ease);
+}
+.truth__card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(96,232,220,0.3);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.4), var(--glow-rune);
+}
+.truth__card:hover::before { opacity: 1; }
+
+.truth__num {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: var(--rune-dim);
+  line-height: 1;
+}
+.truth__card-title { font-size: var(--t-h3); color: var(--summit); margin: var(--sp-1) 0 var(--sp-2); }
+.truth__card-body { color: var(--bone-dim); font-size: 1rem; }
+
+.truth__close {
+  margin-top: var(--sp-4);
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  color: var(--bone);
+  font-style: italic;
+  max-width: 60ch;
+}
+.truth__close span { color: var(--rune); font-style: normal; text-shadow: var(--glow-rune); }

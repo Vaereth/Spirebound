@@ -1,0 +1,104 @@
+/* ===== SPIREBOUND HERO (3D) ===== */
+/* Tall section: scroll-distance becomes the climb. Sticky inner pins the scene. */
+.hero { position: relative; height: 320vh; background: var(--ink); }
+
+.hero__sticky {
+  position: sticky; top: 0;
+  height: 100vh; width: 100%;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.hero__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* Vignette keeps title legible over any sky color */
+.hero__vignette {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(120% 90% at 50% 38%, transparent 40%, rgba(0,0,0,0.35) 100%),
+    linear-gradient(180deg, rgba(0,0,0,0.25) 0%, transparent 22%, transparent 64%, rgba(8,9,14,0.85) 100%);
+}
+
+.hero__overlay {
+  position: relative; z-index: 3; text-align: center;
+  display: grid; gap: var(--sp-3);
+  padding-bottom: 14vh; /* lift above the reserved foreground */
+}
+
+.hero__lore {
+  font-style: italic;
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  color: #fdfaf2;
+  max-width: 34ch; margin-inline: auto;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.95), 0 0 40px rgba(0,0,0,0.85), 0 0 80px rgba(0,0,0,0.6);
+  opacity: 0; animation: fadeIn 2s var(--ease) 0.3s forwards;
+}
+
+.hero__title {
+  position: relative;
+  font-size: var(--t-hero);
+  font-weight: 900; letter-spacing: 0.08em;
+  display: inline-block;
+  opacity: 0; transform: translateY(14px);
+  animation: titleIn 1.8s var(--ease) 1s forwards;
+}
+/* a soft dark scrim directly behind the wordmark, always present, so the
+   title never fights a bright tower behind it */
+.hero__title::before {
+  content: ''; position: absolute; inset: -18% -8%;
+  background: radial-gradient(60% 70% at 50% 50%, rgba(8,9,14,0.55), rgba(8,9,14,0) 72%);
+  z-index: -1; pointer-events: none;
+  opacity: calc(1 - var(--climb, 0) * 0.55);
+}
+
+/* The two stacked treatments share the same grid cell */
+.hero__title-bright, .hero__title-gold {
+  grid-area: 1 / 1;
+  display: block;
+}
+.hero__title { display: grid; }
+
+/* BRIGHT (top of climb, over the golden tower): white/bone + dark glow */
+.hero__title-bright {
+  color: #fbf6e9;
+  text-shadow:
+    0 2px 18px rgba(0,0,0,0.85),
+    0 0 40px rgba(0,0,0,0.6),
+    0 0 70px rgba(255,240,200,0.25);
+  opacity: calc(1 - var(--climb, 0));
+}
+
+/* GOLD (descending into dark): the gradient look that shines on black */
+.hero__title-gold {
+  background: linear-gradient(180deg, #fff7e6 0%, #f4e4b8 42%, #e8b954 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 26px rgba(0,0,0,0.7)) drop-shadow(0 0 44px rgba(232,185,84,0.35));
+  opacity: var(--climb, 0);
+}
+
+.hero__tagline {
+  font-size: clamp(0.95rem, 1.6vw, 1.3rem);
+  color: #fdfaf2; max-width: 40ch; margin-inline: auto;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.95), 0 0 44px rgba(0,0,0,0.8);
+  opacity: 0; animation: fadeIn 2s var(--ease) 1.8s forwards;
+}
+
+.hero__foreground {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 28vh; z-index: 2;
+  pointer-events: none;
+  /* placeholder ground glow where characters will stand */
+  background: radial-gradient(60% 100% at 50% 120%, rgba(96,232,220,0.12) 0%, transparent 70%);
+}
+
+.hero__scroll {
+  position: absolute; bottom: 5vh; left: 50%; transform: translateX(-50%); z-index: 4;
+  font-family: var(--font-util); font-size: var(--t-small); letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--rune); border: var(--edge-rune); padding: 0.7rem 1.4rem; border-radius: 40px;
+  background: rgba(8,9,14,0.4); backdrop-filter: blur(4px);
+  transition: all 0.4s var(--ease); animation: bob 2.4s ease-in-out infinite;
+}
+.hero__scroll:hover { background: rgba(96,232,220,0.12); box-shadow: var(--glow-rune); }
+
+@keyframes fadeIn { to { opacity: 1; } }
+@keyframes titleIn { to { opacity: 1; transform: none; } }
+@keyframes bob { 0%,100%{transform:translateX(-50%) translateY(0);} 50%{transform:translateX(-50%) translateY(5px);} }

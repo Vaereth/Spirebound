@@ -1,0 +1,9 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Spirebound</title>
+<script>
+  // GitHub Pages serves 404.html for unknown paths. Since the app uses HASH
+  // routing (#/floors/1), deep links already work — but if someone hits a
+  // non-hash path, bounce them to the app root and let the hash router take over.
+  location.replace('/Spirebound/' + (location.hash || ''));
+</script>
