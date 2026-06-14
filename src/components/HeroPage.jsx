@@ -1,6 +1,7 @@
 import { CAST } from '../data/cast.js';
 import { EluvainKit, FeiyanKit, StatRadar } from './Cast.jsx';
 import ArtSlot from './ArtSlot.jsx';
+import HeroLevel1Sheet from './HeroStats.jsx';
 import './EntryPage.css';
 import './Cast.css';
 
@@ -71,20 +72,25 @@ export default function HeroPage({ id, navigate }) {
 
             {c.stats && (
               <div className="entry__panel entry__panel--accent" style={{ marginBottom: 'var(--sp-3)' }}>
-                <h3 className="entry__panel-h">Combat Profile</h3>
+                <h3 className="entry__panel-h">Base Template Profile</h3>
+                <p className="entry__p entry__p--dim" style={{ fontSize: '0.82rem', marginBottom: 'var(--sp-2)' }}>The character's design feel — survivability, mitigation, movement, output, and skill ceiling. Not attribute values.</p>
                 <div className="entry__cols2">
                   <div>
                     {c.identity?.difficulty && <FieldRow k="Difficulty" v={c.identity.difficulty} />}
-                    {c.identity?.health && <FieldRow k="Health" v={c.identity.health} />}
-                    {c.identity?.defense && <FieldRow k="Defense" v={c.identity.defense} />}
-                    {c.identity?.mobility && <FieldRow k="Mobility" v={c.identity.mobility} />}
-                    {c.identity?.damage && <FieldRow k="Damage" v={c.identity.damage} />}
+                    {c.identity?.health && <FieldRow k="Base Health" v={c.identity.health} />}
+                    {c.identity?.defense && <FieldRow k="Base Guard" v={c.identity.defense} />}
+                    {c.identity?.mobility && <FieldRow k="Base Movement" v={c.identity.mobility} />}
+                    {c.identity?.damage && <FieldRow k="Base Output" v={c.identity.damage} />}
                     {c.identity?.skillCeiling && <FieldRow k="Skill Ceiling" v={c.identity.skillCeiling} />}
                   </div>
                   <div><StatRadar stats={c.stats} accent={c.accent} /></div>
                 </div>
               </div>
             )}
+
+            <div className="entry__panel" style={{ marginBottom: 'var(--sp-3)' }}>
+              <HeroLevel1Sheet />
+            </div>
 
             {c.overview && (
               <div className="entry__panel" style={{ marginBottom: 'var(--sp-3)' }}>

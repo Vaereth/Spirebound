@@ -180,3 +180,41 @@ export const DEEP_LORE = {
     summary: 'The Floor 100 boss is NOT the true corrupt god. It is the strongest sanctioned encounter — likely the Master Warden / Final Article / final authorised lock before the prison. Identity and stats remain TBD. It must remain below the corrupt god\u2019s 4,000 total.',
   },
 };
+
+// =====================================================================
+// HIDDEN IMPLEMENTATION RULE — HERO ATTRIBUTE BASELINES
+// Not public-facing lore. Governs how playable hero stats are presented.
+// Heroes begin at Level 1 with 0 in ALL six visible attributes; there are
+// NO hidden innate points. Every visible permanent point must be traceable
+// to level allocation, gear, enchantments, or explicit permanent rewards.
+// Heroes remain fully functional via their Base Character Template; the six
+// attributes MODIFY baseline combat values, they do not create them.
+// Hero stat totals must NOT be compared 1:1 with a creature's authored total.
+// =====================================================================
+export const HERO_BASELINE_RULE = {
+  level1: { vitality: 0, might: 0, guard: 0, arcana: 0, ward: 0, mobility: 0, allocatedTotal: 0 },
+  progression: 'Level 1: 0 points · Levels 2–99: +10 each · Level 100: +10 plus a +10 capstone → 1,000 allocatable total.',
+  sources: ['Level-up allocation', 'Gear', 'Enchantments', 'Permanent rewards', 'Other explicit progression systems'],
+  totals: [
+    { term: 'Allocated Total', def: 'Points spent through levelling.' },
+    { term: 'Permanent Effective Total', def: 'Allocated + permanent gear, enchantments, and permanent rewards.' },
+    { term: 'Current Effective Total', def: 'Permanent effective total + temporary buffs and penalties.' },
+  ],
+  calc: 'Final value = Base Character Value + Attribute Contribution + Gear Effects + Temporary Modifiers.',
+  functionalAtZero: 'A hero with 0 in all six attributes is still fully functional — they move, dodge, attack, defend, cast, and survive ordinary Level 1 content through their Base Character Template. Attributes enhance these baselines rather than enabling them.',
+  identityFrom: ['Base Character Template', 'Weapons', 'Ability coefficients', 'Resource mechanics', 'Movement & dodge style', 'Attack & recovery timing', 'Talent trees', 'Equipment compatibility', 'Unique systems'],
+  creatureRule: 'Do not compare a hero\u2019s allocated total 1:1 with a creature\u2019s authored total. Both use the same six names but different base templates; the outcome depends on template, level, gear, abilities, coefficients, size, mechanics, and encounter design.',
+};
+
+// Short PUBLIC explainer (opt-in) for the systems page.
+export const HERO_STATS_EXPLAINER = {
+  title: 'How Hero Stats Work',
+  points: [
+    'Playable climbers begin at Level 1 with 0 in every visible attribute. This is deliberate — the numbers stay clean and fully traceable.',
+    'There are no hidden innate points. Every permanent attribute point comes from level-up allocation, gear, enchantments, or explicit permanent rewards.',
+    'A climber at 0 attributes is still fully functional. Movement, dodging, attacking, defending, and abilities come from each climber\u2019s Base Character Template; attributes enhance those baselines, they don\u2019t create them.',
+    'This is why two climbers can both read 0 at Level 1 yet feel completely different — identity lives in their template, weapons, coefficients, movement, and unique systems, not in a starting stat spread.',
+    'Climber attribute totals are not directly comparable to a creature\u2019s authored stat total; the two use different base templates.',
+  ],
+  sheet: 'Character sheets show Allocated · Gear · Temporary · Effective — every number traceable, with nothing added invisibly.',
+};

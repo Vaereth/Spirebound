@@ -1,4 +1,4 @@
-import { ATTRIBUTES, CLASSIFICATIONS, PLAYER_PROGRESSION, LEVEL_BANDS, RANK_SYSTEM } from '../data/canon.js';
+import { ATTRIBUTES, CLASSIFICATIONS, PLAYER_PROGRESSION, LEVEL_BANDS, RANK_SYSTEM, HERO_STATS_EXPLAINER } from '../data/canon.js';
 import './EntryPage.css';
 import './SystemsPage.css';
 
@@ -55,6 +55,21 @@ export default function GameSystemsPage({ navigate }) {
                 ))}
               </tbody></table>
               <p className="entry__p entry__p--dim" style={{ marginTop: 'var(--sp-2)', fontSize: '0.85rem' }}>{PLAYER_PROGRESSION.note}</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="entry__sec">
+          <h2 className="entry__sec-h entry__sec-h--display">{HERO_STATS_EXPLAINER.title}</h2>
+          <div className="entry__grid">
+            <div className="entry__panel entry__panel--accent">
+              <ul className="sys-list">
+                {HERO_STATS_EXPLAINER.points.map((p) => <li key={p} style={{ marginBottom: '0.5rem' }}>{p}</li>)}
+              </ul>
+            </div>
+            <div className="entry__panel">
+              <h3 className="entry__panel-h">The Character Sheet</h3>
+              <p className="entry__p">{HERO_STATS_EXPLAINER.sheet}</p>
             </div>
           </div>
         </section>

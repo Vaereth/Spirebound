@@ -5,11 +5,11 @@ import './Cast.css';
 // --- tiny SVG radar for the 5 stat axes ---
 export function StatRadar({ stats, accent }) {
   const axes = [
-    { key: 'health',   label: 'VIT' },
-    { key: 'defense',  label: 'DEF' },
-    { key: 'mobility', label: 'MOB' },
-    { key: 'damage',   label: 'DMG' },
-    { key: 'ceiling',  label: 'SKILL' },
+    { key: 'health',   label: 'SURVIVE' },
+    { key: 'defense',  label: 'MITIGATE' },
+    { key: 'mobility', label: 'MOVE' },
+    { key: 'damage',   label: 'OUTPUT' },
+    { key: 'ceiling',  label: 'CEILING' },
   ];
   const N = axes.length, R = 58, cx = 72, cy = 72;
   const pt = (i, r) => {
