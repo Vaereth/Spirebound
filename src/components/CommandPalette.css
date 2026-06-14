@@ -1,0 +1,33 @@
+/* ===================== COMMAND PALETTE ===================== */
+.cmdp { position: fixed; inset: 0; z-index: 200; display: flex; align-items: flex-start; justify-content: center;
+  padding-top: 12vh; background: rgba(8,9,14,0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  animation: cmdp-fade 0.18s var(--ease); }
+@keyframes cmdp-fade { from { opacity: 0; } to { opacity: 1; } }
+
+.cmdp__panel { width: min(640px, 92vw); background: linear-gradient(180deg, var(--ink-3), var(--ink-2));
+  border: 1px solid rgba(96,232,220,0.25); border-radius: var(--radius-lg);
+  box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 60px rgba(96,232,220,0.08); overflow: hidden;
+  animation: cmdp-rise 0.22s var(--ease); }
+@keyframes cmdp-rise { from { transform: translateY(-12px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.cmdp__inputrow { display: flex; align-items: center; gap: 0.7rem; padding: 0.9rem 1.1rem; border-bottom: var(--edge); }
+.cmdp__icon { color: var(--rune); font-size: 1.2rem; }
+.cmdp__input { flex: 1; background: none; border: none; outline: none; color: var(--bone);
+  font-family: var(--font-util); font-size: 1.02rem; }
+.cmdp__input::placeholder { color: var(--bone-dim); }
+.cmdp__esc { font-family: var(--font-util); font-size: 0.68rem; color: var(--bone-dim); padding: 0.15rem 0.4rem; border-radius: 4px; background: rgba(231,227,214,0.08); border: 1px solid rgba(231,227,214,0.12); }
+
+.cmdp__results { max-height: 52vh; overflow-y: auto; padding: 0.4rem; }
+.cmdp__empty { color: var(--bone-dim); text-align: center; padding: var(--sp-4); font-style: italic; }
+.cmdp__row { width: 100%; display: flex; align-items: center; gap: 0.7rem; cursor: pointer; text-align: left;
+  padding: 0.6rem 0.8rem; border-radius: var(--radius); background: none; border: none; transition: background 0.15s var(--ease); }
+.cmdp__row.is-sel { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.cmdp__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex-shrink: 0; box-shadow: 0 0 8px var(--accent); }
+.cmdp__label { color: var(--bone); font-family: var(--font-util); font-size: 0.92rem; }
+.cmdp__sub { color: var(--bone-dim); font-size: 0.78rem; }
+.cmdp__kind { margin-left: auto; font-family: var(--font-util); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--accent); padding: 0.2rem 0.5rem; border-radius: 40px; border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); }
+
+.cmdp__foot { display: flex; gap: 1.2rem; padding: 0.6rem 1.1rem; border-top: var(--edge); }
+.cmdp__foot span { font-family: var(--font-util); font-size: 0.68rem; color: var(--bone-dim); display: flex; align-items: center; gap: 0.3rem; }
+.cmdp__foot kbd { font-family: var(--font-util); font-size: 0.66rem; padding: 0.1rem 0.35rem; border-radius: 4px; background: rgba(231,227,214,0.08); border: 1px solid rgba(231,227,214,0.12); color: var(--bone-dim); }

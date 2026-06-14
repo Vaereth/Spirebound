@@ -1,0 +1,14 @@
+/* ===================== BREADCRUMBS ===================== */
+.crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 0.1rem;
+  padding: 0.6rem max(1rem, 3vw); background: color-mix(in srgb, var(--ink) 60%, transparent);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(231,227,214,0.05); position: sticky; top: 49px; z-index: 70; }
+.crumbs__item { display: inline-flex; align-items: center; }
+.crumbs__link { cursor: pointer; background: none; border: none; padding: 0.2rem 0.4rem; border-radius: 4px;
+  font-family: var(--font-util); font-size: 0.74rem; letter-spacing: 0.04em; color: var(--bone-dim); transition: color 0.2s var(--ease); }
+.crumbs__link:hover { color: var(--rune); }
+.crumbs__current { padding: 0.2rem 0.4rem; font-family: var(--font-util); font-size: 0.74rem; letter-spacing: 0.04em; color: var(--bone); font-weight: 600; }
+.crumbs__plain { padding: 0.2rem 0.4rem; font-family: var(--font-util); font-size: 0.74rem; color: var(--bone-dim); }
+.crumbs__sep { color: rgba(231,227,214,0.25); font-size: 0.75rem; padding: 0 0.1rem; }
+
+@media (max-width: 720px) { .crumbs { top: 47px; } }

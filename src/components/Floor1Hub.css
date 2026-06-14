@@ -1,7 +1,7 @@
 /* ===================== FLOOR 1 HUB (SAO console) ===================== */
 .hub { background: var(--ink); color: var(--bone); min-height: 100vh; padding-bottom: var(--sp-7); }
 
-.hub__nav { position: sticky; top: 0; z-index: 30; display: flex; gap: 0.8rem; align-items: center;
+.hub__nav { position: relative; z-index: 5; display: flex; gap: 0.8rem; align-items: center;
   padding: var(--sp-2) max(1.5rem, 4vw); background: color-mix(in srgb, var(--ink) 86%, transparent);
   backdrop-filter: blur(10px); border-bottom: var(--edge); }
 .hub__back { cursor: pointer; font-family: var(--font-util); font-size: var(--t-small); letter-spacing: 0.14em;

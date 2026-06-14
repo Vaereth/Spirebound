@@ -1,7 +1,7 @@
 /* ===================== SHARED ENTRY / DETAIL PAGES ===================== */
 .entry { --accent: #60E8DC; background: var(--ink); color: var(--bone); min-height: 100vh; }
 
-.entry__nav { position: sticky; top: 0; z-index: 30; display: flex; gap: 0.6rem; align-items: center;
+.entry__nav { position: relative; z-index: 5; display: flex; gap: 0.6rem; align-items: center;
   padding: var(--sp-2) max(1rem, 4vw); background: color-mix(in srgb, var(--ink) 86%, transparent);
   backdrop-filter: blur(10px); border-bottom: var(--edge); flex-wrap: wrap; }
 .entry__back { cursor: pointer; font-family: var(--font-util); font-size: var(--t-small);

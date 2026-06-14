@@ -1,0 +1,40 @@
+/* ===================== PERSISTENT TOP BAR ===================== */
+.topbar {
+  position: sticky; top: 0; z-index: 80;
+  display: flex; align-items: center; gap: var(--sp-3);
+  padding: 0.6rem max(1rem, 3vw);
+  background: color-mix(in srgb, var(--ink) 72%, transparent);
+  backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  border-bottom: 1px solid rgba(231,227,214,0.08);
+}
+
+/* logo */
+.topbar__logo { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; background: none; border: none; padding: 0.2rem 0.3rem; }
+.topbar__spire { color: var(--rune); font-size: 0.85rem; filter: drop-shadow(0 0 6px color-mix(in srgb, var(--rune) 50%, transparent)); transition: transform 0.4s var(--ease); }
+.topbar__logo:hover .topbar__spire { transform: translateY(-2px); }
+.topbar__word { font-family: var(--font-display); font-weight: 800; font-size: 1rem; letter-spacing: 0.16em;
+  color: var(--bone); }
+
+/* nav links */
+.topbar__nav { display: flex; align-items: center; gap: 0.2rem; margin-left: var(--sp-2); }
+.topbar__link { cursor: pointer; background: none; border: none; padding: 0.45rem 0.85rem; border-radius: 40px;
+  font-family: var(--font-util); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--bone-dim); transition: color 0.25s var(--ease), background 0.25s var(--ease); }
+.topbar__link:hover { color: var(--bone); background: rgba(231,227,214,0.06); }
+.topbar__link.is-active { color: var(--rune); background: rgba(96,232,220,0.08); }
+
+/* search trigger */
+.topbar__search { margin-left: auto; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.45rem 0.7rem 0.45rem 0.9rem; border-radius: 40px;
+  background: rgba(231,227,214,0.04); border: 1px solid rgba(231,227,214,0.1);
+  font-family: var(--font-util); font-size: 0.78rem; color: var(--bone-dim); transition: all 0.25s var(--ease); }
+.topbar__search:hover { color: var(--bone); border-color: var(--edge-rune); background: rgba(96,232,220,0.06); }
+.topbar__search-icon { font-size: 1rem; }
+.topbar__kbd { font-family: var(--font-util); font-size: 0.7rem; min-width: 18px; text-align: center;
+  padding: 0.1rem 0.35rem; border-radius: 4px; background: rgba(231,227,214,0.1); border: 1px solid rgba(231,227,214,0.14); color: var(--bone-dim); }
+
+@media (max-width: 720px) {
+  .topbar__nav { display: none; }            /* links collapse; logo + search remain, breadcrumbs carry context */
+  .topbar__search-text { display: none; }
+  .topbar__word { font-size: 0.9rem; }
+}

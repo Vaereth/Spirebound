@@ -11,7 +11,7 @@
 .fen__vignette { position: fixed; inset: 0; pointer-events: none; z-index: 0;
   background: radial-gradient(120% 90% at 50% 40%, transparent 45%, rgba(0,0,0,0.85)); }
 
-.fen__nav { position: sticky; top: 0; z-index: 30; display: flex; gap: 0.8rem; align-items: center;
+.fen__nav { position: relative; z-index: 5; display: flex; gap: 0.8rem; align-items: center;
   padding: var(--sp-2) max(1rem, 4vw); background: rgba(8,5,5,0.8); backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(154,47,35,0.25); }
 .fen__back { cursor: pointer; font-family: var(--font-util); font-size: 0.78rem; letter-spacing: 0.14em;

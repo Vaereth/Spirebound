@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Hero from './components/Hero.jsx';
 import Truth from './components/Truth.jsx';
 import Cast from './components/Cast.jsx';
@@ -15,6 +16,9 @@ import ProfessionPage from './components/ProfessionPage.jsx';
 import FenrathPage from './components/FenrathPage.jsx';
 import SystemsPage from './components/SystemsPage.jsx';
 import DeepLorePage from './components/DeepLorePage.jsx';
+import TopBar from './components/TopBar.jsx';
+import Breadcrumbs from './components/Breadcrumbs.jsx';
+import CommandPalette from './components/CommandPalette.jsx';
 import { useHashRoute } from './hooks/useHashRoute.js';
 import './styles/tokens.css';
 import './styles/global.css';
@@ -31,14 +35,6 @@ function Footer() {
   );
 }
 
-function BackBar({ navigate }) {
-  return (
-    <div className="entry__nav" style={{ position: 'sticky', top: 0, zIndex: 30, display: 'flex', gap: '0.8rem', alignItems: 'center', padding: '0.75rem max(1.5rem,4vw)', background: 'color-mix(in srgb, var(--ink) 86%, transparent)', backdropFilter: 'blur(10px)', borderBottom: 'var(--edge)' }}>
-      <button className="entry__back" onClick={() => navigate('#/')}>← Home</button>
-    </div>
-  );
-}
-
 // Everything that isn't the home view. Returns null when we ARE home.
 function RouteView({ route, navigate }) {
   const [seg0, seg1, seg2, seg3] = route.parts;
@@ -46,8 +42,8 @@ function RouteView({ route, navigate }) {
   if (seg0 === 'heroes' && seg1) return <HeroPage id={seg1} navigate={navigate} />;
 
   if (seg0 === 'systems') return <GameSystemsPage navigate={navigate} />;
-  if (seg0 === 'truth') return (<><BackBar navigate={navigate} /><Truth /><Footer /></>);
-  if (seg0 === 'climbers') return (<><BackBar navigate={navigate} /><Cast navigate={navigate} /><Footer /></>);
+  if (seg0 === 'truth') return (<><Truth /><Footer /></>);
+  if (seg0 === 'climbers') return (<><Cast navigate={navigate} /><Footer /></>);
 
   if (seg0 === 'floors' && seg1 === '1') {
     if (seg2 === 'world') return <Floor1Page navigate={navigate} />;
@@ -70,13 +66,25 @@ function RouteView({ route, navigate }) {
 export default function App() {
   const { route, navigate } = useHashRoute();
   const isHome = route.path === '/';
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  // Global "/" to open search (ignore when typing in a field).
+  useEffect(() => {
+    const onKey = (e) => {
+      const tag = (e.target?.tagName || '').toLowerCase();
+      const typing = tag === 'input' || tag === 'textarea' || e.target?.isContentEditable;
+      if (e.key === '/' && !typing && !searchOpen) { e.preventDefault(); setSearchOpen(true); }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [searchOpen]);
 
   // The Tower hero + main hub mount ONCE and persist for the whole session.
-  // On non-home routes we just hide them (display:none) instead of unmounting,
-  // so returning home is instant — no rebuilding the 3D scene. The hero's own
-  // IntersectionObserver pauses its render loop while it's hidden.
   return (
     <>
+      <TopBar navigate={navigate} route={route} onOpenSearch={() => setSearchOpen(true)} />
+      <Breadcrumbs route={route} navigate={navigate} />
+
       <div style={{ display: isHome ? 'block' : 'none' }}>
         <Hero />
         <MainHub navigate={navigate} />
@@ -84,6 +92,8 @@ export default function App() {
       </div>
 
       {!isHome && <RouteView route={route} navigate={navigate} />}
+
+      <CommandPalette open={searchOpen} onClose={() => setSearchOpen(false)} navigate={navigate} />
     </>
   );
 }
