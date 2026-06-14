@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { FLOOR1 as F } from '../data/floor1.js';
-import Bestiary from './Bestiary.jsx';
 import { slugify } from '../lib/slug.js';
 import './Floor1.css';
 
@@ -75,28 +74,16 @@ export default function Floor1Page({ navigate }) {
       <header className="f1banner">
         <div className="f1banner__veil" aria-hidden="true" />
         <div className="f1banner__inner wrap">
-          <button className="f1back" onClick={() => navigate('#/floors')}>← The Ascent</button>
-          <p className="f1banner__floor">Floor {F.numeral}</p>
+          <button className="f1back" onClick={() => navigate('#/floors/1')}>← Floor 1 Console</button>
+          <p className="f1banner__floor">Floor {F.numeral} · The Living World</p>
           <h1 className="f1banner__name">{F.name}</h1>
           <p className="f1banner__epigraph">“{F.epigraph}”</p>
-          <div className="f1banner__arc">
-            {F.emotionalArc.map((line, i) => (
-              <span key={i} className="f1banner__arc-line" style={{ '--d': `${i * 0.4 + 0.6}s` }}>{line}</span>
-            ))}
-          </div>
         </div>
       </header>
 
       <div className="wrap f1body">
         <Section id="overview" eyebrow="The Floor" title="A world, not a tutorial">
           <Reveal><p className="f1lead">{F.overview}</p></Reveal>
-        </Section>
-
-        <Section id="map" eyebrow="Cartography" title="The Verdant Reach, charted">
-          <Reveal><MapBlock /></Reveal>
-          <Reveal className="f1map__epigraphs">
-            {F.mapEpigraphs.map((e, i) => <p key={i} className="f1map__epigraph">“{e}”</p>)}
-          </Reveal>
         </Section>
 
         <Section id="layout" eyebrow="Geography" title="From Hearthvale to the Gate">
@@ -117,19 +104,6 @@ export default function Floor1Page({ navigate }) {
           <Reveal className="f1chips">
             {F.hearthvale.locations.map((l) => <span key={l} className="f1chip">{l}</span>)}
           </Reveal>
-        </Section>
-
-        <Section id="regions" eyebrow="The Six Lands" title="Regions of the Reach">
-          <div className="f1grid f1grid--regions">
-            {F.regions.map((r) => (
-              <Reveal key={r.name} className="f1region" style={{ '--accent': r.accent }}>
-                <h3 className="f1region__name">{r.name}</h3>
-                <p className="f1region__terrain">{r.terrain}</p>
-                <p className="f1region__play"><span>Play</span> {r.play}</p>
-                <p className="f1region__themes"><span>Themes</span> {r.themes}</p>
-              </Reveal>
-            ))}
-          </div>
         </Section>
 
         <Section id="danger" eyebrow="Survival" title="Danger & the tended roads">
@@ -168,15 +142,6 @@ export default function Floor1Page({ navigate }) {
           </div>
           <Reveal><p className="f1lead">{F.ecology}</p></Reveal>
         </Section>
-
-        <section id="bestiary-section" className="f1sec">
-          <Reveal>
-            <button className="f1fenbtn" style={{ background: 'linear-gradient(180deg, rgba(96,232,220,0.18), rgba(96,232,220,0.08))', borderColor: 'rgba(96,232,220,0.5)', color: '#bfeee9' }} onClick={() => navigate('#/floors/1/systems')}>
-              Stats &amp; Systems — attributes, ranks, named rares &amp; regional elites →
-            </button>
-          </Reveal>
-          <Bestiary navigate={navigate} />
-        </section>
 
         <Section id="guild" eyebrow="Institutions" title="The Ascendant Guild & the Plates">
           <div className="f1cols">
@@ -246,18 +211,6 @@ export default function Floor1Page({ navigate }) {
           <Reveal><p className="f1rule">{F.quests.msq}</p></Reveal>
         </Section>
 
-        <Section id="fenrath" eyebrow="The First Guardian" title="Fenrath">
-          <Reveal><p className="f1lead">{F.fenrath.public}</p></Reveal>
-          <Reveal className="f1chips">{F.fenrath.titles.map((t) => <span key={t} className="f1chip f1chip--title">{t}</span>)}</Reveal>
-          <Reveal><p className="f1note"><strong>The arena —</strong> {F.fenrath.arena}</p></Reveal>
-          <Reveal className="f1guardian"><p>{F.fenrath.guardianRole}</p></Reveal>
-          <Reveal>
-            <button className="f1fenbtn" onClick={() => navigate('#/floors/1/fenrath')}>
-              Enter the Guardian's record — Fenrath →
-            </button>
-          </Reveal>
-        </Section>
-
         <Section id="proofs" eyebrow="The Gate's Conditions" title="The Five Guardian Proofs">
           <Reveal><p className="f1lead">{F.proofs.intro}</p></Reveal>
           <div className="f1grid f1grid--proofs">
@@ -282,25 +235,6 @@ export default function Floor1Page({ navigate }) {
           <Reveal><p className="f1note f1note--small">{F.proofs.proofNote}</p></Reveal>
         </Section>
 
-        {/* Sealed placeholders — no invented lore */}
-        <Section id="sealed" eyebrow="Beyond the Public Record" title="Sealed archives">
-          <div className="f1grid f1grid--sealed">
-            {F.sealed.map((s) => (
-              <Reveal key={s.label} className="f1sealed">
-                <span className="f1sealed__lock" aria-hidden="true">⛓</span>
-                <h4 className="f1sealed__label">{s.label}</h4>
-                <p className="f1sealed__note">{s.note}</p>
-                <span className="f1sealed__tag">Coming later</span>
-              </Reveal>
-            ))}
-          </div>
-          <Reveal>
-            <button className="f1fenbtn" onClick={() => navigate('#/floors/1/sealed')}>
-              ⛓ Open the Sealed Archive — endgame spoilers
-            </button>
-          </Reveal>
-        </Section>
-
         <Section id="tbd" eyebrow="Design Status" title="Still to be designed">
           <Reveal className="f1chips f1chips--tbd">
             {F.tbd.map((t) => <span key={t} className="f1chip f1chip--tbd">{t}</span>)}
@@ -309,7 +243,7 @@ export default function Floor1Page({ navigate }) {
       </div>
 
       <footer className="f1foot">
-        <button className="f1back" onClick={() => navigate('#/floors')}>← Return to the Ascent</button>
+        <button className="f1back" onClick={() => navigate('#/floors/1')}>← Back to the Floor 1 Console</button>
       </footer>
     </div>
   );

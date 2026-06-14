@@ -2,7 +2,10 @@ import Hero from './components/Hero.jsx';
 import Truth from './components/Truth.jsx';
 import Cast from './components/Cast.jsx';
 import Floors from './components/Floors.jsx';
+import Floor1Hub from './components/Floor1Hub.jsx';
 import Floor1Page from './components/Floor1Page.jsx';
+import RegionsPage from './components/RegionsPage.jsx';
+import BestiaryPage from './components/BestiaryPage.jsx';
 import HeroPage from './components/HeroPage.jsx';
 import CreaturePage from './components/CreaturePage.jsx';
 import NpcPage from './components/NpcPage.jsx';
@@ -37,20 +40,25 @@ export default function App() {
 
   // ---- Floor 1 sub-routes ----
   if (seg0 === 'floors' && seg1 === '1') {
+    // #/floors/1/world → the lighter lore page
+    if (seg2 === 'world') return <Floor1Page navigate={navigate} />;
+    // #/floors/1/regions
+    if (seg2 === 'regions') return <RegionsPage navigate={navigate} />;
     // #/floors/1/fenrath
     if (seg2 === 'fenrath') return <FenrathPage navigate={navigate} />;
     // #/floors/1/systems
     if (seg2 === 'systems') return <SystemsPage navigate={navigate} />;
     // #/floors/1/sealed → gated deep lore
     if (seg2 === 'sealed') return <DeepLorePage navigate={navigate} />;
-    // #/floors/1/bestiary/:id
+    // #/floors/1/bestiary/:id → creature; #/floors/1/bestiary → list
     if (seg2 === 'bestiary' && seg3) return <CreaturePage id={seg3} navigate={navigate} />;
+    if (seg2 === 'bestiary') return <BestiaryPage navigate={navigate} />;
     // #/floors/1/npcs/:slug
     if (seg2 === 'npcs' && seg3) return <NpcPage slug={seg3} navigate={navigate} />;
     // #/floors/1/professions/:slug
     if (seg2 === 'professions' && seg3) return <ProfessionPage slug={seg3} navigate={navigate} />;
-    // #/floors/1 → the archive
-    return <Floor1Page navigate={navigate} />;
+    // #/floors/1 → the SAO-style hub console
+    return <Floor1Hub navigate={navigate} />;
   }
 
   // #/floors → the Ascent overview on its own
