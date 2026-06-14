@@ -27,7 +27,7 @@ function MapBlock() {
 const TILES = [
   { key: 'regions', label: 'Regions', sub: 'The six lands, west to east', route: '#/floors/1/regions', accent: '#5E9C68' },
   { key: 'bestiary', label: 'Bestiary', sub: '42 known species', route: '#/floors/1/bestiary', accent: '#9ab36a' },
-  { key: 'systems', label: 'Stats & Systems', sub: 'Attributes · ranks · named rares · elites', route: '#/floors/1/systems', accent: '#60E8DC' },
+  { key: 'rares', label: 'Named Rares & Elites', sub: 'Floor 1 rare individuals & regional elites', route: '#/floors/1/systems', accent: '#c98a4a' },
   { key: 'world', label: 'The Living World', sub: 'Seasons · weather · ecology · Hearthvale · Guild', route: '#/floors/1/world', accent: '#5fa3c4' },
   { key: 'fenrath', label: 'Fenrath', sub: 'The First Guardian', route: '#/floors/1/fenrath', accent: '#9a2f23', danger: true },
   { key: 'sealed', label: 'Sealed Archive', sub: 'Restricted · endgame spoilers', route: '#/floors/1/sealed', accent: '#7a1f18', locked: true },

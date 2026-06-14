@@ -1,6 +1,8 @@
 import Hero from './components/Hero.jsx';
 import Truth from './components/Truth.jsx';
 import Cast from './components/Cast.jsx';
+import MainHub from './components/MainHub.jsx';
+import GameSystemsPage from './components/GameSystemsPage.jsx';
 import Floors from './components/Floors.jsx';
 import Floor1Hub from './components/Floor1Hub.jsx';
 import Floor1Page from './components/Floor1Page.jsx';
@@ -38,6 +40,33 @@ export default function App() {
     return <HeroPage id={seg1} navigate={navigate} />;
   }
 
+  // ---- Top-level game domains ----
+  if (seg0 === 'systems') {
+    return <GameSystemsPage navigate={navigate} />;
+  }
+  if (seg0 === 'truth') {
+    return (
+      <>
+        <div className="entry__nav" style={{ position: 'sticky', top: 0, zIndex: 30, display: 'flex', gap: '0.8rem', alignItems: 'center', padding: '0.75rem max(1.5rem,4vw)', background: 'color-mix(in srgb, var(--ink) 86%, transparent)', backdropFilter: 'blur(10px)', borderBottom: 'var(--edge)' }}>
+          <button className="entry__back" onClick={() => navigate('#/')}>← Home</button>
+        </div>
+        <Truth />
+        <Footer />
+      </>
+    );
+  }
+  if (seg0 === 'climbers') {
+    return (
+      <>
+        <div className="entry__nav" style={{ position: 'sticky', top: 0, zIndex: 30, display: 'flex', gap: '0.8rem', alignItems: 'center', padding: '0.75rem max(1.5rem,4vw)', background: 'color-mix(in srgb, var(--ink) 86%, transparent)', backdropFilter: 'blur(10px)', borderBottom: 'var(--edge)' }}>
+          <button className="entry__back" onClick={() => navigate('#/')}>← Home</button>
+        </div>
+        <Cast navigate={navigate} />
+        <Footer />
+      </>
+    );
+  }
+
   // ---- Floor 1 sub-routes ----
   if (seg0 === 'floors' && seg1 === '1') {
     // #/floors/1/world → the lighter lore page
@@ -71,13 +100,11 @@ export default function App() {
     );
   }
 
-  // default: the full main site
+  // default: the Tower hero, then the navigable hub console
   return (
     <>
       <Hero />
-      <Truth />
-      <Cast navigate={navigate} />
-      <Floors navigate={navigate} />
+      <MainHub navigate={navigate} />
       <Footer />
     </>
   );
