@@ -1,5 +1,6 @@
 import { FLOOR1 as F } from '../data/floor1.js';
 import { slugify } from '../lib/slug.js';
+import ArtSlot from './ArtSlot.jsx';
 import './EntryPage.css';
 
 // Build a lookup of NPCs with any known hook lines.
@@ -39,14 +40,25 @@ export default function NpcPage({ slug, navigate }) {
       </header>
 
       <div className="entry__body">
-        {rec.hooks.length > 0 ? (
-          <section className="entry__sec">
-            <h2 className="entry__sec-h">What the Guild Notes</h2>
-            {rec.hooks.map((h) => <p key={h} className="entry__p">{h}</p>)}
-          </section>
-        ) : (
-          <p className="entry__p entry__p--dim">A known figure of Hearthvale. Their full story is not yet recorded here.</p>
-        )}
+        <div className="entry__cols2">
+          <div>
+            {rec.hooks.length > 0 ? (
+              <section className="entry__sec">
+                <h2 className="entry__sec-h">What the Guild Notes</h2>
+                {rec.hooks.map((h) => <p key={h} className="entry__p">{h}</p>)}
+              </section>
+            ) : (
+              <p className="entry__p entry__p--dim">A known figure of Hearthvale. Their full story is not yet recorded here.</p>
+            )}
+          </div>
+          <ArtSlot
+            variant="portrait"
+            label="Portrait"
+            path={`images/npcs/${slugify(rec.name)}.png`}
+            src={`/images/npcs/${slugify(rec.name)}.png`}
+            alt={`${rec.name} portrait`}
+          />
+        </div>
 
         <div className="entry__coming">
           <p className="entry__coming-h">Expanded Entry — Coming</p>

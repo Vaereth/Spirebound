@@ -1,4 +1,5 @@
 import { FLOOR1 as F } from '../data/floor1.js';
+import ArtSlot from './ArtSlot.jsx';
 import './FenrathPage.css';
 
 export default function FenrathPage({ navigate }) {
@@ -21,6 +22,16 @@ export default function FenrathPage({ navigate }) {
       </header>
 
       <div className="fen__body">
+        <div style={{ '--accent': '#9a2f23' }}>
+          <ArtSlot
+            variant="boss"
+            label="Guardian Art"
+            path="images/bosses/fenrath.png"
+            src="/images/bosses/fenrath.png"
+            alt="Fenrath, the First Guardian"
+          />
+        </div>
+
         <section className="fen__sec">
           <h2 className="fen__h">The Barrier</h2>
           <p className="fen__p">{fn.public}</p>

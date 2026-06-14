@@ -1,0 +1,1 @@
+Drop bestiary images here. See IMAGE_FILENAMES.txt for exact names.

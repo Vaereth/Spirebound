@@ -1,5 +1,6 @@
 import { FLOOR1 as F } from '../data/floor1.js';
 import { slugify } from '../lib/slug.js';
+import ArtSlot from './ArtSlot.jsx';
 import './EntryPage.css';
 
 export default function ProfessionPage({ slug, navigate }) {
@@ -29,6 +30,14 @@ export default function ProfessionPage({ slug, navigate }) {
       </header>
 
       <div className="entry__body">
+        <ArtSlot
+          variant="emblem"
+          label="Emblem"
+          path={`images/professions/${slug}.png`}
+          src={`/images/professions/${slug}.png`}
+          alt={`${name} emblem`}
+        />
+
         <section className="entry__sec">
           <h2 className="entry__sec-h">Starter Access</h2>
           <p className="entry__p">{F.professions.starter}</p>

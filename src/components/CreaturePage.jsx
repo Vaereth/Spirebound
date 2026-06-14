@@ -1,4 +1,6 @@
 import { BESTIARY, MIGRATION_CLASSES } from '../data/bestiary.js';
+import { slugify } from '../lib/slug.js';
+import ArtSlot from './ArtSlot.jsx';
 import './EntryPage.css';
 
 const ZONE_ACCENT = {
@@ -38,10 +40,27 @@ export default function CreaturePage({ id, navigate }) {
       </header>
 
       <div className="entry__body">
+        <ArtSlot
+          variant="dossier"
+          label="Field Dossier"
+          path={`images/bestiary/${slugify(c.name)}-dossier.png`}
+          src={`/images/bestiary/${slugify(c.name)}-dossier.png`}
+          alt={`${c.name} field dossier`}
+        />
+
         <Field h="Seasonal Presence" t={c.seasonal} />
         <Field h="Visual Identity" t={c.visual} />
         <Field h="Movement & Ordinary Behaviour" t={c.movement} />
         <Field h="World Presence" t={c.world} />
+
+        <ArtSlot
+          variant="render"
+          label="Specimen Render"
+          path={`images/bestiary/${slugify(c.name)}.png`}
+          src={`/images/bestiary/${slugify(c.name)}.png`}
+          alt={`${c.name} render`}
+        />
+
         <div className="entry__cols2">
           <Field h="Sound" t={c.sound} />
           <Field h="Smell & Physical Traces" t={c.traces} />

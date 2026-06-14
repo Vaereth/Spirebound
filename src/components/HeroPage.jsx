@@ -1,5 +1,6 @@
 import { CAST } from '../data/cast.js';
 import { EluvainKit, FeiyanKit, StatRadar } from './Cast.jsx';
+import ArtSlot from './ArtSlot.jsx';
 import './EntryPage.css';
 import './Cast.css';
 
@@ -44,6 +45,13 @@ export default function HeroPage({ id, navigate }) {
       </header>
 
       <div className="entry__body">
+        <ArtSlot
+          variant="splash"
+          label="Key Art / Splash"
+          path={`images/heroes/${c.id}-splash.png`}
+          src={`/images/heroes/${c.id}-splash.png`}
+          alt={`${c.name} key art`}
+        />
         {c.tagline && <p className="entry__p" style={{ fontSize: '1.15rem', fontStyle: 'italic', color: 'var(--summit)' }}>“{c.tagline}”</p>}
         {c.overview && (
           <section className="entry__sec">
@@ -89,7 +97,16 @@ export default function HeroPage({ id, navigate }) {
         {c.appearance && (
           <section className="entry__sec">
             <h2 className="entry__sec-h">Appearance</h2>
-            <p className="entry__p entry__p--dim">{c.appearance.join(' · ')}</p>
+            <div className="entry__cols2">
+              <p className="entry__p entry__p--dim">{c.appearance.join(' · ')}</p>
+              <ArtSlot
+                variant="portrait"
+                label="Portrait"
+                path={`images/heroes/${c.id}.png`}
+                src={`/images/heroes/${c.id}.png`}
+                alt={`${c.name} portrait`}
+              />
+            </div>
           </section>
         )}
 
