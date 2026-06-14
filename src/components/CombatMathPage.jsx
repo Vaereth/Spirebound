@@ -1,4 +1,4 @@
-import { COMBAT_MATH, RANK_COMBAT, THREAT_GRADES } from '../data/canon.js';
+import { COMBAT_MATH, RANK_COMBAT, THREAT_GRADES, BOSS_MATH } from '../data/canon.js';
 import DamageCalc from './DamageCalc.jsx';
 import GradeBadge from './GradeBadge.jsx';
 import './EntryPage.css';
@@ -104,6 +104,50 @@ export default function CombatMathPage({ navigate }) {
                 <p className="entry__p" style={{ fontSize: '0.9rem' }}>{r.rule}</p>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* Boss & Guardian math */}
+        <section className="entry__sec">
+          <h2 className="entry__sec-h entry__sec-h--display">Boss &amp; Guardian Math</h2>
+          <p className="entry__p entry__p--dim">The rules that support Floor Guardians like Fenrath, layered on top of the universal equations.</p>
+          <div className="entry__grid">
+            <div className="entry__panel entry__panel--accent">
+              <h3 className="entry__panel-h">Guardian Stability</h3>
+              <p className="entry__p" style={{ fontSize: '0.88rem' }}>{BOSS_MATH.stabilityFormula}</p>
+              <p className="entry__p" style={{ fontSize: '0.85rem', marginTop: '0.4rem' }}><b>Example —</b> {BOSS_MATH.stabilityExample}</p>
+              <p className="entry__p" style={{ fontSize: '0.85rem', marginTop: '0.4rem' }}><b>Interpolation —</b> {BOSS_MATH.stabilityInterp}</p>
+            </div>
+            <div className="entry__panel">
+              <h3 className="entry__panel-h">Phase Health</h3>
+              <p className="entry__p" style={{ fontSize: '0.88rem' }}>{BOSS_MATH.phaseHealth}</p>
+            </div>
+            <div className="entry__panel">
+              <h3 className="entry__panel-h">Phase Integrity</h3>
+              <p className="entry__p" style={{ fontSize: '0.88rem' }}>{BOSS_MATH.phaseIntegrity}</p>
+            </div>
+            <div className="entry__panel">
+              <h3 className="entry__panel-h">Stagger Generation</h3>
+              <p className="entry__p" style={{ fontSize: '0.88rem' }}>{BOSS_MATH.staggerGen}</p>
+            </div>
+            <div className="entry__panel">
+              <h3 className="entry__panel-h">Bleed &amp; Crushed Guard</h3>
+              <p className="entry__p" style={{ fontSize: '0.85rem' }}>{BOSS_MATH.bleed}</p>
+              <p className="entry__p" style={{ fontSize: '0.85rem', marginTop: '0.4rem' }}>{BOSS_MATH.crushedGuard}</p>
+            </div>
+            <div className="entry__panel">
+              <h3 className="entry__panel-h">Status Caps</h3>
+              <ul className="sys-list">{BOSS_MATH.statusCaps.map((s) => <li key={s}>{s}</li>)}</ul>
+              <p className="entry__p" style={{ fontSize: '0.82rem', marginTop: '0.4rem' }}>{BOSS_MATH.statusRule}</p>
+            </div>
+            <div className="entry__panel entry__panel--accent">
+              <h3 className="entry__panel-h">Phase 3 Execution Rule</h3>
+              <p className="entry__p" style={{ fontSize: '0.88rem' }}>{BOSS_MATH.execution}</p>
+            </div>
+            <div className="entry__panel">
+              <h3 className="entry__panel-h">Difficulty Application Order</h3>
+              <ol className="cm-order">{BOSS_MATH.diffOrder.map((o, i) => <li key={i}>{o}</li>)}</ol>
+            </div>
           </div>
         </section>
 
