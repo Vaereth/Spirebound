@@ -1,8 +1,12 @@
 import { useMemo, useState } from 'react';
 import { BESTIARY, BESTIARY_ZONES, MIGRATION_CLASSES } from '../data/bestiary.js';
 import { StatBars } from './StatBlock.jsx';
-import GradeBadge from './GradeBadge.jsx';
+import GradeBadge, { gradeColor } from './GradeBadge.jsx';
+import Corven from './Corven.jsx';
+import { CORVEN, corvenLine } from '../data/corven.js';
 import './Bestiary.css';
+
+const GRADE_ORDER = ['E', 'D', 'C', 'B', 'A'];
 
 // Accent per zone (kept in sync with the region palette where they overlap).
 const ZONE_ACCENT = {
@@ -93,6 +97,7 @@ function Field({ label, text }) {
 
 export default function Bestiary({ navigate }) {
   const [zone, setZone] = useState('All');
+  const [grade, setGrade] = useState('All');
   const [query, setQuery] = useState('');
   const [openId, setOpenId] = useState(null);
 
@@ -102,40 +107,78 @@ export default function Bestiary({ navigate }) {
     return BESTIARY_ZONES.filter((z) => counts[z]).map((z) => ({ z, n: counts[z] }));
   }, []);
 
+  const gradesWithCounts = useMemo(() => {
+    const counts = {};
+    BESTIARY.forEach((c) => { counts[c.grade] = (counts[c.grade] || 0) + 1; });
+    return GRADE_ORDER.filter((g) => counts[g]).map((g) => ({ g, n: counts[g] }));
+  }, []);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return BESTIARY.filter((c) => {
       if (zone !== 'All' && c.zone !== zone) return false;
+      if (grade !== 'All' && c.grade !== grade) return false;
       if (q && !(`${c.name} ${c.classification} ${c.region}`.toLowerCase().includes(q))) return false;
       return true;
     });
-  }, [zone, query]);
+  }, [zone, grade, query]);
+
+  // Corven's reaction — derived from current activity. Pure data, no lag.
+  const corven = useMemo(() => {
+    const q = query.trim();
+    if (q) return corvenLine(filtered.length === 0 ? CORVEN.searchMiss : CORVEN.searchHit, q.length);
+    if (grade !== 'All') return corvenLine(CORVEN.grade[grade] || CORVEN.greet, grade.charCodeAt(0));
+    if (zone !== 'All') return corvenLine(CORVEN.region[zone] || CORVEN.greet, zone.length);
+    return corvenLine(CORVEN.greet, 0);
+  }, [query, grade, zone, filtered.length]);
 
   return (
-    <section id="bestiary" className="best">
-      <div className="best__intro">
-        <p className="best__eyebrow">Ascendant Guild Records</p>
-        <h2 className="best__title">The Floor 1 Bestiary</h2>
-        <p className="best__lead">
-          Forty-two species are known to the Reach. “The Dawnfields are not harmless. They are healthy.
-          Learn the difference.” Filter by region, or search by name — then open any record for the
-          full Guild field notes.
-        </p>
+    <section id="bestiary" className="best best--hall">
+      <div className="best__hall-bg" aria-hidden="true" />
+
+      <div className="best__hallhead">
+        <div className="best__intro">
+          <p className="best__eyebrow">Hearthvale · The Ascendant Guild</p>
+          <h2 className="best__title">The Guild Hall &amp; Beast-Rolls</h2>
+          <p className="best__lead">
+            The lanterns are lit and the rolls lie open. Forty-two creatures of the Verdant Reach are catalogued here —
+            filter by region, by Guild threat grade, or ask by name. Open any record for the full field notes.
+            The Guildmaster is in, should you care for his opinion.
+          </p>
+        </div>
+        <div className="best__corven"><Corven line={corven} /></div>
       </div>
 
-      {/* Floor selector — only Floor 1 is active; scaffolded for later floors. */}
+      {/* Floor selector */}
       <div className="best__floors" role="tablist" aria-label="Floor">
         <button className="best__floor is-active" aria-selected="true">Floor 1 · The Verdant Reach</button>
         <button className="best__floor is-locked" disabled title="Coming later">Floor 2 +</button>
       </div>
 
+      {/* Grade filter */}
+      <div className="best__filterbar">
+        <span className="best__filterlabel">Threat Grade</span>
+        <button className={`best__gradechip ${grade === 'All' ? 'is-on' : ''}`} onClick={() => { setGrade('All'); setOpenId(null); }}>All</button>
+        {gradesWithCounts.map(({ g, n }) => (
+          <button
+            key={g}
+            className={`best__gradechip ${grade === g ? 'is-on' : ''}`}
+            style={{ '--g': gradeColor(g) }}
+            onClick={() => { setGrade(grade === g ? 'All' : g); setOpenId(null); }}
+          >
+            {g} <span className="best__gradecount">{n}</span>
+          </button>
+        ))}
+      </div>
+
       {/* Zone filter */}
-      <div className="best__zonebar">
+      <div className="best__filterbar">
+        <span className="best__filterlabel">Region</span>
         <button
           className={`best__zone ${zone === 'All' ? 'is-on' : ''}`}
-          onClick={() => setZone('All')}
+          onClick={() => { setZone('All'); setOpenId(null); }}
         >
-          All Regions <span className="best__zonecount">{BESTIARY.length}</span>
+          All <span className="best__zonecount">{BESTIARY.length}</span>
         </button>
         {zonesWithCounts.map(({ z, n }) => (
           <button
@@ -153,7 +196,7 @@ export default function Bestiary({ navigate }) {
         <input
           className="best__search"
           type="search"
-          placeholder="Search creatures…"
+          placeholder="Ask Corven for a creature by name…"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />

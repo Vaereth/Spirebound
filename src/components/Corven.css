@@ -1,0 +1,28 @@
+/* ===================== CORVEN HALE ===================== */
+.corven { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+
+.corven__fig { width: 120px; height: 140px; }
+.corven__skin { fill: #d9a878; stroke: #3a2a1c; stroke-width: 1.5; }
+.corven__hair { fill: #6b5640; }
+.corven__ink { fill: #2a1d12; }
+.corven__limb { fill: none; stroke: #4a3826; stroke-width: 3.5; stroke-linecap: round; }
+.corven__tabard { fill: #4d7a52; stroke: #2f5236; stroke-width: 1.5; }
+.corven__emblem { fill: #e8d8a8; }
+.corven__desk { fill: #5a4330; stroke: #3a2a1c; stroke-width: 1; }
+.corven__ledger { fill: #d8c9a8; stroke: #8a7a55; stroke-width: 1; }
+
+/* gentle idle sway — CSS only, GPU-cheap, no JS loop */
+.corven__body { transform-origin: 52px 92px; animation: corven-sway 5s ease-in-out infinite; }
+@keyframes corven-sway { 0%,100% { transform: rotate(-1.2deg); } 50% { transform: rotate(1.2deg); } }
+@media (prefers-reduced-motion: reduce) { .corven__body { animation: none; } }
+
+.corven__name { font-family: var(--font-util); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--bone-dim); }
+
+/* speech bubble */
+.corven__bubble { position: relative; max-width: 260px; background: #f4ecd8; color: #2a1d12;
+  border-radius: 12px; padding: 0.7rem 0.9rem; box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  animation: corven-pop 0.3s var(--ease); }
+@keyframes corven-pop { from { transform: translateY(6px) scale(0.96); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+.corven__line { font-family: var(--font-body, Georgia, serif); font-size: 0.86rem; line-height: 1.5; font-style: italic; }
+.corven__tail { position: absolute; bottom: -7px; left: 50%; transform: translateX(-50%);
+  width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 8px solid #f4ecd8; }
