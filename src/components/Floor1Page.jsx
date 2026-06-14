@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { FLOOR1 as F } from '../data/floor1.js';
 import Bestiary from './Bestiary.jsx';
+import { slugify } from '../lib/slug.js';
 import './Floor1.css';
 
 function Reveal({ children, className = '' }) {
@@ -169,7 +170,7 @@ export default function Floor1Page({ navigate }) {
         </Section>
 
         <section id="bestiary-section" className="f1sec">
-          <Bestiary />
+          <Bestiary navigate={navigate} />
         </section>
 
         <Section id="guild" eyebrow="Institutions" title="The Ascendant Guild & the Plates">
@@ -199,7 +200,7 @@ export default function Floor1Page({ navigate }) {
 
         <Section id="professions" eyebrow="Crafts of the Reach" title="Professions & mentors">
           <Reveal><p className="f1note">{F.professions.starter}</p></Reveal>
-          <Reveal className="f1chips">{F.professions.core.map((p) => <span key={p} className="f1chip">{p}</span>)}</Reveal>
+          <Reveal className="f1chips">{F.professions.core.map((p) => <button key={p} className="f1chip f1chip--link" onClick={() => navigate('#/floors/1/professions/' + slugify(p))}>{p}</button>)}</Reveal>
           <div className="f1grid f1grid--mentors">
             {F.professions.mentors.map((m) => (
               <Reveal key={m.name} className="f1mentor">
@@ -227,7 +228,7 @@ export default function Floor1Page({ navigate }) {
         </Section>
 
         <Section id="npcs" eyebrow="The People" title="Named souls of Hearthvale">
-          <Reveal className="f1chips">{F.npcs.hearthvale.map((n) => <span key={n} className="f1chip f1chip--npc">{n}</span>)}</Reveal>
+          <Reveal className="f1chips">{F.npcs.hearthvale.map((n) => <button key={n} className="f1chip f1chip--npc f1chip--link" onClick={() => navigate('#/floors/1/npcs/' + slugify(n))}>{n}</button>)}</Reveal>
           <h4 className="f1subh">Lore hooks</h4>
           <div className="f1hooks">
             {F.npcs.hooks.map((h) => <Reveal key={h} className="f1hook">{h}</Reveal>)}
@@ -245,6 +246,11 @@ export default function Floor1Page({ navigate }) {
           <Reveal className="f1chips">{F.fenrath.titles.map((t) => <span key={t} className="f1chip f1chip--title">{t}</span>)}</Reveal>
           <Reveal><p className="f1note"><strong>The arena —</strong> {F.fenrath.arena}</p></Reveal>
           <Reveal className="f1guardian"><p>{F.fenrath.guardianRole}</p></Reveal>
+          <Reveal>
+            <button className="f1fenbtn" onClick={() => navigate('#/floors/1/fenrath')}>
+              Enter the Guardian's record — Fenrath →
+            </button>
+          </Reveal>
         </Section>
 
         <Section id="proofs" eyebrow="The Gate's Conditions" title="The Five Guardian Proofs">

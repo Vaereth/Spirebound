@@ -177,3 +177,18 @@
 
 /* ---- footer ---- */
 .f1foot { text-align: center; padding: var(--sp-5) 0; border-top: var(--edge); }
+
+/* clickable chips (professions, NPCs) */
+.f1chip--link { cursor: pointer; font: inherit; transition: all 0.25s var(--ease); }
+.f1chip--link:hover { color: var(--bone); border-color: var(--verdant); background: color-mix(in srgb, var(--verdant) 12%, var(--ink-2)); transform: translateY(-1px); }
+.f1chip--npc.f1chip--link:hover { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 12%, var(--ink-2)); }
+
+/* Fenrath page entry button */
+.f1fenbtn {
+  margin-top: var(--sp-3); cursor: pointer;
+  font-family: var(--font-util); font-size: var(--t-small); letter-spacing: 0.16em; text-transform: uppercase;
+  color: #e8ddcc; background: linear-gradient(180deg, rgba(154,47,35,0.25), rgba(154,47,35,0.12));
+  border: 1px solid rgba(154,47,35,0.5); border-radius: 40px; padding: 0.8rem 1.5rem; font-weight: 700;
+  transition: all 0.3s var(--ease);
+}
+.f1fenbtn:hover { background: linear-gradient(180deg, rgba(154,47,35,0.4), rgba(154,47,35,0.2)); box-shadow: 0 0 30px rgba(154,47,35,0.4); transform: translateY(-2px); }

@@ -39,7 +39,7 @@ function ThreatBadge({ threat }) {
   return <span className="best__threat" style={{ '--tc': THREAT_COLOR[peak] || '#6c6c6c' }}>{peak}</span>;
 }
 
-function CreatureCard({ c, accent, open, onToggle }) {
+function CreatureCard({ c, accent, open, onToggle, navigate }) {
   return (
     <article className={`best__card ${open ? 'is-open' : ''}`} style={{ '--accent': accent }}>
       <button className="best__cardhead" onClick={onToggle} aria-expanded={open}>
@@ -61,37 +61,12 @@ function CreatureCard({ c, accent, open, onToggle }) {
 
           <Field label="Seasonal Presence" text={c.seasonal} />
           <Field label="Visual Identity" text={c.visual} />
-          <Field label="Movement & Ordinary Behaviour" text={c.movement} />
-          <Field label="World Presence" text={c.world} />
 
-          <div className="best__cols">
-            <Field label="Sound" text={c.sound} />
-            <Field label="Smell & Physical Traces" text={c.traces} />
-          </div>
-
-          <Field label="Behavioural States" text={c.behaviour} />
-
-          <div className="best__guide">
-            <h5 className="best__guide-h">Ascendant Guild Field Guide</h5>
-            {c.fieldguide.map((line, i) => (
-              <p key={i} className={i === 0 ? 'best__guide-lead' : 'best__guide-line'}>{line}</p>
-            ))}
-          </div>
-
-          <div className="best__threatfull">
-            <span className="best__threatfull-label">Guild Threat Assessment</span>
-            <div className="best__threatrows">
-              {c.threat.split('|').map((seg, i) => {
-                const [k, v] = seg.split(':').map((s) => s.trim());
-                return (
-                  <div key={i} className="best__threatrow">
-                    <span className="best__threatrow-k">{k}</span>
-                    <span className="best__threatrow-v" style={{ '--tc': THREAT_COLOR[v] || '#9a8f7a' }}>{v || k}</span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          {navigate && (
+            <button className="best__full" onClick={() => navigate('#/floors/1/bestiary/' + c.id)}>
+              Full field record — open {c.name}'s page →
+            </button>
+          )}
         </div>
       )}
     </article>
@@ -108,7 +83,7 @@ function Field({ label, text }) {
   );
 }
 
-export default function Bestiary() {
+export default function Bestiary({ navigate }) {
   const [zone, setZone] = useState('All');
   const [query, setQuery] = useState('');
   const [openId, setOpenId] = useState(null);
@@ -185,6 +160,7 @@ export default function Bestiary() {
             accent={ZONE_ACCENT[c.zone] || '#60E8DC'}
             open={openId === c.id}
             onToggle={() => setOpenId(openId === c.id ? null : c.id)}
+            navigate={navigate}
           />
         ))}
         {filtered.length === 0 && (

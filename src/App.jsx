@@ -3,6 +3,11 @@ import Truth from './components/Truth.jsx';
 import Cast from './components/Cast.jsx';
 import Floors from './components/Floors.jsx';
 import Floor1Page from './components/Floor1Page.jsx';
+import HeroPage from './components/HeroPage.jsx';
+import CreaturePage from './components/CreaturePage.jsx';
+import NpcPage from './components/NpcPage.jsx';
+import ProfessionPage from './components/ProfessionPage.jsx';
+import FenrathPage from './components/FenrathPage.jsx';
 import { useHashRoute } from './hooks/useHashRoute.js';
 import './styles/tokens.css';
 import './styles/global.css';
@@ -21,10 +26,24 @@ function Footer() {
 
 export default function App() {
   const { route, navigate } = useHashRoute();
-  const [seg0, seg1] = route.parts;
+  const [seg0, seg1, seg2, seg3] = route.parts;
 
-  // #/floors/1 → dedicated Floor 1 page
+  // ---- Hero pages: #/heroes/eluvain ----
+  if (seg0 === 'heroes' && seg1) {
+    return <HeroPage id={seg1} navigate={navigate} />;
+  }
+
+  // ---- Floor 1 sub-routes ----
   if (seg0 === 'floors' && seg1 === '1') {
+    // #/floors/1/fenrath
+    if (seg2 === 'fenrath') return <FenrathPage navigate={navigate} />;
+    // #/floors/1/bestiary/:id
+    if (seg2 === 'bestiary' && seg3) return <CreaturePage id={seg3} navigate={navigate} />;
+    // #/floors/1/npcs/:slug
+    if (seg2 === 'npcs' && seg3) return <NpcPage slug={seg3} navigate={navigate} />;
+    // #/floors/1/professions/:slug
+    if (seg2 === 'professions' && seg3) return <ProfessionPage slug={seg3} navigate={navigate} />;
+    // #/floors/1 → the archive
     return <Floor1Page navigate={navigate} />;
   }
 
@@ -38,12 +57,12 @@ export default function App() {
     );
   }
 
-  // default: the full main site (root, or any unknown hash)
+  // default: the full main site
   return (
     <>
       <Hero />
       <Truth />
-      <Cast />
+      <Cast navigate={navigate} />
       <Floors navigate={navigate} />
       <Footer />
     </>

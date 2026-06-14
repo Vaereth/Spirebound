@@ -1,0 +1,60 @@
+/* ===================== FENRATH — THE FIRST GUARDIAN ===================== */
+.fen {
+  --blood: #9a2f23; --bone-f: #d8cfc0; --emberred: #c2702f;
+  position: relative; min-height: 100vh; color: var(--bone-f);
+  background:
+    radial-gradient(80% 50% at 50% 0%, rgba(154,47,35,0.18), transparent 60%),
+    radial-gradient(60% 80% at 80% 100%, rgba(40,12,10,0.6), transparent 60%),
+    linear-gradient(180deg, #0c0707 0%, #070505 100%);
+  overflow: hidden;
+}
+.fen__vignette { position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(120% 90% at 50% 40%, transparent 45%, rgba(0,0,0,0.85)); }
+
+.fen__nav { position: sticky; top: 0; z-index: 30; display: flex; gap: 0.8rem; align-items: center;
+  padding: var(--sp-2) max(1rem, 4vw); background: rgba(8,5,5,0.8); backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(154,47,35,0.25); }
+.fen__back { cursor: pointer; font-family: var(--font-util); font-size: 0.78rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--emberred); background: rgba(154,47,35,0.08);
+  border: 1px solid rgba(154,47,35,0.4); border-radius: 40px; padding: 0.5rem 1.1rem; transition: all 0.3s var(--ease); }
+.fen__back:hover { background: rgba(154,47,35,0.18); box-shadow: 0 0 22px rgba(154,47,35,0.3); }
+.fen__crumb { font-family: var(--font-util); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: #8a7068; }
+
+.fen__banner { position: relative; z-index: 1; padding: var(--sp-7) max(1rem, 4vw) var(--sp-5); text-align: center; }
+.fen__eyebrow { font-family: var(--font-util); font-size: var(--t-label); letter-spacing: 0.4em; text-transform: uppercase; color: var(--blood); }
+.fen__name {
+  font-family: var(--font-display); font-weight: 900; font-size: clamp(3.5rem, 13vw, 9rem); line-height: 0.95;
+  margin: var(--sp-2) 0; letter-spacing: 0.02em;
+  background: linear-gradient(180deg, #e8ddcc 0%, #b8704f 55%, #7a1f18 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 60px rgba(154,47,35,0.4); animation: fenpulse 5s ease-in-out infinite;
+}
+@keyframes fenpulse { 0%,100% { filter: brightness(1); } 50% { filter: brightness(1.12); } }
+.fen__sub { font-style: italic; color: #b59a86; font-size: clamp(1.05rem, 2vw, 1.35rem); max-width: 50ch; margin: 0 auto; }
+.fen__titles { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-top: var(--sp-3); }
+.fen__title { font-family: var(--font-util); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--bone-f); border: 1px solid rgba(154,47,35,0.4); border-radius: 40px; padding: 0.35rem 0.85rem; background: rgba(154,47,35,0.06); }
+
+.fen__body { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: var(--sp-4) max(1rem,4vw) var(--sp-7); display: grid; gap: var(--sp-5); }
+.fen__sec { }
+.fen__h { font-family: var(--font-display); font-size: var(--t-h3); color: var(--bone-f); margin-bottom: var(--sp-2);
+  border-left: 3px solid var(--blood); padding-left: var(--sp-2); }
+.fen__h--truth { color: #d98a6a; }
+.fen__p { color: #cabbac; line-height: 1.9; max-width: 72ch; }
+.fen__p--dim { color: #998a7c; }
+.fen__sec--truth { padding: var(--sp-4); border: 1px solid rgba(154,47,35,0.3); border-radius: var(--radius-lg);
+  background: radial-gradient(120% 100% at 0% 0%, rgba(154,47,35,0.1), transparent 60%), rgba(20,10,9,0.5); }
+
+.fen__gates { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--sp-2); margin-top: var(--sp-3); }
+.fen__gate { padding: var(--sp-3); border: 1px solid rgba(154,47,35,0.3); border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(154,47,35,0.06), rgba(8,5,5,0.4)); }
+.fen__gatecount { font-family: var(--font-util); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--emberred); font-weight: 700; }
+.fen__gatemsg { font-family: var(--font-display); color: var(--bone-f); white-space: pre-wrap; margin: var(--sp-2) 0; font-size: 0.98rem; line-height: 1.5; }
+.fen__gatevoice { font-family: var(--font-body); font-style: italic; color: #c98a6a; white-space: pre-wrap; font-size: 0.92rem; line-height: 1.55; border-top: 1px solid rgba(154,47,35,0.2); padding-top: var(--sp-2); }
+
+.fen__coming { padding: var(--sp-4); border: 1px dashed rgba(154,47,35,0.4); border-radius: var(--radius-lg);
+  background: rgba(154,47,35,0.05); text-align: center; }
+.fen__coming-h { font-family: var(--font-util); font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blood); }
+.fen__coming-t { color: #998a7c; font-style: italic; margin-top: 0.5rem; max-width: 60ch; margin-inline: auto; }
+
+.fen__foot { text-align: center; padding-top: var(--sp-3); }

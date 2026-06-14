@@ -3,7 +3,7 @@ import { CAST, RESERVED_SLOTS } from '../data/cast.js';
 import './Cast.css';
 
 // --- tiny SVG radar for the 5 stat axes ---
-function StatRadar({ stats, accent }) {
+export function StatRadar({ stats, accent }) {
   const axes = [
     { key: 'health',   label: 'VIT' },
     { key: 'defense',  label: 'DEF' },
@@ -124,7 +124,7 @@ function FlowScaling({ fs }) {
   );
 }
 
-function EluvainKit({ c }) {
+export function EluvainKit({ c }) {
   const rs = c.runeSystem;
   return (
     <div className="kit kit--single">
@@ -165,7 +165,7 @@ function EluvainKit({ c }) {
   );
 }
 
-function FeiyanKit({ c }) {
+export function FeiyanKit({ c }) {
   const fs = c.flowSystem;
   const am = c.aerialMomentum;
   return (
@@ -216,7 +216,7 @@ function FeiyanKit({ c }) {
   );
 }
 
-function ClimberCard({ c, open, onToggle }) {
+function ClimberCard({ c, open, onToggle, navigate }) {
   return (
     <article className={`climber ${open ? 'is-open' : ''}`} style={{ '--accent': c.accent }}>
       <button className="climber__head" onClick={onToggle} aria-expanded={open}>
@@ -258,13 +258,17 @@ function ClimberCard({ c, open, onToggle }) {
             <p className="kit__note">{c.appearance.join(' · ')}</p>
           </div>
         </div>
-        {c.id === 'eluvain' ? <EluvainKit c={c} /> : <FeiyanKit c={c} />}
+        {navigate && (
+          <button className="climber__full" onClick={() => navigate('#/heroes/' + c.id)}>
+            Full kit, rune system &amp; signature — open {c.name}'s page →
+          </button>
+        )}
       </div>
     </article>
   );
 }
 
-export default function Cast() {
+export default function Cast({ navigate }) {
   const [openId, setOpenId] = useState('eluvain');
   const ref = useRef(null);
 
@@ -288,7 +292,7 @@ export default function Cast() {
         <div className="cast__list">
           {CAST.map((c) => (
             <div className="reveal" key={c.id}>
-              <ClimberCard c={c} open={openId === c.id} onToggle={() => setOpenId(openId === c.id ? null : c.id)} />
+              <ClimberCard c={c} open={openId === c.id} onToggle={() => setOpenId(openId === c.id ? null : c.id)} navigate={navigate} />
             </div>
           ))}
 

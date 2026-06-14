@@ -88,3 +88,13 @@
 .best__threatrow { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--ink); border: var(--edge); border-radius: 40px; padding: 0.3rem 0.7rem; }
 .best__threatrow-k { color: var(--bone-dim); font-size: 0.82rem; }
 .best__threatrow-v { color: var(--tc); font-family: var(--font-util); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 700; }
+
+/* full-record link from a creature card */
+.best__full {
+  margin-top: var(--sp-2); cursor: pointer; width: 100%;
+  font-family: var(--font-util); font-size: var(--t-small); letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: 40px;
+  padding: 0.65rem 1.2rem; transition: all 0.3s var(--ease);
+}
+.best__full:hover { background: color-mix(in srgb, var(--accent) 18%, transparent); box-shadow: 0 0 22px color-mix(in srgb, var(--accent) 25%, transparent); }
