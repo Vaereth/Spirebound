@@ -8,6 +8,8 @@ import CreaturePage from './components/CreaturePage.jsx';
 import NpcPage from './components/NpcPage.jsx';
 import ProfessionPage from './components/ProfessionPage.jsx';
 import FenrathPage from './components/FenrathPage.jsx';
+import SystemsPage from './components/SystemsPage.jsx';
+import DeepLorePage from './components/DeepLorePage.jsx';
 import { useHashRoute } from './hooks/useHashRoute.js';
 import './styles/tokens.css';
 import './styles/global.css';
@@ -37,6 +39,10 @@ export default function App() {
   if (seg0 === 'floors' && seg1 === '1') {
     // #/floors/1/fenrath
     if (seg2 === 'fenrath') return <FenrathPage navigate={navigate} />;
+    // #/floors/1/systems
+    if (seg2 === 'systems') return <SystemsPage navigate={navigate} />;
+    // #/floors/1/sealed → gated deep lore
+    if (seg2 === 'sealed') return <DeepLorePage navigate={navigate} />;
     // #/floors/1/bestiary/:id
     if (seg2 === 'bestiary' && seg3) return <CreaturePage id={seg3} navigate={navigate} />;
     // #/floors/1/npcs/:slug

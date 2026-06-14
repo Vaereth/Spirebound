@@ -1,0 +1,30 @@
+/* ===================== DEEP LORE ARCHIVE ===================== */
+.dl { background: linear-gradient(180deg, #0c0707 0%, #080606 100%); color: #d8cfc0; }
+
+/* the gate */
+.dl__gate { max-width: 640px; margin: 0 auto; padding: var(--sp-7) max(1.5rem, 4vw); text-align: center; min-height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.dl__seal { font-size: 4rem; opacity: 0.5; color: var(--accent); }
+.dl__gate-title { font-family: var(--font-display); font-size: clamp(2.2rem, 6vw, 3.5rem); color: var(--bone); margin: var(--sp-2) 0; }
+.dl__gate-warn { color: #b59a86; line-height: 1.8; max-width: 56ch; margin: 0 auto var(--sp-2); }
+.dl__gate-warn--strong { color: #d98a6a; font-style: italic; font-weight: 600; }
+.dl__gate-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: center; margin-top: var(--sp-4); }
+.dl__reveal { cursor: pointer; font-family: var(--font-util); font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700;
+  color: #e8ddcc; background: linear-gradient(180deg, rgba(154,47,35,0.4), rgba(154,47,35,0.2)); border: 1px solid rgba(154,47,35,0.6);
+  border-radius: 40px; padding: 0.9rem 1.6rem; transition: all 0.3s var(--ease); }
+.dl__reveal:hover { box-shadow: 0 0 30px rgba(154,47,35,0.5); transform: translateY(-2px); }
+.dl__decline { cursor: pointer; font-family: var(--font-util); font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--bone-dim); background: transparent; border: var(--edge); border-radius: 40px; padding: 0.9rem 1.6rem; transition: all 0.3s var(--ease); }
+.dl__decline:hover { color: var(--bone); }
+
+.dl__list { list-style: none; display: grid; gap: 0.35rem; }
+.dl__list li { color: #b8a99a; padding-left: 1rem; position: relative; font-size: 0.9rem; line-height: 1.6; }
+.dl__list li::before { content: '◆'; position: absolute; left: 0; color: var(--accent); font-size: 0.6rem; top: 0.3rem; }
+
+.dl__state { display: grid; grid-template-columns: 110px 1fr; gap: 0.6rem; padding: 0.5rem 0.7rem; background: rgba(20,10,9,0.5); border: 1px solid rgba(154,47,35,0.2); border-radius: var(--radius); }
+.dl__state-k { font-family: var(--font-util); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+.dl__state-d { color: #b8a99a; font-size: 0.88rem; }
+
+.dl__seq { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.dl__seq-step { font-family: var(--font-util); font-size: 0.78rem; color: #d8cfc0; background: rgba(154,47,35,0.1); border: 1px solid rgba(154,47,35,0.3); border-radius: 40px; padding: 0.35rem 0.8rem; }
+
+.dl__god { margin-top: var(--sp-3); }

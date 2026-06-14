@@ -1,5 +1,6 @@
 import { BESTIARY, MIGRATION_CLASSES } from '../data/bestiary.js';
 import { slugify } from '../lib/slug.js';
+import { StatPanel } from './StatBlock.jsx';
 import ArtSlot from './ArtSlot.jsx';
 import './EntryPage.css';
 
@@ -36,6 +37,8 @@ export default function CreaturePage({ id, navigate }) {
         <div className="entry__tags">
           <span className="entry__tag entry__tag--accent">{c.region}</span>
           <span className="entry__tag" title={MIGRATION_CLASSES[c.migration] || ''}>{c.migration}</span>
+          {c.level != null && <span className="entry__tag">Level {c.level}</span>}
+          {c.total != null && <span className="entry__tag">Total {c.total}</span>}
         </div>
       </header>
 
@@ -60,7 +63,14 @@ export default function CreaturePage({ id, navigate }) {
             </div>
           </div>
 
-          <div className="entry__grid">
+          <div>
+            {c.stats && (
+              <div className="entry__panel entry__panel--accent" style={{ marginBottom: 'var(--sp-3)' }}>
+                <h3 className="entry__panel-h">Attribute Profile</h3>
+                <StatPanel stats={c.stats} total={c.total} level={c.level} accent={accent} maxScale={Math.max(30, ...Object.values(c.stats))} />
+              </div>
+            )}
+            <div className="entry__grid">
             <div className="entry__panel entry__panel--accent">
               <h3 className="entry__panel-h">Seasonal Presence</h3>
               <p className="entry__field-t">{c.seasonal}</p>
@@ -89,6 +99,7 @@ export default function CreaturePage({ id, navigate }) {
               <h3 className="entry__panel-h">Behavioural States</h3>
               <p className="entry__field-t">{c.behaviour}</p>
             </div>
+          </div>
           </div>
         </div>
 

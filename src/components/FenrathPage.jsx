@@ -1,4 +1,6 @@
 import { FLOOR1 as F } from '../data/floor1.js';
+import { FENRATH_STATS } from '../data/canon.js';
+import { StatPanel } from './StatBlock.jsx';
 import ArtSlot from './ArtSlot.jsx';
 import './FenrathPage.css';
 
@@ -47,6 +49,14 @@ export default function FenrathPage({ navigate }) {
         <section className="fen__sec fen__sec--truth">
           <h2 className="fen__h fen__h--truth">What the Guild Will Only Whisper</h2>
           <p className="fen__p">{fn.guardianRole}</p>
+        </section>
+
+        <section className="fen__sec">
+          <h2 className="fen__h">Standard Stat Chart</h2>
+          <p className="fen__p">{FENRATH_STATS.base.note}</p>
+          <div style={{ marginTop: 'var(--sp-3)', '--accent': '#c2702f' }}>
+            <StatPanel stats={FENRATH_STATS.base.stats} total={FENRATH_STATS.base.total} accent="#c2702f" maxScale={100} rank="Floor Guardian" />
+          </div>
         </section>
 
         <section className="fen__sec">

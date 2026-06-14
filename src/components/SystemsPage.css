@@ -1,0 +1,26 @@
+/* ===================== SYSTEMS / STATS PAGE ===================== */
+.sys-table { width: 100%; border-collapse: collapse; }
+.sys-table td { padding: 0.4rem 0.2rem; border-bottom: var(--edge); color: var(--bone-dim); font-size: 0.92rem; }
+.sys-table td:first-child { color: var(--bone); }
+.sys-table__v { text-align: right; color: var(--accent) !important; font-family: var(--font-display); }
+
+.sys-list { list-style: none; display: grid; gap: 0.3rem; }
+.sys-list li { color: var(--bone-dim); padding-left: 1rem; position: relative; font-size: 0.92rem; }
+.sys-list li::before { content: '◇'; position: absolute; left: 0; color: var(--accent); font-size: 0.65rem; top: 0.25rem; }
+
+.sys-band { display: grid; grid-template-columns: 90px 1fr; gap: 0.6rem; padding: 0.5rem 0; border-top: var(--edge); }
+.sys-band:first-of-type { border-top: none; }
+.sys-band__lvl { font-family: var(--font-display); color: var(--accent); font-size: 0.95rem; }
+.sys-band__d { color: var(--bone-dim); font-size: 0.9rem; }
+
+.sys-rank { display: grid; grid-template-columns: 110px 1fr; gap: 0.6rem; padding: 0.4rem 0; border-top: var(--edge); }
+.sys-rank:first-of-type { border-top: none; }
+.sys-rank__k { font-family: var(--font-util); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+.sys-rank__d { color: var(--bone-dim); font-size: 0.88rem; }
+
+.sys-rare__head { margin-bottom: 0.5rem; }
+.sys-rare__name { font-family: var(--font-display); font-size: 1.35rem; color: var(--bone); }
+.sys-rare__species { font-family: var(--font-util); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.sys-rare__facts { margin-top: var(--sp-2); display: grid; gap: 0.35rem; }
+.sys-rare__facts p { color: var(--bone-dim); font-size: 0.88rem; line-height: 1.5; }
+.sys-rare__facts b { color: var(--bone); }

@@ -170,6 +170,11 @@ export default function Floor1Page({ navigate }) {
         </Section>
 
         <section id="bestiary-section" className="f1sec">
+          <Reveal>
+            <button className="f1fenbtn" style={{ background: 'linear-gradient(180deg, rgba(96,232,220,0.18), rgba(96,232,220,0.08))', borderColor: 'rgba(96,232,220,0.5)', color: '#bfeee9' }} onClick={() => navigate('#/floors/1/systems')}>
+              Stats &amp; Systems — attributes, ranks, named rares &amp; regional elites →
+            </button>
+          </Reveal>
           <Bestiary navigate={navigate} />
         </section>
 
@@ -289,6 +294,11 @@ export default function Floor1Page({ navigate }) {
               </Reveal>
             ))}
           </div>
+          <Reveal>
+            <button className="f1fenbtn" onClick={() => navigate('#/floors/1/sealed')}>
+              ⛓ Open the Sealed Archive — endgame spoilers
+            </button>
+          </Reveal>
         </Section>
 
         <Section id="tbd" eyebrow="Design Status" title="Still to be designed">
