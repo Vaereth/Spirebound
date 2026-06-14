@@ -40,49 +40,76 @@ export default function CreaturePage({ id, navigate }) {
       </header>
 
       <div className="entry__body">
-        <ArtSlot
-          variant="dossier"
-          label="Field Dossier"
-          path={`images/bestiary/${slugify(c.name)}-dossier.png`}
-          src={`/images/bestiary/${slugify(c.name)}-dossier.png`}
-          alt={`${c.name} field dossier`}
-        />
-
-        <Field h="Seasonal Presence" t={c.seasonal} />
-        <Field h="Visual Identity" t={c.visual} />
-        <Field h="Movement & Ordinary Behaviour" t={c.movement} />
-        <Field h="World Presence" t={c.world} />
-
-        <ArtSlot
-          variant="render"
-          label="Specimen Render"
-          path={`images/bestiary/${slugify(c.name)}.png`}
-          src={`/images/bestiary/${slugify(c.name)}.png`}
-          alt={`${c.name} render`}
-        />
-
-        <div className="entry__cols2">
-          <Field h="Sound" t={c.sound} />
-          <Field h="Smell & Physical Traces" t={c.traces} />
-        </div>
-        <Field h="Behavioural States" t={c.behaviour} />
-
-        <section className="entry__sec">
-          <h2 className="entry__sec-h">Ascendant Guild Field Guide</h2>
-          {c.fieldguide.map((line, i) => (
-            <p key={i} className="entry__p" style={i === 0 ? { color: 'var(--bone)', fontWeight: 600 } : { color: 'var(--bone-dim)', fontStyle: 'italic' }}>{line}</p>
-          ))}
-        </section>
-
-        <section className="entry__sec">
-          <h2 className="entry__sec-h">Guild Threat Assessment</h2>
-          <div className="entry__related">
-            {c.threat.split('|').map((seg, i) => {
-              const [k, v] = seg.split(':').map((s) => s.trim());
-              return <span key={i} className="entry__tag"><b style={{ color: 'var(--bone-dim)' }}>{k}</b>{v ? ` — ${v}` : ''}</span>;
-            })}
+        <div className="entry__hero">
+          <div className="entry__hero-art">
+            <ArtSlot
+              variant="dossier"
+              label="Field Dossier"
+              path={`images/bestiary/${slugify(c.name)}-dossier.png`}
+              src={`/images/bestiary/${slugify(c.name)}-dossier.png`}
+              alt={`${c.name} field dossier`}
+            />
+            <div style={{ marginTop: 'var(--sp-3)' }}>
+              <ArtSlot
+                variant="render"
+                label="Specimen Render"
+                path={`images/bestiary/${slugify(c.name)}.png`}
+                src={`/images/bestiary/${slugify(c.name)}.png`}
+                alt={`${c.name} render`}
+              />
+            </div>
           </div>
-        </section>
+
+          <div className="entry__grid">
+            <div className="entry__panel entry__panel--accent">
+              <h3 className="entry__panel-h">Seasonal Presence</h3>
+              <p className="entry__field-t">{c.seasonal}</p>
+            </div>
+            <div className="entry__panel">
+              <h3 className="entry__panel-h">Visual Identity</h3>
+              <p className="entry__field-t">{c.visual}</p>
+            </div>
+            <div className="entry__panel">
+              <h3 className="entry__panel-h">Movement & Behaviour</h3>
+              <p className="entry__field-t">{c.movement}</p>
+            </div>
+            <div className="entry__panel">
+              <h3 className="entry__panel-h">World Presence</h3>
+              <p className="entry__field-t">{c.world}</p>
+            </div>
+            <div className="entry__panel">
+              <h3 className="entry__panel-h">Sound</h3>
+              <p className="entry__field-t">{c.sound}</p>
+            </div>
+            <div className="entry__panel">
+              <h3 className="entry__panel-h">Smell & Traces</h3>
+              <p className="entry__field-t">{c.traces}</p>
+            </div>
+            <div className="entry__panel">
+              <h3 className="entry__panel-h">Behavioural States</h3>
+              <p className="entry__field-t">{c.behaviour}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="entry__grid">
+          <section className="entry__panel entry__panel--accent">
+            <h2 className="entry__panel-h">Ascendant Guild Field Guide</h2>
+            {c.fieldguide.map((line, i) => (
+              <p key={i} className="entry__p" style={i === 0 ? { color: 'var(--bone)', fontWeight: 600 } : { color: 'var(--bone-dim)', fontStyle: 'italic' }}>{line}</p>
+            ))}
+          </section>
+
+          <section className="entry__panel">
+            <h2 className="entry__panel-h">Guild Threat Assessment</h2>
+            <div className="entry__related">
+              {c.threat.split('|').map((seg, i) => {
+                const [k, v] = seg.split(':').map((s) => s.trim());
+                return <span key={i} className="entry__tag"><b style={{ color: 'var(--bone-dim)' }}>{k}</b>{v ? ` — ${v}` : ''}</span>;
+              })}
+            </div>
+          </section>
+        </div>
 
         <div className="entry__coming">
           <p className="entry__coming-h">Expanded Entry — Coming</p>

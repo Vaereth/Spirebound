@@ -35,7 +35,9 @@
 .fen__title { font-family: var(--font-util); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--bone-f); border: 1px solid rgba(154,47,35,0.4); border-radius: 40px; padding: 0.35rem 0.85rem; background: rgba(154,47,35,0.06); }
 
-.fen__body { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: var(--sp-4) max(1rem,4vw) var(--sp-7); display: grid; gap: var(--sp-5); }
+.fen__body { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; padding: var(--sp-4) max(1.5rem,4vw) var(--sp-7); display: grid; gap: var(--sp-5); }
+.fen__grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); align-items: start; }
+@media (max-width: 860px) { .fen__grid2 { grid-template-columns: 1fr; } }
 .fen__sec { }
 .fen__h { font-family: var(--font-display); font-size: var(--t-h3); color: var(--bone-f); margin-bottom: var(--sp-2);
   border-left: 3px solid var(--blood); padding-left: var(--sp-2); }

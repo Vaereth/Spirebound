@@ -32,15 +32,17 @@ export default function FenrathPage({ navigate }) {
           />
         </div>
 
-        <section className="fen__sec">
-          <h2 className="fen__h">The Barrier</h2>
-          <p className="fen__p">{fn.public}</p>
-        </section>
+        <div className="fen__grid2">
+          <section className="fen__sec">
+            <h2 className="fen__h">The Barrier</h2>
+            <p className="fen__p">{fn.public}</p>
+          </section>
 
-        <section className="fen__sec">
-          <h2 className="fen__h">The Arena</h2>
-          <p className="fen__p">{fn.arena}</p>
-        </section>
+          <section className="fen__sec">
+            <h2 className="fen__h">The Arena</h2>
+            <p className="fen__p">{fn.arena}</p>
+          </section>
+        </div>
 
         <section className="fen__sec fen__sec--truth">
           <h2 className="fen__h fen__h--truth">What the Guild Will Only Whisper</h2>

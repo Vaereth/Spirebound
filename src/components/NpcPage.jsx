@@ -40,29 +40,30 @@ export default function NpcPage({ slug, navigate }) {
       </header>
 
       <div className="entry__body">
-        <div className="entry__cols2">
+        <div className="entry__hero">
+          <div className="entry__hero-art">
+            <ArtSlot
+              variant="portrait"
+              label="Portrait"
+              path={`images/npcs/${slugify(rec.name)}.png`}
+              src={`/images/npcs/${slugify(rec.name)}.png`}
+              alt={`${rec.name} portrait`}
+            />
+          </div>
           <div>
             {rec.hooks.length > 0 ? (
-              <section className="entry__sec">
-                <h2 className="entry__sec-h">What the Guild Notes</h2>
-                {rec.hooks.map((h) => <p key={h} className="entry__p">{h}</p>)}
-              </section>
+              <div className="entry__panel entry__panel--accent">
+                <h2 className="entry__panel-h">What the Guild Notes</h2>
+                {rec.hooks.map((h) => <p key={h} className="entry__p" style={{ marginBottom: '0.6rem' }}>{h}</p>)}
+              </div>
             ) : (
               <p className="entry__p entry__p--dim">A known figure of Hearthvale. Their full story is not yet recorded here.</p>
             )}
+            <div className="entry__coming" style={{ marginTop: 'var(--sp-3)' }}>
+              <p className="entry__coming-h">Expanded Entry — Coming</p>
+              <p className="entry__coming-t">Role, personality, questlines, relationships, and dialogue to be added.</p>
+            </div>
           </div>
-          <ArtSlot
-            variant="portrait"
-            label="Portrait"
-            path={`images/npcs/${slugify(rec.name)}.png`}
-            src={`/images/npcs/${slugify(rec.name)}.png`}
-            alt={`${rec.name} portrait`}
-          />
-        </div>
-
-        <div className="entry__coming">
-          <p className="entry__coming-h">Expanded Entry — Coming</p>
-          <p className="entry__coming-t">Role, personality, questlines, relationships, and dialogue to be added.</p>
         </div>
 
         {others.length > 0 && (

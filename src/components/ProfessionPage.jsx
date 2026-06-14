@@ -30,29 +30,32 @@ export default function ProfessionPage({ slug, navigate }) {
       </header>
 
       <div className="entry__body">
-        <ArtSlot
-          variant="emblem"
-          label="Emblem"
-          path={`images/professions/${slug}.png`}
-          src={`/images/professions/${slug}.png`}
-          alt={`${name} emblem`}
-        />
-
-        <section className="entry__sec">
-          <h2 className="entry__sec-h">Starter Access</h2>
-          <p className="entry__p">{F.professions.starter}</p>
-        </section>
-
-        {mentor && (
-          <section className="entry__sec">
-            <h2 className="entry__sec-h">Mentor</h2>
-            <p className="entry__p"><b>{mentor.name}</b> teaches {mentor.craft} in Hearthvale.</p>
-          </section>
-        )}
-
-        <div className="entry__coming">
-          <p className="entry__coming-h">Expanded Entry — Coming</p>
-          <p className="entry__coming-t">Recipes, gathering nodes, tiers, station upgrades, and profession quests to be added.</p>
+        <div className="entry__hero">
+          <div className="entry__hero-art">
+            <ArtSlot
+              variant="emblem"
+              label="Emblem"
+              path={`images/professions/${slug}.png`}
+              src={`/images/professions/${slug}.png`}
+              alt={`${name} emblem`}
+            />
+          </div>
+          <div>
+            <div className="entry__panel entry__panel--accent">
+              <h2 className="entry__panel-h">Starter Access</h2>
+              <p className="entry__p">{F.professions.starter}</p>
+            </div>
+            {mentor && (
+              <div className="entry__panel" style={{ marginTop: 'var(--sp-3)' }}>
+                <h2 className="entry__panel-h">Mentor</h2>
+                <p className="entry__p"><b>{mentor.name}</b> teaches {mentor.craft} in Hearthvale.</p>
+              </div>
+            )}
+            <div className="entry__coming" style={{ marginTop: 'var(--sp-3)' }}>
+              <p className="entry__coming-h">Expanded Entry — Coming</p>
+              <p className="entry__coming-t">Recipes, gathering nodes, tiers, station upgrades, and profession quests to be added.</p>
+            </div>
+          </div>
         </div>
 
         <section className="entry__sec">

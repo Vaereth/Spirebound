@@ -45,60 +45,17 @@ export default function HeroPage({ id, navigate }) {
       </header>
 
       <div className="entry__body">
-        <ArtSlot
-          variant="splash"
-          label="Key Art / Splash"
-          path={`images/heroes/${c.id}-splash.png`}
-          src={`/images/heroes/${c.id}-splash.png`}
-          alt={`${c.name} key art`}
-        />
-        {c.tagline && <p className="entry__p" style={{ fontSize: '1.15rem', fontStyle: 'italic', color: 'var(--summit)' }}>“{c.tagline}”</p>}
-        {c.overview && (
-          <section className="entry__sec">
-            <h2 className="entry__sec-h">Overview</h2>
-            <p className="entry__p">{c.overview}</p>
-          </section>
-        )}
-
-        {c.coreFantasy && (
-          <section className="entry__sec">
-            <h2 className="entry__sec-h">Core Fantasy</h2>
-            <p className="entry__p">{c.coreFantasy}</p>
-          </section>
-        )}
-
-        <section className="entry__sec">
-          <h2 className="entry__sec-h">Combat Profile</h2>
-          <div className="entry__cols2">
-            <div>
-              {c.identity?.difficulty && <FieldRow k="Difficulty" v={c.identity.difficulty} />}
-              {c.identity?.health && <FieldRow k="Health" v={c.identity.health} />}
-              {c.identity?.defense && <FieldRow k="Defense" v={c.identity.defense} />}
-              {c.identity?.mobility && <FieldRow k="Mobility" v={c.identity.mobility} />}
-              {c.identity?.damage && <FieldRow k="Damage" v={c.identity.damage} />}
-              {c.identity?.skillCeiling && <FieldRow k="Skill Ceiling" v={c.identity.skillCeiling} />}
-            </div>
-            {c.stats && <div style={{ maxWidth: 380 }}><StatRadar stats={c.stats} accent={c.accent} /></div>}
-          </div>
-        </section>
-
-        {c.weapons && (
-          <section className="entry__sec">
-            <h2 className="entry__sec-h">Weapons</h2>
-            {c.weapons.map((w) => (
-              <div key={w.name} className="entry__field">
-                <h3 className="entry__field-h">{w.name} · {w.hand}</h3>
-                <p className="entry__field-t">{w.notes.join(' · ')}</p>
-              </div>
-            ))}
-          </section>
-        )}
-
-        {c.appearance && (
-          <section className="entry__sec">
-            <h2 className="entry__sec-h">Appearance</h2>
-            <div className="entry__cols2">
-              <p className="entry__p entry__p--dim">{c.appearance.join(' · ')}</p>
+        {/* Landscape hero: art left, the essentials right — all visible at once */}
+        <div className="entry__hero">
+          <div className="entry__hero-art">
+            <ArtSlot
+              variant="splash"
+              label="Key Art / Splash"
+              path={`images/heroes/${c.id}-splash.png`}
+              src={`/images/heroes/${c.id}-splash.png`}
+              alt={`${c.name} key art`}
+            />
+            <div style={{ marginTop: 'var(--sp-3)' }}>
               <ArtSlot
                 variant="portrait"
                 label="Portrait"
@@ -107,8 +64,63 @@ export default function HeroPage({ id, navigate }) {
                 alt={`${c.name} portrait`}
               />
             </div>
-          </section>
-        )}
+          </div>
+
+          <div>
+            {c.tagline && <p className="entry__p" style={{ fontSize: '1.2rem', fontStyle: 'italic', color: 'var(--summit)', marginBottom: 'var(--sp-3)' }}>“{c.tagline}”</p>}
+
+            {c.stats && (
+              <div className="entry__panel entry__panel--accent" style={{ marginBottom: 'var(--sp-3)' }}>
+                <h3 className="entry__panel-h">Combat Profile</h3>
+                <div className="entry__cols2">
+                  <div>
+                    {c.identity?.difficulty && <FieldRow k="Difficulty" v={c.identity.difficulty} />}
+                    {c.identity?.health && <FieldRow k="Health" v={c.identity.health} />}
+                    {c.identity?.defense && <FieldRow k="Defense" v={c.identity.defense} />}
+                    {c.identity?.mobility && <FieldRow k="Mobility" v={c.identity.mobility} />}
+                    {c.identity?.damage && <FieldRow k="Damage" v={c.identity.damage} />}
+                    {c.identity?.skillCeiling && <FieldRow k="Skill Ceiling" v={c.identity.skillCeiling} />}
+                  </div>
+                  <div><StatRadar stats={c.stats} accent={c.accent} /></div>
+                </div>
+              </div>
+            )}
+
+            {c.overview && (
+              <div className="entry__panel" style={{ marginBottom: 'var(--sp-3)' }}>
+                <h3 className="entry__panel-h">Overview</h3>
+                <p className="entry__p">{c.overview}</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Secondary facts in a full-width grid */}
+        <div className="entry__grid">
+          {c.coreFantasy && (
+            <div className="entry__panel">
+              <h3 className="entry__panel-h">Core Fantasy</h3>
+              <p className="entry__p">{c.coreFantasy}</p>
+            </div>
+          )}
+          {c.weapons && (
+            <div className="entry__panel">
+              <h3 className="entry__panel-h">Weapons</h3>
+              {c.weapons.map((w) => (
+                <div key={w.name} className="entry__field">
+                  <h4 className="entry__field-h">{w.name} · {w.hand}</h4>
+                  <p className="entry__field-t">{w.notes.join(' · ')}</p>
+                </div>
+              ))}
+            </div>
+          )}
+          {c.appearance && (
+            <div className="entry__panel">
+              <h3 className="entry__panel-h">Appearance</h3>
+              <p className="entry__p entry__p--dim">{c.appearance.join(' · ')}</p>
+            </div>
+          )}
+        </div>
 
         <section className="entry__sec">
           <h2 className="entry__sec-h entry__sec-h--display">Kit &amp; Signature</h2>

@@ -29,7 +29,19 @@
   padding: 0.35rem 0.8rem; border: var(--edge); border-radius: 40px; background: var(--ink-2); }
 .entry__tag--accent { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
 
-.entry__body { max-width: 920px; margin: 0 auto; padding: var(--sp-5) max(1rem, 4vw) var(--sp-7); display: grid; gap: var(--sp-4); }
+.entry__body { max-width: 1400px; margin: 0 auto; padding: var(--sp-5) max(1.5rem, 4vw) var(--sp-7); display: grid; gap: var(--sp-4); }
+
+/* Landscape hero: art on one side, key facts on the other — above the fold. */
+.entry__hero { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--sp-5); align-items: start; }
+@media (max-width: 900px) { .entry__hero { grid-template-columns: 1fr; } }
+.entry__hero-art { position: sticky; top: 80px; }
+@media (max-width: 900px) { .entry__hero-art { position: static; } }
+
+/* Multi-column content grid that uses the whole width. */
+.entry__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--sp-3); align-items: start; }
+.entry__panel { padding: var(--sp-3); border: var(--edge); border-radius: var(--radius-lg); background: var(--ink-2); }
+.entry__panel--accent { border-left: 3px solid var(--accent); }
+.entry__panel-h { font-family: var(--font-util); font-size: var(--t-small); letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: var(--sp-2); }
 
 .entry__sec { }
 .entry__sec-h { font-family: var(--font-util); font-size: var(--t-small); letter-spacing: 0.18em;
