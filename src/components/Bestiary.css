@@ -137,3 +137,12 @@
   box-shadow: 0 0 16px color-mix(in srgb, var(--g, #c9b24b) 30%, transparent); }
 .best__gradecount { font-family: var(--font-util); font-size: 0.66rem; color: var(--bone-dim); }
 .best__gradechip.is-on .best__gradecount { color: var(--g, #c9b24b); }
+
+/* clean threat assessment block (Grade is the official system) */
+.best__assessment { margin-top: 0.6rem; padding: 0.7rem 0.8rem; background: rgba(0,0,0,0.18); border: var(--edge); border-radius: var(--radius); }
+.best__grade-line { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+.best__escal { font-size: 0.84rem; color: var(--bone-dim); }
+.best__escal b { color: #e0903c; }
+.best__advisory { margin-top: 0.5rem; font-size: 0.85rem; color: var(--bone-dim); line-height: 1.5; }
+.best__advisory-k { font-family: var(--font-util); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); border-radius: 40px; padding: 0.1rem 0.5rem; margin-right: 0.4rem; }

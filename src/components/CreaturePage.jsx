@@ -117,14 +117,18 @@ export default function CreaturePage({ id, navigate }) {
 
           <section className="entry__panel">
             <h2 className="entry__panel-h">Guild Threat Assessment</h2>
-            <div style={{ marginBottom: 'var(--sp-2)' }}><GradeBadge grade={c.grade} size="md" /></div>
-            {c.escalation && <p className="entry__p" style={{ fontSize: '0.9rem' }}><b style={{ color: '#e0903c' }}>Escalation — </b>{c.escalation}</p>}
-            <div className="entry__related" style={{ marginTop: 'var(--sp-2)' }}>
-              {c.threat.split('|').map((seg, i) => {
-                const [k, v] = seg.split(':').map((s) => s.trim());
-                return <span key={i} className="entry__tag"><b style={{ color: 'var(--bone-dim)' }}>{k}</b>{v ? ` — ${v}` : ''}</span>;
-              })}
-            </div>
+            <div style={{ marginBottom: 'var(--sp-2)' }}><GradeBadge grade={c.grade} size="lg" /></div>
+            {c.escalation && (
+              <p className="entry__p" style={{ fontSize: '0.92rem' }}>
+                <b style={{ color: '#e0903c' }}>Escalation — </b>{c.escalation}
+              </p>
+            )}
+            <p className="entry__p" style={{ fontSize: '0.92rem', marginTop: 'var(--sp-2)' }}>
+              <b style={{ color: 'var(--accent)' }}>Field Risk — </b>{c.classification}.
+            </p>
+            <p className="entry__p entry__p--dim" style={{ fontSize: '0.82rem', marginTop: 'var(--sp-2)' }}>
+              Guild Threat Grade is the single official classification. Conditions below alter the field grade situationally.
+            </p>
           </section>
         </div>
 

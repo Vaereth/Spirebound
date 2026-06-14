@@ -24,27 +24,6 @@ const ZONE_ACCENT = {
   'Rare Weather': '#b59ad6',
 };
 
-// Pull the headline threat severity for a quick at-a-glance tag.
-function peakThreat(threatStr) {
-  const order = ['Minimal', 'Low', 'Moderate', 'High', 'Very High', 'Extreme', 'Elite threat', 'Regional emergency', 'Infrastructure emergency', 'Severe', 'Variable', 'Unknown'];
-  let best = '', bestRank = -1;
-  order.forEach((label, i) => {
-    if (threatStr.includes(label) && i > bestRank) { best = label; bestRank = i; }
-  });
-  return best || '—';
-}
-const THREAT_COLOR = {
-  'Minimal': '#5E9C68', 'Low': '#7CA84B', 'Moderate': '#C9A24B', 'High': '#C2702F',
-  'Very High': '#A33B2A', 'Extreme': '#8B2C20', 'Elite threat': '#8B2C20',
-  'Regional emergency': '#7A1F18', 'Infrastructure emergency': '#7A1F18',
-  'Severe': '#A33B2A', 'Variable': '#8a7d5a', 'Unknown': '#6c6c6c', '—': '#6c6c6c',
-};
-
-function ThreatBadge({ threat }) {
-  const peak = peakThreat(threat);
-  return <span className="best__threat" style={{ '--tc': THREAT_COLOR[peak] || '#6c6c6c' }}>{peak}</span>;
-}
-
 function CreatureCard({ c, accent, open, onToggle, navigate }) {
   return (
     <article className={`best__card ${open ? 'is-open' : ''}`} style={{ '--accent': accent }}>
@@ -52,9 +31,8 @@ function CreatureCard({ c, accent, open, onToggle, navigate }) {
         <span className="best__num">{String(c.id).padStart(2, '0')}</span>
         <span className="best__headmain">
           <span className="best__name">{c.name}</span>
-          <span className="best__class">{c.classification}</span>
+          <span className="best__class">Level {c.level} · {c.classification}</span>
         </span>
-        <ThreatBadge threat={c.threat} />
         <GradeBadge grade={c.grade} size="sm" />
         <span className="best__chev" aria-hidden="true">{open ? '–' : '+'}</span>
       </button>
@@ -69,7 +47,14 @@ function CreatureCard({ c, accent, open, onToggle, navigate }) {
 
           {c.stats && <StatBars stats={c.stats} total={c.total} maxScale={Math.max(30, ...Object.values(c.stats))} />}
 
-          {c.escalation && <p className="best__escalation"><b>Escalation:</b> {c.escalation}</p>}
+          {/* Guild Threat Grade — the single official classification */}
+          <div className="best__assessment">
+            <div className="best__grade-line">
+              <GradeBadge grade={c.grade} size="md" />
+              {c.escalation && <span className="best__escal"><b>Escalation:</b> {c.escalation}</span>}
+            </div>
+            <p className="best__advisory"><span className="best__advisory-k">Field Risk</span> {c.classification}.</p>
+          </div>
 
           <Field label="Seasonal Presence" text={c.seasonal} />
           <Field label="Visual Identity" text={c.visual} />

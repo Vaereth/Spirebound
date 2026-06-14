@@ -1,4 +1,4 @@
-import { ATTRIBUTES, CLASSIFICATIONS, PLAYER_PROGRESSION, LEVEL_BANDS, RANK_SYSTEM, HERO_STATS_EXPLAINER } from '../data/canon.js';
+import { ATTRIBUTES, CLASSIFICATIONS, PLAYER_PROGRESSION, LEVEL_BANDS, RANK_SYSTEM, HERO_STATS_EXPLAINER, DIFFICULTY } from '../data/canon.js';
 import './EntryPage.css';
 import './SystemsPage.css';
 
@@ -115,6 +115,56 @@ export default function GameSystemsPage({ navigate }) {
               </div>
             ))}
           </div>
+        </section>
+
+        <section className="entry__sec">
+          <h2 className="entry__sec-h entry__sec-h--display">Difficulty</h2>
+          <p className="entry__p">{DIFFICULTY.intro}</p>
+          <p className="entry__p" style={{ fontStyle: 'italic', color: 'var(--summit)', marginTop: 'var(--sp-2)' }}>{DIFFICULTY.ladder}</p>
+
+          <div className="sys-difftable" style={{ marginTop: 'var(--sp-3)' }}>
+            {DIFFICULTY.tiers.map((t) => (
+              <div key={t.name} className="sys-diff">
+                <div className="sys-diff__head">
+                  <h3 className="sys-diff__name">{t.name}</h3>
+                  <span className="sys-diff__mults">DMG {t.dmg} · HP {t.hp} · Stagger {t.stag}</span>
+                </div>
+                <p className="entry__p" style={{ fontSize: '0.9rem' }}>{t.purpose}</p>
+                <ul className="sys-list" style={{ marginTop: '0.4rem' }}>{t.rules.map((r) => <li key={r}>{r}</li>)}</ul>
+              </div>
+            ))}
+          </div>
+
+          <div className="entry__grid" style={{ marginTop: 'var(--sp-3)' }}>
+            <div className="entry__panel entry__panel--accent">
+              <h3 className="entry__panel-h">The One-Life Rule</h3>
+              <p className="entry__p" style={{ fontSize: '0.9rem' }}>{DIFFICULTY.oath.rule}</p>
+            </div>
+            <div className="entry__panel">
+              <h3 className="entry__panel-h">The Memorial System</h3>
+              <p className="entry__p" style={{ fontSize: '0.9rem' }}>{DIFFICULTY.oath.memorial}</p>
+            </div>
+          </div>
+
+          <h3 className="entry__sec-h" style={{ marginTop: 'var(--sp-4)', fontSize: '1.1rem' }}>Mechanic Layers</h3>
+          <div className="entry__grid">
+            {DIFFICULTY.layers.map((l) => (
+              <div key={l.name} className="entry__panel">
+                <h4 className="entry__panel-h">{l.name}</h4>
+                <p className="entry__p" style={{ fontSize: '0.85rem' }}><b style={{ color: 'var(--accent)' }}>{l.when}</b></p>
+                <p className="entry__p" style={{ fontSize: '0.85rem' }}>{l.ex}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="entry__panel" style={{ marginTop: 'var(--sp-3)' }}>
+            <h3 className="entry__panel-h">The Safe-Combination Rule</h3>
+            <p className="entry__p" style={{ fontSize: '0.9rem' }}>{DIFFICULTY.safeRule}</p>
+          </div>
+
+          <p className="entry__p entry__p--dim" style={{ marginTop: 'var(--sp-2)', fontSize: '0.82rem', fontStyle: 'italic' }}>
+            Provisional — to be revisited after Fenrath's full encounter is complete. {DIFFICULTY.tbd}
+          </p>
         </section>
 
         <p className="entry__p entry__p--dim" style={{ textAlign: 'center', fontStyle: 'italic' }}>

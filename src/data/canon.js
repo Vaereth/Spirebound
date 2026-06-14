@@ -338,3 +338,129 @@ export const FENRATH_GRADES = {
 
 // corrupt god grade (restricted)
 export const CORRUPT_GOD_GRADE = { grade: 'Tower Class', note: 'The 4,000-point profile is a manifested or intersecting combat body. The complete entity is unquantifiable — 4,000 does not represent its entire metaphysical existence.' };
+
+// =====================================================================
+// FENRATH — FULL ENCOUNTER CANON (boss page; nothing here is sealed-gated).
+// Phase 1 is complete. Phase 2 / hidden Phase 3 are being drafted — the data
+// holds what's locked and marks the rest as in-progress so the page can
+// accommodate phases as they're written.
+// =====================================================================
+export const FENRATH_ENCOUNTER = {
+  functions: ['The Veins', 'The Breath', 'The Roots', 'The Blood', 'The Memory'],
+  attributeNote: 'Fenrath\u2019s six attributes do not change with difficulty. Difficulty modifies derived combat values — health, Base Power, stagger, Stability, recovery, telegraphs — never what he fundamentally is.',
+
+  phases: [
+    {
+      id: 'p1', name: 'Phase 1 — The First Article', health: '100% → 65%', status: 'complete',
+      identity: 'A Guardian mechanism wearing the shape of a beast. Chained, controlled, heavy, ritualistic, slow, precise, highly readable, extremely punishing.',
+      movement: 'Heavy forelimb repositioning, short lunges, body turns, chain-assisted pivots, deliberate slams, controlled pulls. He does not run freely.',
+      purpose: ['Teach Fenrath\u2019s attack language', 'Teach chain positioning', 'Reveal active Guardian channels', 'Establish punish windows', 'Punish passive outer-range play', 'Introduce the humanoid arms gradually'],
+      transition: 'At 65%, Fenrath deliberately unfastens his chains using the folded humanoid arms.',
+      lines: ['\u201CThe Article has judged you.\u201D', '\u201CNow face the beast that carries it.\u201D'],
+    },
+    {
+      id: 'p2', name: 'Phase 2 — Guardian Beast Unbound', health: 'TBD', status: 'drafting',
+      identity: 'Fenrath becomes more animalistic, mobile, aggressive, and emotionally present.',
+      gains: ['Free arena movement', 'Short quadrupedal charges', 'Lateral lunges', 'Predator circling', 'Chain-assisted turns', 'Longer combos', 'False recovery windows', 'Stronger regional combinations'],
+      lines: ['\u201CThe way above is open.\u201D', '\u201CSo is the wound below.\u201D'],
+      note: 'Full Phase 2 mechanics are being drafted.',
+    },
+  ],
+
+  // Hidden Phase 3 — behind a reveal on the page.
+  phase3: {
+    name: 'Hidden Phase 3 — The First Fang', status: 'drafting',
+    trigger: 'Complete Phases 1 and 2 without taking any disqualifying damage or contact.',
+    lines: ['\u201CNot once.\u201D', '\u201CThen let the First Fang answer you.\u201D'],
+    coreRule: 'The entire encounter becomes a forced no-hit completion.',
+    restriction: ['Normal blocking is invalid.', 'Barrier absorption is invalid.', 'Damage immunity does not preserve the run unless it is a classified perfect defensive technique.', 'Only perfect dodge, perfect parry, or an explicitly equivalent hero technique is valid.'],
+    onContact: ['Stuns or pins the hero', 'Fenrath\u2019s humanoid arms seize them', 'Fenrath tears them apart', 'Fenrath consumes the remains', 'Immediate death'],
+    bypasses: ['Health', 'Guard', 'Ward', 'Damage reduction', 'Shields', 'Revives', 'Death prevention', 'Ordinary invulnerability'],
+    health: 'Fenrath restores or reveals 20–25% of maximum health.',
+    duration: '45–90 seconds for a skilled successful attempt.',
+    thematic: 'A blocked attack is a caught attack.',
+    note: 'Hidden Phase 3 is being drafted; the locked rules are shown here.',
+  },
+
+  // The five Proofs (suppression packages).
+  proofs: [
+    { name: 'Proof of the Living Current', fn: 'The Veins', region: 'Silverrun', trial: 'The River Must Pass', lesson: 'Water survives by moving through many paths, not by being forced through one.', reductions: 'Vitality −5 · Arcana −10 · Ward −3 (total 18)', suppresses: ['Flood pulses', 'Waterlogged arena zones', 'Silverrun pressure attacks', 'Electrical-water combinations', 'One source of regeneration'], line: '\u201CThe river passed through your hands, and you did not close them.\u201D' },
+    { name: 'Proof of the Open Sky', fn: 'The Breath', region: 'Windmere Hills', trial: 'Where the Wind Is Allowed', lesson: 'The sky remains safe because nothing is permitted to hold it still.', reductions: 'Arcana −6 · Ward −2 · Mobility −5 (total 13)', suppresses: ['Wind knockback', 'Forced movement', 'Pressure-wave acceleration', 'Storm escalation', 'One Mobility surge'], line: '\u201CYou opened your hand to the wind. It did not leave you empty.\u201D' },
+    { name: 'Proof of the Shared Root', fn: 'The Roots', region: 'Briarwood', trial: 'What the Forest Keeps', lesson: 'Nothing in the forest survives alone, and not everything must remain alive to remain part of it.', reductions: 'Vitality −7 · Guard −13 · Ward −4 (total 24)', suppresses: ['Root grabs', 'Briar walls', 'Arena entanglement', 'Root armour regeneration', 'Ground-based repair'], line: '\u201CYou permitted one life to end so that the forest could continue.\u201D' },
+    { name: 'Proof of the Red Cycle', fn: 'The Blood', region: 'Dawnfields (with Old March)', trial: 'No Death Is Singular', lesson: 'Death is part of the floor. Waste is not.', reductions: 'Vitality −8 · Might −17 · Guard −3 (total 28)', suppresses: ['Rage escalation', 'Predator manifestations', 'Physical lifesteal', 'Blood-fed recovery', 'One major Might enhancement'], line: '\u201CYou killed. You spared. More importantly, you knew why.\u201D' },
+    { name: 'Proof of the Remembered Path', fn: 'The Memory', region: 'Crownward Expanse', trial: 'The Path That Remembers You', lesson: 'A path survives because the world remembers where it was meant to lead.', reductions: 'Guard −4 · Arcana −12 · Ward −14 (total 30)', suppresses: ['Arena rewrites', 'Route prediction', 'Attack-pattern adaptation', 'Echoed attacks', 'Restoration of broken mechanics'], line: '\u201CThe floor remembered you. You remembered it in return.\u201D' },
+  ],
+
+  proofBands: [
+    { n: '0 Proofs', total: '473', d: 'Full First Article. All five Guardian systems active. Maximum raw attributes and arena authority. Unique challenge reward.' },
+    { n: '1 Proof', total: '443–460', d: 'Four Guardian systems active. Brutal challenge route.' },
+    { n: '2 Proofs', total: '415–442', d: 'Three Guardian systems active. Extreme challenge route.' },
+    { n: '3 Proofs', total: '391–418', d: 'Guild-recognised minimum. Hard but intended to be learnable.' },
+    { n: '4 Proofs', total: '373–390', d: 'Only one regional system active. Highly prepared route.' },
+    { n: '5 Proofs', total: '360', d: 'All regional systems suppressed. Complete standard route.' },
+  ],
+  proofChoice: 'Completed Proofs are not automatically invoked. Before entering the arena, the player chooses which to activate — enabling deliberate challenge runs.',
+
+  // Phase 1 global mechanics
+  globals: {
+    channels: 'Five channels connect the arena to Fenrath — Veins, Breath, Roots, Blood, Memory. Each invoked Proof darkens its channel. Each active channel grants one passive environmental effect, one active regional ability, and one enhancement to a core attack.',
+    pressure: 'Fenrath builds Guardian Pressure when the player lingers at outer range, stays directly behind him, circles one way repeatedly, repeats a defensive response, deals continuous ranged damage without engaging, or ignores regional mechanics. Stages: Stable → Warning → Enforcement. Resets on returning to mid range, perfect-parrying a major move, staggering him, or surviving an Enforcement action.',
+    committed: 'Major Phase 1 attacks are committed: limited rotation, restricted cancellation, high or absolute Poise, followed by a punish window.',
+    stagger: 'Dedicated Guardian stagger gauge. Contribution — Light 50% · Heavy neutral 100% · Recovery-window 150% · Perfect parry 250%. Full stagger: 4.5s, Stability removed, chest rune exposed, +15% damage taken, channels paused. Post-stagger protection: 12s at 25% buildup, cannot be fully staggered again.',
+  },
+
+  // Phase 1 core abilities (Adventurer baseline Base Powers)
+  abilities: [
+    { name: "Article's Weight", type: 'Heavy committed slam', windup: '1.15s', power: 'Paw 34 · Shockwave 14 · Delayed rupture 10 (Physical)', effects: 'Heavy knockdown, high Impact, Fractured Guard 6s (−20% Guard, +25% block cost).', cd: '8s', counter: 'Dodge the paw · cross/jump the shockwave · leave the delayed rupture · perfect-parry the outer paw edge.' },
+    { name: "First Article's Sweep", type: 'Broad frontal cleave (160°)', windup: '0.8s', power: '22 Physical', effects: 'Strong lateral knockback, Off-Balance 3s (−15% dodge distance, slower turning, −25% chain-pull resistance).', cd: '5s', counter: 'Dodge inward · move behind the attacking shoulder · perfect-parry wrist or lower claw.' },
+    { name: 'Maw of the Gate', type: 'Close-range bite & throw', windup: '0.55s', power: 'Bite 26 · Throw 8 (Physical)', effects: 'Central hit applies Seized (~1.2s), lifts and throws to mid range.', cd: '6s', counter: 'Late lateral dodge · perfect-parry the lower jaw · exit the bite cone. (Anti-cheese: punishes camping beneath him.)' },
+    { name: 'Chain of Recall', type: 'Anti-distance chain control', windup: '1.25s', power: 'Strike 12 · Drag 7 · Final 10 (Physical)', effects: 'Pulls the player inward, applies Bound Momentum 4s. Forced if the player stays at outer range 6s.', cd: '11s', counter: 'Jump the low chain / dodge or parry the mid chain. Perfect-parry rebounds the chain, heavy stagger, disables the arm 6s.' },
+    { name: 'Burdened Turn', type: 'Rear-position control', windup: '0.7s', power: 'Body 18 · Chain 14 · Tail 10 (strongest contact only)', effects: 'Rotates Fenrath ~160–200°, clears the rear zone, breaks fragile terrain, repositions chains.', cd: '7s', counter: 'Punishes staying behind him; reposition off his flank.' },
+    { name: 'Pillar of the First Step', type: 'Long-range terrain creation', windup: '1.4s', power: 'Double slam 30 · Eruption 16 · Centre 21 (Physical)', effects: 'Creates up to three pillars (8s) that block line of sight, interrupt some projectiles, and give cover. Path locks shortly before the first eruption.', cd: '14s', counter: 'Read the tracking line; use the pillars as cover afterward.' },
+    { name: 'Judgment of the Bound', type: 'Major Guardian grab', windup: '1.1s', power: 'Grasp 7 · Compression 13 · Throw 16 (Physical)', effects: 'Applies Judged 10s (−30% healing, higher priority, channel attacks gain effects).', cd: '16s', counter: 'Stay out of the central corridor. Perfect-parry pins the arm by its own chain — major stagger, 2.5s punish.' },
+    { name: 'Boundary Rend', type: 'Crownward arena control', windup: '1.3s', power: 'Claw 14 Physical · Crossing pulse 12 Magical', effects: 'Persistent boundary line (7s); crossing causes a magical pulse, short slow, and Guardian Pressure. Memory active → up to two boundaries, one may shift.', cd: '12s', counter: 'Don\u2019t cross the line; bait it away from your lane.' },
+    { name: 'The Gate Refuses', type: 'Reactive anti-burst defence', windup: 'reactive', power: 'Neutral shockwave 10 Magical (five-Proof fallback)', effects: 'Triggers if >12% max health is dealt within 5s: 50% reduced final damage for 4s, stagger immunity 2s, one active channel retaliates.', cd: '22s', counter: 'Spread burst; respect the window after it fires.' },
+  ],
+
+  // Active channel abilities (exist only when the matching Proof is NOT invoked)
+  channels: [
+    { name: 'Veins — Flood of the First Vein', power: 'Surge 14 · Electrified 18 (Magical)', effect: 'Pushes the player, leaves wet ground 6s, Fenrath heals slightly in the stream, chains conduct through wet ground.', cd: '15s' },
+    { name: 'Breath — Pressure Without Sky', power: '13 Magical', effect: 'Strong knockback, accelerates his next lunge, extinguishes weak player zones, may push across Boundary Rend.', cd: '13s' },
+    { name: 'Roots — The Floor Closes', power: 'Eruption 10 Magical · Constriction 8 Physical', effect: 'Rooted 1.3s, −10% Guard, Fenrath slowly repairs armour while roots remain.', cd: '14s' },
+    { name: 'Blood — Red Law', power: 'Target mark (8s)', effect: '+12% physical damage vs target, physical hits restore his health, Maw & Judgment track harder, player leaves a red trail. Removed by perfect-parry, avoiding all contact, or a cleanse.', cd: '18s' },
+    { name: 'Memory — The Floor Remembers', power: 'Echo at 55% original Base Power', effect: 'Recreates one recent core attack 2.5s after it ends. Secondary effects do not repeat at full strength.', cd: '17s' },
+  ],
+
+  telegraphRules: 'Every move has a body telegraph, a world telegraph, and an optional assisted indicator. No invisible extension beyond animation; decorative fur/roots/cloth never deal damage unless visibly weaponised; grab hitboxes are narrower than damage cleaves; ground attacks use visible cracks as their true boundary. Difficulty may hide assistance but never changes hitbox geometry.',
+};
+
+// =====================================================================
+// DIFFICULTY SYSTEM (provisional canon) — for the public Systems page.
+// =====================================================================
+export const DIFFICULTY = {
+  intro: 'Difficulty changes far more than health and damage. Higher tiers add mechanics, move variants, smarter AI, mechanic overlap, shorter recovery, anti-cheese responses, scarcer resources, and harsher world-state consequences — never health inflation, invisible damage, input reading, or unavoidable overlap.',
+  ladder: 'Pilgrim teaches the world. Adventurer presents it. Veteran tests understanding. Ascendant reveals the full design. The Unbroken Oath asks whether one life is enough.',
+  tiers: [
+    { name: 'Pilgrim', purpose: 'Story, exploration, lore, ecology, and accessible action combat.', dmg: '×0.75', hp: '×0.85', stag: '×0.80',
+      rules: ['Reduced enemy aggression', 'Longer telegraphs', 'Full AoE indicators by default', 'Fewer mechanics at once', 'Generous healing & revival', 'Reduced death penalties', 'Core identity stays intact'] },
+    { name: 'Adventurer', purpose: 'The accessible standard experience — the numerical baseline.', dmg: '×1.00', hp: '×1.00', stag: '×1.00',
+      rules: ['Baseline stats & Base Power', 'Full core movesets', 'Limited mechanic overlap', 'Normal checkpoints & economy', 'Boss mechanics introduced before being combined', 'Normal punish, status, and stagger'] },
+    { name: 'Veteran', purpose: 'Demanding but fair action-RPG challenge.', dmg: '×1.10', hp: '×1.08', stag: '×1.10',
+      rules: ['Smarter AI, more variants', 'Shorter punish windows', 'Faster cooldowns', 'Enemies react to repeated habits', 'Reduced artificial AoE indicators', 'Higher stagger & status pressure', 'More aggressive coordination'] },
+    { name: 'Ascendant', purpose: 'The complete mechanical version — the primary target for encounter design.', dmg: '×1.20', hp: '×1.15', stag: '×1.20',
+      rules: ['Full enemy & boss mechanics', 'More simultaneous objectives', 'Strong anti-cheese', 'Most artificial AoE shapes off by default', 'Fully coordinated packs', 'Limited healing & revival', 'Faster world-state deterioration'] },
+    { name: 'The Unbroken Oath', purpose: 'Hardcore, one-life, maximum-intensity world simulation.', dmg: '×1.25', hp: '×1.15', stag: '×1.25',
+      rules: ['One life for the entire run', 'Everything from Ascendant + exclusive mechanics', 'No ordinary resurrection, reloads, or rewinds', 'Persistent injuries', 'Faster corruption while Guardians stay dead', 'Named enemies may permanently alter routes', 'Retreat becomes strategic'] },
+  ],
+  oath: {
+    rule: 'The player has one life for the entire run. Death permanently ends that character\u2019s journey — the save becomes a read-only memorial rather than being deleted. A new run may begin, but the dead character cannot be revived.',
+    memorial: 'A dead Unbroken character joins the account\u2019s history — recording name, highest floor, time survived, Guardians defeated and restored, factions, moral path, named rares met, hidden content, final gear, cause of death, and the state of the world at death. Outcomes range from a grave or rumour to an archive entry or minor future-world reference. Memorial rewards never grant major power — intentional death is not encouraged.',
+  },
+  layers: [
+    { name: 'Core Mechanics', when: 'Every difficulty — these define the entity.', ex: 'Fenrath\u2019s Proof suppression, chains, Guardian channels, the two standard phases, Guardian stagger, world-state consequence.' },
+    { name: 'Advanced Mechanics', when: 'Primarily Veteran & Ascendant.', ex: 'Altered timing, behavioural adaptation, extra follow-ups, stronger anti-distance tools, false recovery windows, complex terrain use.' },
+    { name: 'Unbroken Mechanics', when: 'Exclusive or especially severe.', ex: 'Persistent arena damage & injuries, Proof quality affecting suppression, boss memory between retreats, named-rare memory, severe resource denial.' },
+  ],
+  safeRule: 'Higher difficulty may add overlap but never unavoidable contradiction. Every legal combination must include at least one valid solution — a positional safe zone, perfect parry, perfect dodge, terrain counterplay, Proof counter, or hero-equivalent response available to all heroes.',
+  tbd: 'Exact resource scarcity, death penalties outside Unbroken, economy changes, injury catalogue, survival scaling, co-op scaling, corruption speed, and final reward differences remain TBD.',
+};

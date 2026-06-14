@@ -66,3 +66,56 @@
   background: rgba(20,10,9,0.5); border: 1px solid rgba(154,47,35,0.2); border-radius: var(--radius); }
 .fen__grade-state { font-family: var(--font-display); color: var(--bone-f); font-size: 1rem; }
 .fen__grade-note { color: #998a7c; font-size: 0.85rem; }
+
+/* ---- Fenrath encounter sections ---- */
+.fen__sub-h { font-family: var(--font-util); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--emberred); margin-bottom: 0.4rem; }
+.fen__list { list-style: none; display: grid; gap: 0.3rem; }
+.fen__list li { color: #cabbac; font-size: 0.88rem; padding-left: 1rem; position: relative; line-height: 1.5; }
+.fen__list li::before { content: '▸'; position: absolute; left: 0; color: var(--blood); }
+
+.fen__voice { font-family: var(--font-body, Georgia, serif); font-style: italic; color: #c98a6a; font-size: 0.92rem; margin-top: 0.4rem; }
+.fen__lines { margin: var(--sp-2) 0; padding-left: var(--sp-2); border-left: 2px solid rgba(154,47,35,0.4); }
+
+/* phases */
+.fen__phases { display: grid; gap: var(--sp-2); margin-top: var(--sp-3); }
+.fen__phase { padding: var(--sp-3); border: 1px solid rgba(154,47,35,0.25); border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(154,47,35,0.06), rgba(8,5,5,0.4)); }
+.fen__phase--wip { border-style: dashed; opacity: 0.92; }
+.fen__phase-head { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; margin-bottom: var(--sp-2); }
+.fen__phase-name { font-family: var(--font-display); font-size: 1.3rem; color: var(--bone-f); }
+.fen__phase-name--fang { color: #e8956a; }
+.fen__phase-hp { font-family: var(--font-util); font-size: 0.75rem; color: var(--emberred); border: 1px solid rgba(194,112,47,0.4); border-radius: 40px; padding: 0.2rem 0.6rem; }
+.fen__wip { font-family: var(--font-util); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: #d8b08a;
+  background: rgba(216,176,138,0.12); border: 1px solid rgba(216,176,138,0.3); border-radius: 40px; padding: 0.2rem 0.6rem; }
+
+/* spoiler gate for phase 3 */
+.fen__spoilergate { padding: var(--sp-4); border: 1px dashed rgba(154,47,35,0.4); border-radius: var(--radius-lg); background: rgba(154,47,35,0.05); text-align: center; }
+.fen__reveal { margin-top: var(--sp-2); cursor: pointer; font-family: var(--font-util); font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700;
+  color: #e8ddcc; background: linear-gradient(180deg, rgba(154,47,35,0.35), rgba(154,47,35,0.18)); border: 1px solid rgba(154,47,35,0.55); border-radius: 40px; padding: 0.8rem 1.5rem; transition: all 0.3s var(--ease); }
+.fen__reveal:hover { box-shadow: 0 0 26px rgba(154,47,35,0.45); transform: translateY(-2px); }
+.fen__fang { padding: var(--sp-4); border: 1px solid rgba(154,47,35,0.4); border-radius: var(--radius-lg);
+  background: radial-gradient(120% 100% at 0% 0%, rgba(154,47,35,0.12), transparent 60%), rgba(20,10,9,0.55); }
+.fen__hide { margin-left: auto; cursor: pointer; font-family: var(--font-util); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--bone-dim); background: none; border: var(--edge); border-radius: 40px; padding: 0.3rem 0.8rem; }
+.fen__p--truth { color: #e0a080; }
+
+/* proofs */
+.fen__proofs { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--sp-2); margin-top: var(--sp-3); }
+.fen__proof { padding: var(--sp-3); border: 1px solid rgba(154,47,35,0.2); border-radius: var(--radius-lg); background: rgba(20,10,9,0.4); }
+.fen__proof-name { font-family: var(--font-display); font-size: 1.05rem; color: var(--bone-f); }
+.fen__proof-fn { font-family: var(--font-util); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--emberred); }
+
+/* bands */
+.fen__bands { display: grid; gap: 0.4rem; margin-top: var(--sp-2); }
+.fen__band { display: grid; grid-template-columns: 90px 90px 1fr; gap: 0.6rem; align-items: baseline; padding: 0.5rem 0.7rem; background: rgba(20,10,9,0.4); border: 1px solid rgba(154,47,35,0.15); border-radius: var(--radius); }
+.fen__band-n { font-family: var(--font-display); color: var(--bone-f); }
+.fen__band-total { font-family: var(--font-util); font-size: 0.78rem; color: var(--emberred); }
+.fen__band-d { color: #998a7c; font-size: 0.85rem; }
+
+/* moves */
+.fen__moves { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--sp-2); margin-top: var(--sp-3); }
+.fen__move { padding: var(--sp-3); border: 1px solid rgba(154,47,35,0.2); border-radius: var(--radius-lg); background: rgba(20,10,9,0.4); }
+.fen__move-head { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
+.fen__move-name { font-family: var(--font-display); font-size: 1.1rem; color: var(--bone-f); }
+.fen__move-type { font-family: var(--font-util); font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--emberred); }
+.fen__move-stats { display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 0.5rem 0; font-size: 0.78rem; color: #cabbac; }
+.fen__move-stats b { color: var(--emberred); font-family: var(--font-util); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.08em; margin-right: 0.2rem; }
