@@ -1,0 +1,70 @@
+/* =====================================================================
+   LAYOUT PRIMITIVES — responsive composition
+   Desktop composes horizontally; tablet reduces; mobile stacks in
+   correct reading order. Mobile never dictates desktop.
+   ===================================================================== */
+
+/* ---- Page shell ---- */
+.pg { width: 100%; margin-inline: auto; padding-inline: var(--page-gutter); }
+.pg--default { max-width: var(--page-max-width); }
+.pg--wide    { max-width: var(--page-wide-width); }
+.pg--narrow  { max-width: var(--page-narrow-width); }
+
+/* ---- Vertical rhythm ---- */
+.stack { display: flex; flex-direction: column; }
+.stack--tight   { gap: var(--gap-tight); }
+.stack--default { gap: var(--gap); }
+.stack--section { gap: var(--gap-section); }
+
+/* ---- Reading column ---- */
+.lay-reading { max-width: var(--reading-width); }
+.lay-reading p { margin-bottom: 0.9em; }
+
+/* ---- Editorial Split (prose + aside) ---- */
+.lay-editorial { display: grid; grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr); gap: var(--gap); align-items: start; }
+.lay-editorial--flip { grid-template-columns: minmax(0, 1fr) minmax(0, 1.9fr); }
+.lay-editorial--flip .lay-editorial__main { order: 2; }
+.lay-editorial--flip .lay-editorial__aside { order: 1; }
+.lay-editorial__aside { position: sticky; top: var(--rail-top); }
+
+/* ---- Data Split (identity + data) ---- */
+.lay-data { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--gap); align-items: start; }
+
+/* ---- Card Matrix ---- */
+.lay-matrix { display: grid; grid-template-columns: repeat(auto-fit, minmax(var(--col-min, 260px), 1fr)); gap: var(--gap); }
+
+/* ---- Sticky Contents (rail + main) ---- */
+.lay-sticky { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: var(--gap-section); align-items: start; }
+.lay-sticky__rail { position: sticky; top: var(--rail-top); align-self: start; }
+
+/* ---- Master-Detail ---- */
+.lay-md { display: grid; grid-template-columns: minmax(280px, 0.7fr) minmax(0, 1.3fr); gap: var(--gap); align-items: start; }
+
+/* ---- Asymmetric Dashboard ---- */
+.lay-dash { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gap); }
+.lay-dash__cell--lg { grid-column: span 8; }
+.lay-dash__cell--md { grid-column: span 6; }
+.lay-dash__cell--sm { grid-column: span 4; }
+.lay-dash__cell--full { grid-column: 1 / -1; }
+
+/* ============================ TABLET ============================ */
+@media (max-width: 1199px) {
+  .lay-editorial, .lay-editorial--flip { grid-template-columns: 1fr; }
+  .lay-editorial__aside { position: static; }
+  .lay-editorial--flip .lay-editorial__main,
+  .lay-editorial--flip .lay-editorial__aside { order: initial; }
+  .lay-data { grid-template-columns: 1fr; }
+  .lay-sticky { grid-template-columns: 1fr; gap: var(--gap); }
+  .lay-sticky__rail { position: static; }
+  .lay-md { grid-template-columns: 1fr; }
+  .lay-dash__cell--lg { grid-column: span 12; }
+  .lay-dash__cell--md { grid-column: span 6; }
+  .lay-dash__cell--sm { grid-column: span 6; }
+}
+
+/* ============================ MOBILE ============================ */
+@media (max-width: 767px) {
+  .lay-matrix { grid-template-columns: 1fr; }
+  .lay-dash__cell--md, .lay-dash__cell--sm { grid-column: span 12; }
+  .stack--section { gap: var(--sp-4); }
+}

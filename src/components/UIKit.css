@@ -1,0 +1,52 @@
+/* =====================================================================
+   SHARED UI KIT
+   ===================================================================== */
+
+/* ---- Tabs ---- */
+.uik-tabs { display: flex; flex-wrap: wrap; gap: 0.35rem; --tab-accent: var(--accent-interface); }
+.uik-tab {
+  display: inline-flex; align-items: center; gap: 0.45rem; cursor: pointer;
+  font-family: var(--font-util); font-size: 0.82rem; color: var(--bone-dim);
+  background: var(--surface-2); border: 1px solid var(--hairline);
+  clip-path: var(--notch-tl-br); padding: 0.5rem 1rem; transition: all var(--t-fast) var(--ease);
+}
+.uik-tab:hover { color: var(--bone); border-color: color-mix(in srgb, var(--tab-accent) 40%, transparent); }
+.uik-tab.is-on { color: var(--ink); background: var(--tab-accent); border-color: var(--tab-accent); font-weight: 700; }
+.uik-tab__badge { font-size: 0.66rem; opacity: 0.75; font-variant-numeric: tabular-nums; }
+.uik-tab.is-on .uik-tab__badge { opacity: 0.9; }
+
+/* ---- Quick facts ---- */
+.uik-facts { display: grid; grid-template-columns: repeat(var(--fact-cols, 2), minmax(0, 1fr)); gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); border-radius: var(--radius); overflow: hidden; }
+.uik-fact { background: var(--surface-1); padding: 0.6rem 0.8rem; }
+.uik-fact dt { font-family: var(--font-util); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bone-dim); }
+.uik-fact dd { font-family: var(--font-util); font-size: 0.92rem; color: var(--bone); margin-top: 0.15rem; font-variant-numeric: tabular-nums; }
+
+/* ---- Compare table ---- */
+.uik-tablewrap { --tbl-accent: var(--accent-interface); overflow-x: auto; border: 1px solid var(--hairline); border-radius: var(--radius); }
+.uik-table { width: 100%; border-collapse: collapse; min-width: 520px; }
+.uik-table th { font-family: var(--font-util); font-size: 0.64rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--tbl-accent);
+  text-align: right; padding: 0.6rem 0.85rem; border-bottom: 1px solid color-mix(in srgb, var(--tbl-accent) 24%, transparent); background: var(--surface-2); white-space: nowrap; }
+.uik-table__corner, .uik-table th:first-child { text-align: left; }
+.uik-table td { padding: 0.5rem 0.85rem; text-align: right; color: var(--bone); font-family: var(--font-util); font-size: 0.84rem; font-variant-numeric: tabular-nums; border-bottom: 1px solid rgba(231,227,214,0.045); }
+.uik-table__rowh { text-align: left !important; color: var(--bone-dim) !important; position: sticky; left: 0; background: var(--surface-1); }
+.uik-table tbody tr:hover td { background: rgba(96,232,220,0.03); }
+
+/* ---- Spoiler gate ---- */
+.uik-spoiler { --sp-accent: var(--accent-guardian); }
+.uik-spoiler__gate { text-align: center; padding: var(--sp-4); border: 1px dashed color-mix(in srgb, var(--sp-accent) 45%, transparent);
+  border-radius: var(--radius-lg); background: color-mix(in srgb, var(--sp-accent) 6%, transparent); }
+.uik-spoiler__title { font-family: var(--font-display); font-size: var(--t-h3); color: var(--bone-f); margin-bottom: 0.5rem; }
+.uik-spoiler__warn { color: var(--bone-dim); font-size: 0.9rem; margin-bottom: var(--sp-2); }
+.uik-spoiler__btn { cursor: pointer; font-family: var(--font-util); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700;
+  color: var(--bone); background: linear-gradient(180deg, color-mix(in srgb, var(--sp-accent) 38%, transparent), color-mix(in srgb, var(--sp-accent) 18%, transparent));
+  border: 1px solid color-mix(in srgb, var(--sp-accent) 55%, transparent); border-radius: 40px; padding: 0.75rem 1.5rem; transition: all var(--t-mid) var(--ease); }
+.uik-spoiler__btn:hover { box-shadow: 0 0 24px color-mix(in srgb, var(--sp-accent) 45%, transparent); transform: translateY(-2px); }
+.uik-spoiler__hide { float: right; cursor: pointer; font-family: var(--font-util); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--bone-dim); background: none; border: var(--edge); border-radius: 40px; padding: 0.3rem 0.8rem; margin-bottom: var(--sp-2); }
+
+/* ---- Segmented ---- */
+.uik-seg { display: flex; flex-wrap: wrap; gap: 0.4rem; --seg-accent: var(--accent-interface); }
+.uik-seg__chip { cursor: pointer; font-family: var(--font-util); font-size: 0.8rem; color: var(--bone-dim);
+  background: var(--surface-2); border: 1px solid var(--hairline); border-radius: 40px; padding: 0.45rem 0.95rem; transition: all var(--t-fast) var(--ease); }
+.uik-seg__chip:hover { color: var(--bone); }
+.uik-seg__chip.is-on { color: var(--ink); background: var(--seg-accent); border-color: var(--seg-accent); font-weight: 600; box-shadow: 0 0 16px color-mix(in srgb, var(--seg-accent) 35%, transparent); }

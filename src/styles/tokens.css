@@ -1,27 +1,54 @@
 /* =====================================================================
-   SPIREBOUND — Design Tokens
-   Palette grounded in the game's world: floor-1 fields (sky, verdant,
-   gold light), with Eluvain's rune-cyan as the one disciplined accent.
+   SPIREBOUND — Design Tokens  (Overhaul foundation)
+   One coherent system: an in-game Ascendant Guild archive built from
+   rune-tech, engraved metal, ancient stone, magical glass, and vellum.
+   Preserves the original palette; adds widths, surfaces, geometry,
+   sticky offsets, z-index, and motion so every page composes from one set.
    ===================================================================== */
 :root {
-  /* Core palette */
+  /* ---------- Core palette (preserved) ---------- */
   --sky:      #5BA3D0;
   --sky-deep: #2E5F86;
   --summit:   #F4E4B8;
   --gold:     #E8B954;
+  --gold-deep:#B8893A;
   --verdant:  #5E9C68;
   --verdant-deep: #3C6B48;
   --stone:    #2A2E3A;
   --ink:      #0E1016;
   --ink-2:    #161922;
   --ink-3:    #1E2230;
+  --ink-4:    #262B3B;
   --rune:     #60E8DC;
   --rune-dim: #2D7E78;
   --bone:     #E7E3D6;
   --bone-dim: #9A968A;
+  --bone-f:   #D8CFC0;
   --blood:    #C2502F;
+  --ember:    #C2702F;
+  --ember-bright: #E0903C;
+  --guardian-blood: #9A2F23;
 
-  /* Typography */
+  /* ---------- Surface foundation ---------- */
+  --surface-1: #12141c;
+  --surface-2: #171a24;
+  --surface-3: #1d212e;
+  --surface-glass: rgba(22,26,38,0.66);
+  --surface-vellum: #211d16;
+  --surface-vellum-edge: #2c2517;
+  --surface-stone: #14100f;
+  --hairline: rgba(231,227,214,0.10);
+  --hairline-strong: rgba(231,227,214,0.18);
+
+  /* ---------- Accent roles ---------- */
+  --accent-interface: #60E8DC;
+  --accent-authority: #E8B954;
+  --accent-floor1:    #5E9C68;
+  --accent-guardian:  #C2702F;
+  --accent-blood:     #9A2F23;
+  --accent-air:       #5BA3D0;
+
+  /* ---------- Typography ---------- */
   --font-display: 'Cinzel', Georgia, serif;
   --font-body:    'Spectral', Georgia, serif;
   --font-util:    'Inter', system-ui, sans-serif;
@@ -34,19 +61,66 @@
   --t-small: 0.85rem;
   --t-label: 0.72rem;
 
-  /* Spacing */
+  /* ---------- Width & reading tokens (the layout backbone) ---------- */
+  --page-max-width:  1440px;
+  --page-wide-width: 1600px;
+  --page-narrow-width: 1100px;
+  --reading-width:   68ch;
+  --page-gutter:     clamp(24px, 4vw, 72px);
+  --maxw: 1200px;
+
+  /* ---------- Spacing ---------- */
   --sp-1: 0.5rem;  --sp-2: 1rem;   --sp-3: 1.5rem;  --sp-4: 2.5rem;
   --sp-5: 4rem;    --sp-6: 6.5rem; --sp-7: 10rem;
+  --gap-tight: 14px;
+  --gap:       24px;
+  --gap-section: 64px;
 
-  /* Effects */
-  --glow-rune: 0 0 12px rgba(96,232,220,0.55), 0 0 40px rgba(96,232,220,0.18);
-  --glow-gold: 0 0 16px rgba(232,185,84,0.4);
-  --edge: 1px solid rgba(231,227,214,0.10);
-  --edge-rune: 1px solid rgba(96,232,220,0.30);
+  /* ---------- Geometry — clipped corners ---------- */
   --radius: 4px;
   --radius-lg: 12px;
-  --maxw: 1200px;
+  --clip: 10px;
+  --clip-sm: 6px;
+  --clip-lg: 16px;
+  --notch-tl-br: polygon(var(--clip) 0, 100% 0, 100% calc(100% - var(--clip)), calc(100% - var(--clip)) 100%, 0 100%, 0 var(--clip));
+  --notch-all: polygon(var(--clip) 0, calc(100% - var(--clip)) 0, 100% var(--clip), 100% calc(100% - var(--clip)), calc(100% - var(--clip)) 100%, var(--clip) 100%, 0 calc(100% - var(--clip)), 0 var(--clip));
+
+  /* ---------- Borders ---------- */
+  --edge: 1px solid rgba(231,227,214,0.10);
+  --edge-strong: 1px solid rgba(231,227,214,0.18);
+  --edge-rune: 1px solid rgba(96,232,220,0.30);
+  --edge-gold: 1px solid rgba(232,185,84,0.32);
+  --edge-guardian: 1px solid rgba(194,112,47,0.34);
+
+  /* ---------- Shadows & glows ---------- */
+  --glow-rune: 0 0 12px rgba(96,232,220,0.55), 0 0 40px rgba(96,232,220,0.18);
+  --glow-gold: 0 0 16px rgba(232,185,84,0.4);
+  --glow-guardian: 0 0 22px rgba(154,47,35,0.4);
+  --shadow-panel: 0 8px 30px rgba(0,0,0,0.35);
+  --shadow-float: 0 14px 50px rgba(0,0,0,0.5);
+
+  /* ---------- Sticky offsets & z-index ---------- */
+  --topbar-h: 56px;
+  --sticky-top: calc(var(--topbar-h) + 8px);
+  --rail-top: calc(var(--topbar-h) + 16px);
+  --z-base: 1;
+  --z-rail: 20;
+  --z-topbar: 40;
+  --z-drawer: 60;
+  --z-overlay: 80;
+  --z-modal: 100;
+
+  /* ---------- Motion ---------- */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-fast: 160ms;
+  --t-mid: 240ms;
+  --t-slow: 340ms;
+
+  /* ---------- Breakpoints ---------- */
+  --bp-tablet: 768px;
+  --bp-desktop: 1200px;
+  --bp-wide: 1600px;
 }
 
 @media (prefers-reduced-motion: reduce) {

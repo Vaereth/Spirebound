@@ -1,0 +1,39 @@
+/* =====================================================================
+   SECTION RAIL
+   ===================================================================== */
+.srail { --rail-accent: var(--accent-interface); }
+
+/* ---- desktop vertical rail ---- */
+.srail__desk { position: sticky; top: var(--rail-top); }
+.srail__title { display: block; font-family: var(--font-util); font-size: var(--t-label); letter-spacing: 0.16em; text-transform: uppercase; color: var(--bone-dim); margin-bottom: var(--sp-2); padding-left: 0.9rem; }
+.srail__list { list-style: none; display: flex; flex-direction: column; gap: 1px; border-left: 1px solid var(--hairline); }
+.srail__btn {
+  display: flex; align-items: center; gap: 0.5rem; width: 100%; text-align: left; cursor: pointer;
+  font-family: var(--font-util); font-size: 0.84rem; color: var(--bone-dim);
+  background: transparent; border: none; padding: 0.5rem 0.9rem; margin-left: -1px;
+  border-left: 2px solid transparent; transition: color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+}
+.srail__btn:hover { color: var(--bone); }
+.srail__tick { width: 4px; height: 4px; border-radius: 50%; background: currentColor; opacity: 0; transition: opacity var(--t-fast); flex-shrink: 0; }
+.srail__btn.is-on { color: var(--rail-accent); border-left-color: var(--rail-accent); font-weight: 600; }
+.srail__btn.is-on .srail__tick { opacity: 1; box-shadow: 0 0 8px var(--rail-accent); }
+
+/* ---- mobile dropdown ---- */
+.srail__mob { display: none; }
+.srail__mobtoggle {
+  display: flex; align-items: center; gap: 0.6rem; width: 100%; cursor: pointer;
+  background: var(--surface-glass); border: 1px solid color-mix(in srgb, var(--rail-accent) 24%, transparent);
+  clip-path: var(--notch-tl-br); padding: 0.7rem 1rem; color: var(--bone);
+}
+.srail__moblabel { font-family: var(--font-util); font-size: var(--t-label); letter-spacing: 0.12em; text-transform: uppercase; color: var(--bone-dim); }
+.srail__mobcurrent { font-family: var(--font-util); font-size: 0.9rem; color: var(--rail-accent); margin-left: auto; }
+.srail__chev { transition: transform var(--t-fast); color: var(--bone-dim); }
+.srail__chev.is-open { transform: rotate(180deg); }
+.srail__moblist { list-style: none; margin-top: 4px; background: var(--surface-2); border: 1px solid var(--hairline); border-radius: var(--radius); overflow: hidden; }
+.srail__moblist .srail__btn { padding: 0.7rem 1rem; border-left: none; border-bottom: 1px solid var(--hairline); }
+.srail__moblist li:last-child .srail__btn { border-bottom: none; }
+
+@media (max-width: 1199px) {
+  .srail__desk { display: none; }
+  .srail__mob { display: block; position: sticky; top: var(--sticky-top); z-index: var(--z-rail); }
+}
