@@ -60,3 +60,9 @@
 .fen__coming-t { color: #998a7c; font-style: italic; margin-top: 0.5rem; max-width: 60ch; margin-inline: auto; }
 
 .fen__foot { text-align: center; padding-top: var(--sp-3); }
+
+.fen__grades { display: grid; gap: 0.6rem; margin-top: var(--sp-2); }
+.fen__grade { display: flex; align-items: center; gap: var(--sp-2); padding: 0.6rem 0.8rem;
+  background: rgba(20,10,9,0.5); border: 1px solid rgba(154,47,35,0.2); border-radius: var(--radius); }
+.fen__grade-state { font-family: var(--font-display); color: var(--bone-f); font-size: 1rem; }
+.fen__grade-note { color: #998a7c; font-size: 0.85rem; }

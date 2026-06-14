@@ -80,29 +80,29 @@ export const RANK_SYSTEM = {
 
 // ---- Floor 1 Named Rares (public) ----
 export const NAMED_RARES = [
-  { name: 'Old Bramblehide', species: 'Hornback Grazer', rank: 'Named Rare Alpha', level: 5, stats: { vitality: 42, might: 34, guard: 46, arcana: 8, ward: 24, mobility: 18 }, total: 172, identity: 'Ancient Hornback with thorny vines across its mineral plates.', spawn: 'Excessive Dawnfield grazing pressure or blocked Briarwood routes.', combat: 'Defensive herd leader, vine-entangling charge, protects weaker Hornbacks.', consequence: 'Herd coordination worsens for one season.', respawn: 'Successor Rare' },
-  { name: 'The Furrow King', species: 'Furrowmaw', rank: 'Named Rare Elite', level: 5, stats: { vitality: 40, might: 38, guard: 32, arcana: 8, ward: 20, mobility: 24 }, total: 162, spawn: 'Repeated mining, ploughing, or infrastructure damage.', combat: 'Creates sinkholes, changes burrow routes, collapses structures.', consequence: 'Underground pest surge.', respawn: 'Recurring after major soil disruption' },
-  { name: 'Widow-of-the-Reeds', species: 'Reedlurker', rank: 'Named Rare Elite', level: 5, stats: { vitality: 36, might: 35, guard: 24, arcana: 12, ward: 22, mobility: 28 }, total: 157, identity: 'Massive female with broken harpoons embedded in her hide.', spawn: 'Spring flooding after significant Reedlurker hunting.', combat: 'Commands juveniles, submerged ambush, pulls players through reed channels.', consequence: 'Reedlurker breeding falls sharply.', respawn: 'Truly Unique' },
-  { name: 'Lantern Below', species: 'Lantern Eel', rank: 'Named Rare Anomalous', level: 6, stats: { vitality: 38, might: 22, guard: 24, arcana: 52, ward: 42, mobility: 30 }, total: 208, identity: 'Enormous eel containing too many internal lights.', spawn: 'Severe thunderstorm and active ancient river machinery.', combat: 'Powers/disables arena machinery, moving electrical safe zones, colour-coded attacks.', respawn: 'Recurring during rare storms' },
-  { name: 'The Broken Bell Matron', species: 'Bellwing', rank: 'Named Rare Elite', level: 6, stats: { vitality: 42, might: 38, guard: 34, arcana: 42, ward: 32, mobility: 28 }, total: 216, identity: 'Ancient Bellwing with shattered wing membrane and distorted sonic attacks.', spawn: 'Bellwing colony loses its nesting tower.', combat: 'Irregular sonic timing, resonance amplification, displaced juveniles join.', respawn: 'Truly Unique' },
-  { name: 'White-Tail Thief', species: 'Cloudmarten', rank: 'Named Rare', level: 4, stats: { vitality: 18, might: 12, guard: 10, arcana: 8, ward: 16, mobility: 48 }, total: 112, identity: 'Clever thief of quest items, keys, and trinkets.', combat: 'Chase, trap, track, indirect bargain, or follow to cache; not necessarily a kill target.', respawn: 'Recurring' },
-  { name: 'Antler-Lost-in-Dark', species: 'Lantern Deer', rank: 'Named Rare', level: 5, stats: { vitality: 34, might: 18, guard: 24, arcana: 38, ward: 42, mobility: 30 }, total: 186, identity: 'One missing antler and unstable dim light.', spawn: 'Briarwood luminous flora declines.', combat: 'Protection/tracking; hostile only if cornered.', consequence: 'Severe forest decline.', respawn: 'Truly Unique' },
-  { name: 'Nine-Thorn', species: 'Thornmaw Lynx', rank: 'Named Rare Alpha', level: 5, stats: { vitality: 34, might: 42, guard: 24, arcana: 8, ward: 20, mobility: 40 }, total: 168, identity: 'Old lynx with nine unusually long jaw thorns.', spawn: 'Lantern Deer or Briar Hare populations become excessive.', combat: 'Advanced ambush, false wounded-prey traps, vertical forest movement.', respawn: 'Successor Rare' },
-  { name: 'Captain Without a Banner', species: 'Marching Dead', rank: 'Named Rare Elite', level: 6, stats: { vitality: 40, might: 36, guard: 34, arcana: 18, ward: 28, mobility: 22 }, total: 178, spawn: 'Banner Wraith populations collapse.', combat: 'Reorganises broken undead, creates temporary formations without a banner, command mechanics.', respawn: 'Truly Unique' },
-  { name: 'Hound 13', species: 'Iron Hound', rank: 'Named Rare Elite', level: 6, stats: { vitality: 36, might: 42, guard: 38, arcana: 20, ward: 30, mobility: 44 }, total: 210, identity: 'Pursuit unit with damaged command logic and thirteen recorded target marks.', spawn: 'Repeatedly escape Iron Hound pursuits without destroying them.', combat: 'Studies route habits, intercepts paths, pursues beyond boundaries.', respawn: 'Truly Unique unless reconstructed' },
-  { name: 'Sentinel of the Fifth Line', species: 'Gate Sentinel', rank: 'Named Rare Elite', level: 6, stats: { vitality: 48, might: 40, guard: 52, arcana: 38, ward: 46, mobility: 22 }, total: 246, identity: 'Guards a boundary that no longer exists.', spawn: 'Activate four Proof shrines while leaving the fifth inactive.', combat: 'Creates geometric boundaries, punishes crossing, rewrites arena.', respawn: 'May be reconstructed while Guardian systems remain active' },
-  { name: 'The Listening Maw', species: 'Tunnel Gnawer', rank: 'Named Rare Alpha', level: 5, stats: { vitality: 32, might: 36, guard: 22, arcana: 4, ward: 18, mobility: 38 }, total: 150, spawn: 'Extended mining in one cave network.', combat: 'Reads movement patterns, commands pack positioning, pressures stillness indirectly.', respawn: 'Successor Rare' },
-  { name: 'The Last Thirst', species: 'Thirstmaw', rank: 'Named Rare Alpha', level: 5, stats: { vitality: 34, might: 40, guard: 22, arcana: 4, ward: 18, mobility: 40 }, total: 158, spawn: 'Severe summer drought and multiple failed water routes.', combat: 'Super-pack leader, targets water, strengthens near empty wells.', respawn: 'Successor Rare' },
-  { name: 'Winter-Eats-the-Road', species: 'Palejaw', rank: 'Named Rare Elite', level: 6, stats: { vitality: 42, might: 48, guard: 30, arcana: 20, ward: 30, mobility: 42 }, total: 212, identity: 'Ancient Palejaw that follows roads instead of prey paths.', spawn: 'Long winter and repeated caravan deaths.', combat: 'Controls road geometry, freezes escape paths, summons scouts behind player.', respawn: 'Recurring in severe winters; the name may describe an inherited role' },
+  { name: 'Old Bramblehide', grade: 'A', species: 'Hornback Grazer', rank: 'Named Rare Alpha', level: 5, stats: { vitality: 42, might: 34, guard: 46, arcana: 8, ward: 24, mobility: 18 }, total: 172, identity: 'Ancient Hornback with thorny vines across its mineral plates.', spawn: 'Excessive Dawnfield grazing pressure or blocked Briarwood routes.', combat: 'Defensive herd leader, vine-entangling charge, protects weaker Hornbacks.', consequence: 'Herd coordination worsens for one season.', respawn: 'Successor Rare' },
+  { name: 'The Furrow King', grade: 'A', species: 'Furrowmaw', rank: 'Named Rare Elite', level: 5, stats: { vitality: 40, might: 38, guard: 32, arcana: 8, ward: 20, mobility: 24 }, total: 162, spawn: 'Repeated mining, ploughing, or infrastructure damage.', combat: 'Creates sinkholes, changes burrow routes, collapses structures.', consequence: 'Underground pest surge.', respawn: 'Recurring after major soil disruption' },
+  { name: 'Widow-of-the-Reeds', grade: 'A', species: 'Reedlurker', rank: 'Named Rare Elite', level: 5, stats: { vitality: 36, might: 35, guard: 24, arcana: 12, ward: 22, mobility: 28 }, total: 157, identity: 'Massive female with broken harpoons embedded in her hide.', spawn: 'Spring flooding after significant Reedlurker hunting.', combat: 'Commands juveniles, submerged ambush, pulls players through reed channels.', consequence: 'Reedlurker breeding falls sharply.', respawn: 'Truly Unique' },
+  { name: 'Lantern Below', grade: 'A', species: 'Lantern Eel', rank: 'Named Rare Anomalous', level: 6, stats: { vitality: 38, might: 22, guard: 24, arcana: 52, ward: 42, mobility: 30 }, total: 208, identity: 'Enormous eel containing too many internal lights.', spawn: 'Severe thunderstorm and active ancient river machinery.', combat: 'Powers/disables arena machinery, moving electrical safe zones, colour-coded attacks.', respawn: 'Recurring during rare storms' },
+  { name: 'The Broken Bell Matron', grade: 'A', species: 'Bellwing', rank: 'Named Rare Elite', level: 6, stats: { vitality: 42, might: 38, guard: 34, arcana: 42, ward: 32, mobility: 28 }, total: 216, identity: 'Ancient Bellwing with shattered wing membrane and distorted sonic attacks.', spawn: 'Bellwing colony loses its nesting tower.', combat: 'Irregular sonic timing, resonance amplification, displaced juveniles join.', respawn: 'Truly Unique' },
+  { name: 'White-Tail Thief', grade: 'C', species: 'Cloudmarten', rank: 'Named Rare', level: 4, stats: { vitality: 18, might: 12, guard: 10, arcana: 8, ward: 16, mobility: 48 }, total: 112, identity: 'Clever thief of quest items, keys, and trinkets.', combat: 'Chase, trap, track, indirect bargain, or follow to cache; not necessarily a kill target.', respawn: 'Recurring' },
+  { name: 'Antler-Lost-in-Dark', grade: 'B', species: 'Lantern Deer', rank: 'Named Rare', level: 5, stats: { vitality: 34, might: 18, guard: 24, arcana: 38, ward: 42, mobility: 30 }, total: 186, identity: 'One missing antler and unstable dim light.', spawn: 'Briarwood luminous flora declines.', combat: 'Protection/tracking; hostile only if cornered.', consequence: 'Severe forest decline.', respawn: 'Truly Unique' },
+  { name: 'Nine-Thorn', grade: 'A', species: 'Thornmaw Lynx', rank: 'Named Rare Alpha', level: 5, stats: { vitality: 34, might: 42, guard: 24, arcana: 8, ward: 20, mobility: 40 }, total: 168, identity: 'Old lynx with nine unusually long jaw thorns.', spawn: 'Lantern Deer or Briar Hare populations become excessive.', combat: 'Advanced ambush, false wounded-prey traps, vertical forest movement.', respawn: 'Successor Rare' },
+  { name: 'Captain Without a Banner', grade: 'A', species: 'Marching Dead', rank: 'Named Rare Elite', level: 6, stats: { vitality: 40, might: 36, guard: 34, arcana: 18, ward: 28, mobility: 22 }, total: 178, spawn: 'Banner Wraith populations collapse.', combat: 'Reorganises broken undead, creates temporary formations without a banner, command mechanics.', respawn: 'Truly Unique' },
+  { name: 'Hound 13', grade: 'A', species: 'Iron Hound', rank: 'Named Rare Elite', level: 6, stats: { vitality: 36, might: 42, guard: 38, arcana: 20, ward: 30, mobility: 44 }, total: 210, identity: 'Pursuit unit with damaged command logic and thirteen recorded target marks.', spawn: 'Repeatedly escape Iron Hound pursuits without destroying them.', combat: 'Studies route habits, intercepts paths, pursues beyond boundaries.', respawn: 'Truly Unique unless reconstructed' },
+  { name: 'Sentinel of the Fifth Line', grade: 'A', species: 'Gate Sentinel', rank: 'Named Rare Elite', level: 6, stats: { vitality: 48, might: 40, guard: 52, arcana: 38, ward: 46, mobility: 22 }, total: 246, identity: 'Guards a boundary that no longer exists.', spawn: 'Activate four Proof shrines while leaving the fifth inactive.', combat: 'Creates geometric boundaries, punishes crossing, rewrites arena.', respawn: 'May be reconstructed while Guardian systems remain active' },
+  { name: 'The Listening Maw', grade: 'A', species: 'Tunnel Gnawer', rank: 'Named Rare Alpha', level: 5, stats: { vitality: 32, might: 36, guard: 22, arcana: 4, ward: 18, mobility: 38 }, total: 150, spawn: 'Extended mining in one cave network.', combat: 'Reads movement patterns, commands pack positioning, pressures stillness indirectly.', respawn: 'Successor Rare' },
+  { name: 'The Last Thirst', grade: 'A', species: 'Thirstmaw', rank: 'Named Rare Alpha', level: 5, stats: { vitality: 34, might: 40, guard: 22, arcana: 4, ward: 18, mobility: 40 }, total: 158, spawn: 'Severe summer drought and multiple failed water routes.', combat: 'Super-pack leader, targets water, strengthens near empty wells.', respawn: 'Successor Rare' },
+  { name: 'Winter-Eats-the-Road', grade: 'A', species: 'Palejaw', rank: 'Named Rare Elite', level: 6, stats: { vitality: 42, might: 48, guard: 30, arcana: 20, ward: 30, mobility: 42 }, total: 212, identity: 'Ancient Palejaw that follows roads instead of prey paths.', spawn: 'Long winter and repeated caravan deaths.', combat: 'Controls road geometry, freezes escape paths, summons scouts behind player.', respawn: 'Recurring in severe winters; the name may describe an inherited role' },
 ];
 
 // ---- Regional Elites (public, shown separately from named rares) ----
 export const REGIONAL_ELITES = [
-  { name: 'Stonehorn Patriarch', level: '5', stats: { vitality: 45, might: 40, guard: 50, arcana: 5, ward: 25, mobility: 20 }, total: 185, identity: 'Extreme physical defence, herd leadership, migration influence.' },
-  { name: 'Ferryman Without a Face', level: 'Unknown / L5 equiv.', stats: { vitality: 30, might: 20, guard: 20, arcana: 45, ward: 45, mobility: 30 }, total: 190, identity: 'Anomalous regional elite. Exact species: TBD.' },
-  { name: 'Bellwing Matron', level: '5', stats: { vitality: 40, might: 38, guard: 30, arcana: 35, ward: 30, mobility: 28 }, total: 201, identity: 'Physical/sonic hybrid elite.' },
-  { name: 'Grandmother Briar', level: 'Approx. L8 equiv.', stats: { vitality: 55, might: 35, guard: 48, arcana: 60, ward: 62, mobility: 20 }, total: 280, identity: 'Regional power; not automatically hostile.' },
-  { name: 'Last Standard-Bearer', level: '5', stats: { vitality: 38, might: 35, guard: 30, arcana: 25, ward: 35, mobility: 20 }, total: 183, identity: 'Command-focused undead elite.' },
+  { name: 'Stonehorn Patriarch', grade: 'A', level: '5', stats: { vitality: 45, might: 40, guard: 50, arcana: 5, ward: 25, mobility: 20 }, total: 185, identity: 'Extreme physical defence, herd leadership, migration influence.' },
+  { name: 'Ferryman Without a Face', grade: 'A', level: 'Unknown / L5 equiv.', stats: { vitality: 30, might: 20, guard: 20, arcana: 45, ward: 45, mobility: 30 }, total: 190, identity: 'Anomalous regional elite. Exact species: TBD.' },
+  { name: 'Bellwing Matron', grade: 'A', level: '5', stats: { vitality: 40, might: 38, guard: 30, arcana: 35, ward: 30, mobility: 28 }, total: 201, identity: 'Physical/sonic hybrid elite.' },
+  { name: 'Grandmother Briar', grade: 'S', level: 'Approx. L8 equiv.', stats: { vitality: 55, might: 35, guard: 48, arcana: 60, ward: 62, mobility: 20 }, total: 280, identity: 'Regional power; not automatically hostile.' },
+  { name: 'Last Standard-Bearer', grade: 'A', level: '5', stats: { vitality: 38, might: 35, guard: 30, arcana: 25, ward: 35, mobility: 20 }, total: 183, identity: 'Command-focused undead elite.' },
 ];
 
 // ---- Fenrath stat charts ----
@@ -218,3 +218,123 @@ export const HERO_STATS_EXPLAINER = {
   ],
   sheet: 'Character sheets show Allocated · Gear · Temporary · Effective — every number traceable, with nothing added invisibly.',
 };
+
+// =====================================================================
+// COMBAT MATHEMATICS (public reference) — diminishing-return curves.
+// Heroes start at 0 in all six; 0 Guard/Ward = 100% listed damage taken.
+// Do NOT invent Base Power, Base Health, or final balance numbers.
+// =====================================================================
+export const COMBAT_MATH = {
+  principle: 'A target with 0 Guard or Ward takes exactly 100% listed damage. There is no naked-character penalty. Attributes modify functional baseline values; they do not create them.',
+  offense: {
+    title: 'Outgoing Damage (Might / Arcana)',
+    formula: 'D_raw = P × (1 + 2.5·S / (400 + S))',
+    legend: 'P = Base Power · S = Effective Might (physical) or Arcana (magical).',
+    note: 'Diminishing returns; approaches ×3.5 at the theoretical limit. Arcana uses the same curve as Might.',
+    table: [
+      { s: 0, mult: '×1.000' }, { s: 10, mult: '×1.061' }, { s: 30, mult: '×1.174' }, { s: 50, mult: '×1.278' },
+      { s: 100, mult: '×1.500' }, { s: 200, mult: '×1.833' }, { s: 300, mult: '×2.071' }, { s: 400, mult: '×2.250' },
+      { s: 500, mult: '×2.389' }, { s: 750, mult: '×2.630' }, { s: 1000, mult: '×2.786' }, { s: 1500, mult: '×2.974' },
+      { s: 2000, mult: '×3.083' }, { s: '∞', mult: '→ ×3.500' },
+    ],
+  },
+  defense: {
+    title: 'Incoming Mitigation (Guard / Ward)',
+    formula: 'D_taken = D_raw × 400 / (400 + D)',
+    legend: 'D = Effective Guard (physical) or Ward (magical), after penetration.',
+    note: 'Ward uses the same curve as Guard.',
+    table: [
+      { d: 0, taken: '100.0%', red: '0.0%' }, { d: 10, taken: '97.6%', red: '2.4%' }, { d: 30, taken: '93.0%', red: '7.0%' },
+      { d: 50, taken: '88.9%', red: '11.1%' }, { d: 100, taken: '80.0%', red: '20.0%' }, { d: 200, taken: '66.7%', red: '33.3%' },
+      { d: 300, taken: '57.1%', red: '42.9%' }, { d: 400, taken: '50.0%', red: '50.0%' }, { d: 500, taken: '44.4%', red: '55.6%' },
+      { d: 750, taken: '34.8%', red: '65.2%' }, { d: 1000, taken: '28.6%', red: '71.4%' }, { d: 1500, taken: '21.1%', red: '78.9%' },
+      { d: 2000, taken: '16.7%', red: '83.3%' },
+    ],
+  },
+  vitality: {
+    title: 'Vitality → Maximum Health',
+    formula: 'HP_max = HP_base × (1 + 2·V / (500 + V)) + HP_flat',
+    note: 'Approaches ×3.0 at the theoretical limit. Base Health stays core to identity.',
+    table: [
+      { v: 0, mult: '×1.000' }, { v: 50, mult: '×1.182' }, { v: 100, mult: '×1.333' }, { v: 200, mult: '×1.571' },
+      { v: 300, mult: '×1.750' }, { v: 500, mult: '×2.000' }, { v: 750, mult: '×2.200' }, { v: 1000, mult: '×2.333' },
+      { v: 1500, mult: '×2.500' }, { v: 2000, mult: '×2.600' }, { v: '∞', mult: '→ ×3.000' },
+    ],
+  },
+  mobility: [
+    { k: 'Movement Speed', f: 'Base × (1 + 0.35·Mob / (500 + Mob))', cap: '+35% max' },
+    { k: 'Dodge Distance', f: 'Base × (1 + 0.25·Mob / (400 + Mob))', cap: '+25% max' },
+    { k: 'Recovery Time', f: 'Base × (1 − 0.25·Mob / (600 + Mob))', cap: '−25% max' },
+    { k: 'Perfect Windows', f: 'capped enhancement', cap: '+15% max' },
+  ],
+  penetration: 'Effective Defence = max(0, D × (1 − %Pen) − FlatPen). Percentage applies before flat. Caps: 40% ordinary, 60% pinnacle. Flat cannot drop defence below 0.',
+  crit: 'Default critical = ×1.50, applied BEFORE Guard/Ward. Crits do not auto-ignore defence.',
+  affinity: [
+    { k: 'Severe weakness', m: '×1.50' }, { k: 'Weakness', m: '×1.25' }, { k: 'Neutral', m: '×1.00' },
+    { k: 'Resistance', m: '×0.80' }, { k: 'Strong resistance', m: '×0.60' }, { k: 'Immunity', m: '×0.00' },
+  ],
+  blocking: [
+    { k: 'Weak block', m: '70% remains' }, { k: 'Standard block', m: '50% remains' }, { k: 'Strong block', m: '30% remains' },
+    { k: 'Perfect block', m: '10% remains' }, { k: 'Perfect parry', m: '0% remains' },
+  ],
+  order: [
+    'Determine Base Power', 'Split physical / magical / mixed portions', 'Compute Effective Offensive Stat',
+    'Apply Might or Arcana scaling', 'Apply critical modifier', 'Apply weakness / resistance', 'Apply attack-specific modifiers',
+    'Apply percentage penetration', 'Apply flat penetration', 'Apply Guard or Ward mitigation', 'Apply rank Stability',
+    'Apply blocking / parrying', 'Apply shields / barriers', 'Apply caps and floors', 'Subtract health', 'Apply stagger / status / knockback',
+  ],
+  limits: [
+    'Minimum successful damage: 1.', 'Guard/Ward alone cannot reduce below 15% of raw.',
+    'Ordinary combined mitigation caps at 95%.', 'Only immunity, perfect parry, full shield, invulnerability, or encounter rules reach 100%.',
+    'Ordinary vulnerability caps at ×2.50 incoming.',
+  ],
+  dualScaling: 'For multi-attribute moves, blend first: Effective Stat = (A×wA)+(B×wB), weights total 1.00, then apply the curve once (prevents double-dipping).',
+};
+
+// Rank combat rules (sections 20–24)
+export const RANK_COMBAT = [
+  { rank: 'Standard', rule: 'Universal equations, no rank protection. High health alone does not make an Elite.' },
+  { rank: 'Named Rare', rule: 'One authored Signature Trait, +15% stagger threshold, −10% generic CC duration, unique spawn/consequence/reward/respawn. No blanket damage reduction.' },
+  { rank: 'Elite', rule: 'Elite Resolve: +30% stagger threshold, −20% generic CC, adaptive repeated-control resistance (100→70→40→20%, resets after 30s), ≥1 exclusive mechanic. No generic damage reduction.' },
+  { rank: 'Boss', rule: 'Phase Integrity: one hit cannot skip more than one phase threshold (default 35% excess carry), −50% generic CC, high status resistance, immune to ordinary instakills, stagger-immune during transitions/committed attacks.' },
+  { rank: 'Guardian', rule: 'Article Authority + Guardian Stability (applied after Guard/Ward). Fenrath: 25% final reduction proven / 35% proofless, 0% during committed recovery or full stagger. Dedicated stagger gauge — best broken by perfect parries, punish windows, Proof interactions, arena counters.' },
+];
+
+// ---- Threat Grade definitions (sections 25–27) ----
+export const THREAT_GRADES = {
+  public: [
+    { g: 'E', color: '#7d9b7d', name: 'Minor', desc: 'Minor creature or tutorial threat. Low lethality, easy escape, weak alone.', response: 'Newly registered adventurer, minimal preparation.' },
+    { g: 'D', color: '#8fb36a', name: 'Low', desc: 'Standard low-level field threat. Can injure the careless; clear counterplay.', response: 'One inexperienced adventurer with basic field knowledge.' },
+    { g: 'C', color: '#c9b24b', name: 'Serious', desc: 'Serious regional creature. Dangerous ambush, pack tactics, status effects.', response: 'Competent adventurer, proper equipment, knowledge of its behaviour.' },
+    { g: 'B', color: '#e0903c', name: 'Major', desc: 'Major regional threat. Apex predator or elite construct; settlement danger.', response: 'Experienced adventurer or small prepared party; contract recommended.' },
+    { g: 'A', color: '#e0584f', name: 'Exceptional', desc: 'Exceptional regional danger. Named rare elite, regional elite, powerful anomaly.', response: 'Veteran party, specialised preparation; access restrictions possible.' },
+    { g: 'S', color: '#c2487a', name: 'Floor Crisis', desc: 'Floor-level crisis or major boss. Floor Guardian under suppression; regional power.', response: 'Exceptional adventurers, structured preparation, Guild coordination.' },
+    { g: 'SS', color: '#9b5fd0', name: 'Catastrophic', desc: 'Catastrophic floor-level threat. Full-power Guardian, powerful hidden elite.', response: 'Elite adventurers, specialised mechanics; survival not expected for ordinary parties.' },
+    { g: 'SSS', color: '#6c7be0', name: 'Beyond Floor', desc: 'Threat far beyond the floor\u2019s intended progression.', response: 'Engagement prohibited. Observation and evacuation prioritised.' },
+  ],
+  restricted: [
+    { g: 'Calamity Class', color: '#c2702f', desc: 'Can destroy or permanently transform a major region, multiple settlements, or a substantial floor ecosystem.' },
+    { g: 'Cataclysm Class', color: '#b8503a', desc: 'Can destroy or transform an entire floor, several linked floors, or a major Tower system.' },
+    { g: 'Extinction Class', color: '#a23a2f', desc: 'Can cause civilisational collapse, mass floor death, widespread Guardian failure, irreversible Tower-scale damage.' },
+    { g: 'Tower Class', color: '#7a1f18', desc: 'Threatens the entire Tower, the Hundredfold Seal, and the survival of Tower civilisation. The true corrupt god is Tower Class.' },
+  ],
+  note: 'Threat Grade is separate from Level, Rank, and stat total. It is authored from mechanics, ecology, context, group behaviour, arena, and consequences — never auto-calculated from stats.',
+};
+
+// Fenrath threat grades by state (public) + restricted states
+export const FENRATH_GRADES = {
+  public: [
+    { state: 'Five Proofs invoked', grade: 'S', note: 'Floor Guardian, structured boss, regional functions fully suppressed.' },
+    { state: 'Four Proofs', grade: 'S', note: 'Standard S.' },
+    { state: 'Three Proofs', grade: 'S', note: 'Severe S — still a Floor Guardian.' },
+    { state: 'One or two Proofs', grade: 'SS', note: 'Regional systems active; intended progression assumptions no longer apply.' },
+  ],
+  restricted: [
+    { state: 'Proofless Fenrath', grade: 'SS', note: 'Restricted class: First Article Unbroken. Total 473.' },
+    { state: 'The First Fang', grade: 'SS', note: 'Flawless-trigger no-hit encounter; blocking disabled, only perfect parry/dodge valid.' },
+    { state: 'Proofless First Fang', grade: 'SSS', note: 'The highest Fenrath challenge currently established.' },
+  ],
+};
+
+// corrupt god grade (restricted)
+export const CORRUPT_GOD_GRADE = { grade: 'Tower Class', note: 'The 4,000-point profile is a manifested or intersecting combat body. The complete entity is unquantifiable — 4,000 does not represent its entire metaphysical existence.' };

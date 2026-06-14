@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { DEEP_LORE, FENRATH_STATS } from '../data/canon.js';
+import { DEEP_LORE, FENRATH_STATS, FENRATH_GRADES, THREAT_GRADES, CORRUPT_GOD_GRADE } from '../data/canon.js';
 import { StatPanel, StatBars } from './StatBlock.jsx';
+import GradeBadge from './GradeBadge.jsx';
 import './EntryPage.css';
 import './DeepLore.css';
 
@@ -88,7 +89,15 @@ export default function DeepLorePage({ navigate }) {
         {/* Fenrath gated stats */}
         <section className="entry__sec">
           <h2 className="entry__sec-h entry__sec-h--display">Fenrath — Beyond the Public Record</h2>
-          <div className="entry__grid">
+          <div className="dl__grades">
+            {FENRATH_GRADES.restricted.map((g) => (
+              <div key={g.state} className="dl__grade-row">
+                <GradeBadge grade={g.grade} size="md" />
+                <div><p className="dl__grade-state">{g.state}</p><p className="dl__grade-note">{g.note}</p></div>
+              </div>
+            ))}
+          </div>
+          <div className="entry__grid" style={{ marginTop: 'var(--sp-3)' }}>
             <div className="entry__panel entry__panel--accent">
               <h3 className="entry__panel-h">{FENRATH_STATS.proofless.label} · Total {FENRATH_STATS.proofless.total}</h3>
               <StatBars stats={FENRATH_STATS.proofless.stats} total={FENRATH_STATS.proofless.total} maxScale={110} />
@@ -105,7 +114,8 @@ export default function DeepLorePage({ navigate }) {
         {/* Seven Buried Elites */}
         <section className="entry__sec">
           <h2 className="entry__sec-h entry__sec-h--display">The Seven Buried Elites</h2>
-          <p className="entry__p">{D.sevenElites.intro}</p>
+          <div style={{ marginBottom: 'var(--sp-2)' }}><GradeBadge grade="SSS" size="md" title="All seven: SSS — engagement prohibited" /></div>
+          <p className="entry__p">{D.sevenElites.intro} <b style={{ color: '#d98a6a' }}>All seven are SSS Grade — engagement prohibited. The full seven-elite ritual sequence is a Calamity-Class Operation.</b></p>
           <div className="entry__grid" style={{ marginTop: 'var(--sp-3)' }}>
             {D.sevenElites.list.map((e) => (
               <div key={e.name} className="entry__panel entry__panel--accent">
@@ -124,7 +134,9 @@ export default function DeepLorePage({ navigate }) {
         {/* The corrupt god */}
         <section className="entry__sec">
           <h2 className="entry__sec-h entry__sec-h--display">{D.corruptGod.title}</h2>
+          <div style={{ marginBottom: 'var(--sp-2)' }}><GradeBadge grade="Tower Class" size="lg" /></div>
           <p className="entry__p entry__p--dim">Final true name: {D.corruptGod.finalName}</p>
+          <p className="entry__p" style={{ fontStyle: 'italic', color: 'var(--summit)' }}>{CORRUPT_GOD_GRADE.note}</p>
           <div className="entry__related" style={{ margin: 'var(--sp-2) 0' }}>
             {D.corruptGod.classifications.map((c) => <span key={c} className="entry__tag entry__tag--accent">{c}</span>)}
           </div>
@@ -158,7 +170,22 @@ export default function DeepLorePage({ navigate }) {
         {/* Floor 100 */}
         <section className="entry__sec">
           <h2 className="entry__sec-h entry__sec-h--display">{D.floor100.title}</h2>
-          <p className="entry__p">{D.floor100.summary}</p>
+          <div style={{ marginBottom: 'var(--sp-2)' }}><GradeBadge grade="Extinction Class" size="md" title="Provisional — TBD" /></div>
+          <p className="entry__p">{D.floor100.summary} <span className="entry__p--dim">Provisional grade: Extinction Class (TBD until designed).</span></p>
+        </section>
+
+        {/* Restricted threat classes */}
+        <section className="entry__sec">
+          <h2 className="entry__sec-h entry__sec-h--display">Restricted Threat Classes</h2>
+          <p className="entry__p entry__p--dim">Beyond the public E–SSS ladder. These appear only in restricted records.</p>
+          <div className="dl__grades" style={{ marginTop: 'var(--sp-3)' }}>
+            {THREAT_GRADES.restricted.map((g) => (
+              <div key={g.g} className="dl__grade-row">
+                <GradeBadge grade={g.g} size="md" />
+                <div><p className="dl__grade-note">{g.desc}</p></div>
+              </div>
+            ))}
+          </div>
         </section>
 
         <p className="entry__p entry__p--dim" style={{ textAlign: 'center', fontStyle: 'italic' }}>

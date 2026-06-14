@@ -18,6 +18,12 @@ export default function GameSystemsPage({ navigate }) {
 
       <div className="entry__body">
         <section className="entry__sec">
+          <button className="entry__back" style={{ fontSize: '0.82rem', padding: '0.7rem 1.3rem' }} onClick={() => navigate('#/systems/combat')}>
+            ⚔ Combat Mathematics &amp; Damage Calculator →
+          </button>
+        </section>
+
+        <section className="entry__sec">
           <h2 className="entry__sec-h entry__sec-h--display">The Six Universal Attributes</h2>
           <div className="entry__grid">
             {ATTRIBUTES.map((a) => (

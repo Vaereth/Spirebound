@@ -1,0 +1,34 @@
+/* ===================== COMBAT MATH PAGE ===================== */
+.cm-formula { font-family: var(--font-util); font-size: 1.05rem; color: var(--rune); background: rgba(96,232,220,0.06);
+  border: var(--edge-rune); border-radius: var(--radius); padding: 0.8rem 1rem; margin: var(--sp-2) 0; overflow-x: auto; }
+
+.cm-tablewrap { overflow-x: auto; border: var(--edge); border-radius: var(--radius-lg); margin-top: var(--sp-2); }
+.cm-table { width: 100%; border-collapse: collapse; min-width: 320px; }
+.cm-table th { font-family: var(--font-util); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent);
+  text-align: right; padding: 0.6rem 0.8rem; border-bottom: var(--edge); background: var(--ink-2); }
+.cm-table th:first-child { text-align: left; }
+.cm-table td { padding: 0.45rem 0.8rem; text-align: right; color: var(--bone); font-variant-numeric: tabular-nums; border-bottom: 1px solid rgba(231,227,214,0.04); }
+.cm-table__k { text-align: left !important; color: var(--bone-dim) !important; }
+
+.cm-row { display: grid; grid-template-columns: 1fr auto; gap: 0.3rem 0.6rem; padding: 0.45rem 0; border-top: var(--edge); }
+.cm-row:first-of-type { border-top: none; }
+.cm-row__k { color: var(--bone); font-size: 0.9rem; }
+.cm-row__cap { color: var(--accent); font-size: 0.8rem; font-family: var(--font-util); }
+.cm-row__f { grid-column: 1 / -1; color: var(--bone-dim); font-size: 0.78rem; background: var(--ink-3); padding: 0.25rem 0.5rem; border-radius: 4px; }
+
+.cm-pair { display: flex; justify-content: space-between; padding: 0.35rem 0; border-top: 1px solid rgba(231,227,214,0.05); font-size: 0.88rem; }
+.cm-pair:first-of-type { border-top: none; }
+.cm-pair span { color: var(--bone-dim); }
+.cm-pair b { color: var(--bone); }
+
+.cm-order { list-style: none; counter-reset: step; display: grid; gap: 0.3rem; }
+.cm-order li { counter-increment: step; color: var(--bone-dim); font-size: 0.9rem; padding-left: 2rem; position: relative; padding-top: 0.2rem; padding-bottom: 0.2rem; }
+.cm-order li::before { content: counter(step); position: absolute; left: 0; top: 0; width: 1.4rem; height: 1.4rem; display: grid; place-content: center;
+  font-family: var(--font-util); font-size: 0.7rem; color: var(--accent); border: var(--edge-rune); border-radius: 50%; }
+
+.cm-ladder { display: grid; gap: 0.6rem; margin-top: var(--sp-3); }
+.cm-grade-row { display: flex; gap: var(--sp-2); align-items: flex-start; padding: 0.8rem; background: var(--ink-2); border: var(--edge); border-radius: var(--radius-lg); }
+.cm-grade-name { font-family: var(--font-display); color: var(--bone); font-size: 1.1rem; }
+.cm-grade-desc { color: var(--bone-dim); font-size: 0.88rem; margin: 0.2rem 0; }
+.cm-grade-resp { color: var(--bone-dim); font-size: 0.82rem; }
+.cm-grade-resp b { color: var(--accent); }

@@ -98,3 +98,7 @@
   padding: 0.65rem 1.2rem; transition: all 0.3s var(--ease);
 }
 .best__full:hover { background: color-mix(in srgb, var(--accent) 18%, transparent); box-shadow: 0 0 22px color-mix(in srgb, var(--accent) 25%, transparent); }
+
+.best__escalation { margin-top: 0.5rem; font-size: 0.82rem; color: var(--bone-dim); line-height: 1.5;
+  padding: 0.5rem 0.7rem; background: rgba(224,144,60,0.07); border-left: 2px solid rgba(224,144,60,0.5); border-radius: var(--radius); }
+.best__escalation b { color: #e0903c; }

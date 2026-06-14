@@ -1,0 +1,18 @@
+/* ===================== THREAT GRADE BADGE ===================== */
+.grade { display: inline-flex; flex-direction: column; align-items: center; line-height: 1;
+  border: 1px solid color-mix(in srgb, var(--g) 55%, transparent); border-radius: var(--radius);
+  background: color-mix(in srgb, var(--g) 14%, transparent); overflow: hidden; }
+.grade__label { font-family: var(--font-util); letter-spacing: 0.12em; text-transform: uppercase; color: var(--bone-dim);
+  background: color-mix(in srgb, var(--g) 18%, transparent); width: 100%; text-align: center; }
+.grade__value { font-family: var(--font-display); font-weight: 800; color: var(--g);
+  text-shadow: 0 0 12px color-mix(in srgb, var(--g) 50%, transparent); }
+
+.grade--sm .grade__label { font-size: 0.5rem; padding: 0.12rem 0.3rem; }
+.grade--sm .grade__value { font-size: 0.95rem; padding: 0.12rem 0.4rem; }
+.grade--md .grade__label { font-size: 0.58rem; padding: 0.2rem 0.5rem; }
+.grade--md .grade__value { font-size: 1.5rem; padding: 0.2rem 0.6rem; }
+.grade--lg .grade__label { font-size: 0.65rem; padding: 0.25rem 0.7rem; }
+.grade--lg .grade__value { font-size: 2.4rem; padding: 0.25rem 0.9rem; }
+
+.grade--class .grade__value { font-size: 0.95rem; font-family: var(--font-util); font-weight: 700; letter-spacing: 0.04em; }
+.grade--class.grade--lg .grade__value { font-size: 1.2rem; }

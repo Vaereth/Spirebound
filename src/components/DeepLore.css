@@ -28,3 +28,9 @@
 .dl__seq-step { font-family: var(--font-util); font-size: 0.78rem; color: #d8cfc0; background: rgba(154,47,35,0.1); border: 1px solid rgba(154,47,35,0.3); border-radius: 40px; padding: 0.35rem 0.8rem; }
 
 .dl__god { margin-top: var(--sp-3); }
+
+.dl__grades { display: grid; gap: 0.6rem; }
+.dl__grade-row { display: flex; gap: var(--sp-2); align-items: center; padding: 0.7rem 0.9rem;
+  background: rgba(20,10,9,0.5); border: 1px solid rgba(154,47,35,0.25); border-radius: var(--radius-lg); }
+.dl__grade-state { font-family: var(--font-display); color: var(--bone-f); font-size: 1.05rem; }
+.dl__grade-note { color: #b8a99a; font-size: 0.88rem; line-height: 1.5; }

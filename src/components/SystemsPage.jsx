@@ -1,5 +1,6 @@
 import { NAMED_RARES, REGIONAL_ELITES } from '../data/canon.js';
 import { StatBars } from './StatBlock.jsx';
+import GradeBadge from './GradeBadge.jsx';
 import './EntryPage.css';
 import './SystemsPage.css';
 
@@ -30,6 +31,7 @@ export default function SystemsPage({ navigate }) {
                   <h3 className="sys-rare__name">{r.name}</h3>
                   <span className="sys-rare__species">{r.species} · {r.rank} · L{r.level}</span>
                 </div>
+                {r.grade && <div style={{ marginBottom: '0.5rem' }}><GradeBadge grade={r.grade} size="sm" /></div>}
                 {r.identity && <p className="entry__p" style={{ fontStyle: 'italic', fontSize: '0.92rem' }}>{r.identity}</p>}
                 <StatBars stats={r.stats} total={r.total} maxScale={Math.max(40, ...Object.values(r.stats))} />
                 <div className="sys-rare__facts">
@@ -53,6 +55,7 @@ export default function SystemsPage({ navigate }) {
                   <h3 className="sys-rare__name">{e.name}</h3>
                   <span className="sys-rare__species">Level {e.level}</span>
                 </div>
+                {e.grade && <div style={{ marginBottom: '0.5rem' }}><GradeBadge grade={e.grade} size="sm" /></div>}
                 <p className="entry__p" style={{ fontStyle: 'italic', fontSize: '0.92rem' }}>{e.identity}</p>
                 <StatBars stats={e.stats} total={e.total} maxScale={Math.max(50, ...Object.values(e.stats))} />
               </div>

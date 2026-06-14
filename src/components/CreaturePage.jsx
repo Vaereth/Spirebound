@@ -1,6 +1,7 @@
 import { BESTIARY, MIGRATION_CLASSES } from '../data/bestiary.js';
 import { slugify } from '../lib/slug.js';
 import { StatPanel } from './StatBlock.jsx';
+import GradeBadge from './GradeBadge.jsx';
 import ArtSlot from './ArtSlot.jsx';
 import './EntryPage.css';
 
@@ -39,6 +40,9 @@ export default function CreaturePage({ id, navigate }) {
           <span className="entry__tag" title={MIGRATION_CLASSES[c.migration] || ''}>{c.migration}</span>
           {c.level != null && <span className="entry__tag">Level {c.level}</span>}
           {c.total != null && <span className="entry__tag">Total {c.total}</span>}
+        </div>
+        <div style={{ marginTop: 'var(--sp-3)' }}>
+          <GradeBadge grade={c.grade} size="lg" />
         </div>
       </header>
 
@@ -113,7 +117,9 @@ export default function CreaturePage({ id, navigate }) {
 
           <section className="entry__panel">
             <h2 className="entry__panel-h">Guild Threat Assessment</h2>
-            <div className="entry__related">
+            <div style={{ marginBottom: 'var(--sp-2)' }}><GradeBadge grade={c.grade} size="md" /></div>
+            {c.escalation && <p className="entry__p" style={{ fontSize: '0.9rem' }}><b style={{ color: '#e0903c' }}>Escalation — </b>{c.escalation}</p>}
+            <div className="entry__related" style={{ marginTop: 'var(--sp-2)' }}>
               {c.threat.split('|').map((seg, i) => {
                 const [k, v] = seg.split(':').map((s) => s.trim());
                 return <span key={i} className="entry__tag"><b style={{ color: 'var(--bone-dim)' }}>{k}</b>{v ? ` — ${v}` : ''}</span>;

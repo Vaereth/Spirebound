@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { BESTIARY, BESTIARY_ZONES, MIGRATION_CLASSES } from '../data/bestiary.js';
 import { StatBars } from './StatBlock.jsx';
+import GradeBadge from './GradeBadge.jsx';
 import './Bestiary.css';
 
 // Accent per zone (kept in sync with the region palette where they overlap).
@@ -50,6 +51,7 @@ function CreatureCard({ c, accent, open, onToggle, navigate }) {
           <span className="best__class">{c.classification}</span>
         </span>
         <ThreatBadge threat={c.threat} />
+        <GradeBadge grade={c.grade} size="sm" />
         <span className="best__chev" aria-hidden="true">{open ? '–' : '+'}</span>
       </button>
 
@@ -62,6 +64,8 @@ function CreatureCard({ c, accent, open, onToggle, navigate }) {
           </div>
 
           {c.stats && <StatBars stats={c.stats} total={c.total} maxScale={Math.max(30, ...Object.values(c.stats))} />}
+
+          {c.escalation && <p className="best__escalation"><b>Escalation:</b> {c.escalation}</p>}
 
           <Field label="Seasonal Presence" text={c.seasonal} />
           <Field label="Visual Identity" text={c.visual} />

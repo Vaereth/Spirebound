@@ -4,6 +4,7 @@ import Truth from './components/Truth.jsx';
 import Cast from './components/Cast.jsx';
 import MainHub from './components/MainHub.jsx';
 import GameSystemsPage from './components/GameSystemsPage.jsx';
+import CombatMathPage from './components/CombatMathPage.jsx';
 import Floors from './components/Floors.jsx';
 import Floor1Hub from './components/Floor1Hub.jsx';
 import Floor1Page from './components/Floor1Page.jsx';
@@ -41,6 +42,7 @@ function RouteView({ route, navigate }) {
 
   if (seg0 === 'heroes' && seg1) return <HeroPage id={seg1} navigate={navigate} />;
 
+  if (seg0 === 'systems' && seg1 === 'combat') return <CombatMathPage navigate={navigate} />;
   if (seg0 === 'systems') return <GameSystemsPage navigate={navigate} />;
   if (seg0 === 'truth') return (<><Truth /><Footer /></>);
   if (seg0 === 'climbers') return (<><Cast navigate={navigate} /><Footer /></>);

@@ -1,6 +1,7 @@
 import { FLOOR1 as F } from '../data/floor1.js';
-import { FENRATH_STATS } from '../data/canon.js';
+import { FENRATH_STATS, FENRATH_GRADES } from '../data/canon.js';
 import { StatPanel } from './StatBlock.jsx';
+import GradeBadge from './GradeBadge.jsx';
 import ArtSlot from './ArtSlot.jsx';
 import './FenrathPage.css';
 
@@ -57,6 +58,24 @@ export default function FenrathPage({ navigate }) {
           <div style={{ marginTop: 'var(--sp-3)', '--accent': '#c2702f' }}>
             <StatPanel stats={FENRATH_STATS.base.stats} total={FENRATH_STATS.base.total} accent="#c2702f" maxScale={100} rank="Floor Guardian" />
           </div>
+        </section>
+
+        <section className="fen__sec">
+          <h2 className="fen__h">Guild Threat Grade by Proof State</h2>
+          <div className="fen__grades">
+            {FENRATH_GRADES.public.map((g) => (
+              <div key={g.state} className="fen__grade">
+                <GradeBadge grade={g.grade} size="md" />
+                <div>
+                  <p className="fen__grade-state">{g.state}</p>
+                  <p className="fen__grade-note">{g.note}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="fen__p fen__p--dim" style={{ marginTop: 'var(--sp-2)', fontStyle: 'italic' }}>
+            Further states — the proofless Guardian and the no-hit First Fang — are recorded only in the Sealed Archive.
+          </p>
         </section>
 
         <section className="fen__sec">

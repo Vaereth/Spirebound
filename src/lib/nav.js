@@ -73,6 +73,7 @@ export function searchIndex() {
   idx.push({ label: 'The Three Truths', kind: 'Page', route: '#/truth' });
   idx.push({ label: 'The Climbers', kind: 'Page', route: '#/climbers' });
   idx.push({ label: 'Stats & Systems', kind: 'Page', route: '#/systems' });
+  idx.push({ label: 'Combat Mathematics & Damage Calculator', kind: 'Page', route: '#/systems/combat' });
   idx.push({ label: 'The Ascent', kind: 'Page', route: '#/floors' });
   idx.push({ label: 'Floor 1 · The Verdant Reach', kind: 'Floor', route: '#/floors/1' });
   idx.push({ label: 'Regions of the Reach', kind: 'Page', route: '#/floors/1/regions' });
@@ -85,7 +86,7 @@ export function searchIndex() {
   // heroes
   CAST.forEach((c) => idx.push({ label: c.name, sub: c.epithet, kind: 'Climber', route: '#/heroes/' + c.id }));
   // creatures
-  BESTIARY.forEach((c) => idx.push({ label: c.name, sub: `${c.region} · L${c.level}`, kind: 'Creature', route: '#/floors/1/bestiary/' + c.id }));
+  BESTIARY.forEach((c) => idx.push({ label: c.name, sub: `${c.region} · L${c.level} · ${c.grade}`, kind: 'Creature', route: '#/floors/1/bestiary/' + c.id }));
   // named rares & elites (point to the section page)
   NAMED_RARES.forEach((r) => idx.push({ label: r.name, sub: `Named Rare · ${r.species}`, kind: 'Named Rare', route: '#/floors/1/systems' }));
   REGIONAL_ELITES.forEach((r) => idx.push({ label: r.name, sub: 'Regional Elite', kind: 'Elite', route: '#/floors/1/systems' }));
