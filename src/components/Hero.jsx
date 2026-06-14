@@ -28,7 +28,15 @@ export default function Hero() {
 
     // Pause the (expensive) 3D render loop whenever the hero isn't on screen.
     const vis = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) scene.resume(); else scene.pause(); },
+      ([e]) => {
+        if (e.isIntersecting) {
+          scene.resume();
+          // If we were hidden (display:none) and layout changed, re-fit.
+          if (typeof scene._onResize === 'function') scene._onResize();
+        } else {
+          scene.pause();
+        }
+      },
       { threshold: 0.01 }
     );
     if (heroRef.current) vis.observe(heroRef.current);
