@@ -340,10 +340,10 @@ export const FENRATH_GRADES = {
 export const CORRUPT_GOD_GRADE = { grade: 'Tower Class', note: 'The 4,000-point profile is a manifested or intersecting combat body. The complete entity is unquantifiable — 4,000 does not represent its entire metaphysical existence.' };
 
 // =====================================================================
-// FENRATH — FULL ENCOUNTER CANON (boss page; nothing here is sealed-gated).
-// Phase 1 is complete. Phase 2 / hidden Phase 3 are being drafted — the data
-// holds what's locked and marks the rest as in-progress so the page can
-// accommodate phases as they're written.
+// FENRATH — FULL ENCOUNTER CANON (boss page; restricted truths are gated).
+// All three phases have locked core mechanics and numerical design. Final
+// animation validation, visual identity, rewards, and some presentation
+// details remain. Full deep lore lives in src/data/fenrathLore.js.
 // =====================================================================
 export const FENRATH_ENCOUNTER = {
   identity: {
@@ -514,7 +514,7 @@ export const FENRATH_ENCOUNTER = {
     { when: 'Phase 3 victory', lines: ['\u201CYou were flawless.\u201D', '\u201CThe floor will not be.\u201D'] },
   ],
   achievements: ['The First Article', 'Witnessed Floor', 'Consequences Unverified', 'Without Witness', 'Not Once', 'The First Fang Broken', 'The Floor Will Not Be', 'Unbroken Before the First', 'The Whole Floor Answered'],
-  tbd: ['Final visual identity', 'Full deep lore', 'Final dialogue polish', 'Reward and item names', 'Exact Base Health (pending hero baseline)', 'Final animation timings', 'Final wiki presentation'],
+  tbd: ['Final visual identity', 'Final dialogue polish', 'Reward and item names', 'Exact Base Health (pending hero baseline)', 'Final animation timings', 'Final wiki presentation'],
 
   telegraphRules: 'Every move has a body telegraph, a world telegraph, and an optional assisted indicator. No invisible extension beyond animation; decorative fur/roots/cloth never deal damage unless visibly weaponised; grab hitboxes are narrower than damage cleaves; ground attacks use visible cracks as their true boundary. Difficulty may hide assistance but never changes hitbox geometry.',
 };

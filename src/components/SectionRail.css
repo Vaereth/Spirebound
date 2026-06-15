@@ -4,7 +4,7 @@
 .srail { --rail-accent: var(--accent-interface); }
 
 /* ---- desktop vertical rail ---- */
-.srail__desk { position: sticky; top: var(--rail-top); }
+.srail__desk { position: sticky; top: var(--rail-top); max-height: calc(100vh - var(--rail-top) - var(--sp-3)); overflow-y: auto; }
 .srail__title { display: block; font-family: var(--font-util); font-size: var(--t-label); letter-spacing: 0.16em; text-transform: uppercase; color: var(--bone-dim); margin-bottom: var(--sp-2); padding-left: 0.9rem; }
 .srail__list { list-style: none; display: flex; flex-direction: column; gap: 1px; border-left: 1px solid var(--hairline); }
 .srail__btn {
