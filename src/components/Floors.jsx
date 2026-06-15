@@ -1,23 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
 import { FLOORS } from '../data/floors.js';
+import { Page } from './Layout.jsx';
+import GradeBadge, { gradeColor } from './GradeBadge.jsx';
+import { floorStats } from '../lib/floorStats.js';
 import './Floors.css';
 
-// Observe which floor is centered in view → drives the spine tracker + reveals.
 function useActiveFloor(count) {
   const [active, setActive] = useState(0);
   const refs = useRef([]);
   useEffect(() => {
     const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            const i = Number(e.target.dataset.index);
-            e.target.classList.add('is-in');
-            setActive(i);
-          }
-        });
-      },
-      { threshold: 0.5, rootMargin: '-20% 0px -20% 0px' }
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) { setActive(Number(e.target.dataset.index)); e.target.classList.add('is-in'); }
+      }),
+      { threshold: 0.4, rootMargin: '-15% 0px -30% 0px' }
     );
     refs.current.forEach((el) => el && io.observe(el));
     return () => io.disconnect();
@@ -25,112 +21,81 @@ function useActiveFloor(count) {
   return { active, refs };
 }
 
-function SpineTracker({ floors, active }) {
+// Vertical Tower spine — you are climbing it.
+function TowerSpine({ floors, active }) {
+  const cleared = floors.filter((f) => f.status !== 'locked').length;
   return (
-    <aside className="spine" aria-hidden="true">
-      <div className="spine__rail">
-        <div className="spine__fill" style={{ height: `${(active / (floors.length - 1)) * 100}%` }} />
+    <aside className="tower" aria-hidden="true">
+      <div className="tower__rail">
+        <div className="tower__fill" style={{ height: `${(active / (floors.length - 1)) * 100}%` }} />
         {floors.map((f, i) => (
-          <div
-            key={f.n}
-            className={`spine__node ${i <= active ? 'is-cleared' : ''} ${i === active ? 'is-active' : ''} ${f.status === 'locked' ? 'is-locked' : ''}`}
-            style={{ '--accent': f.accent || '#60E8DC' }}
-          >
-            <span className="spine__num">{f.n}</span>
+          <div key={f.n}
+            className={`tower__node ${i === active ? 'is-active' : ''} ${f.status === 'locked' ? 'is-locked' : i < cleared ? 'is-open' : ''}`}
+            style={{ '--accent': f.accent || 'var(--rune)' }}>
+            <span className="tower__num">{f.status === 'locked' ? '⛓' : f.n}</span>
           </div>
         ))}
       </div>
-      <span className="spine__label">The Ascent</span>
+      <span className="tower__cap">The Ascent</span>
     </aside>
   );
 }
 
-function RevealedFloor({ f, index, refCb, open, onToggle, navigate }) {
+function OpenFloor({ f, index, refCb, navigate }) {
+  const stats = floorStats(f.n);
   return (
-    <article
-      className="floor"
-      data-index={index}
-      ref={refCb}
-      style={{ '--accent': f.accent || '#60E8DC' }}
-    >
-      <div className="floor__bg" aria-hidden="true" />
-      <div className="floor__inner wrap">
-        <div className="floor__marker">
-          <span className="floor__big">{String(f.n).padStart(2, '0')}</span>
-          <span className="floor__of">/ 10</span>
-        </div>
-
-        <div className="floor__head">
-          <p className="floor__eyebrow">
-            {f.biome}{f.settlement ? ` · ${f.settlement.type === 'city' ? 'Hub City' : 'Village'}` : ' · No settlement'}
-          </p>
-          <h3 className="floor__name">{f.name}</h3>
-          <p className="floor__tagline">{f.tagline}</p>
-          <p className="floor__summary">{f.summary}</p>
-
-          <div className="floor__actions">
-            {f.hasPage && navigate && (
-              <button className="floor__archive" onClick={() => navigate('#/floors/' + f.n)}>
-                Enter the full archive →
-              </button>
-            )}
-            <button className="floor__expand" onClick={onToggle} aria-expanded={open}>
-              {open ? 'Close summary –' : 'Quick summary +'}
-            </button>
-          </div>
-
-          <div className={`floor__detail ${open ? 'is-open' : ''}`}>
-            <div className="floor__detail-grid">
-              {f.settlement && (
-                <div className="floor__block">
-                  <h4 className="floor__block-h">{f.settlement.type === 'city' ? 'Hub City' : 'Settlement'}</h4>
-                  <p className="floor__block-name">{f.settlement.name}</p>
-                  {f.settlement.note && <p className="floor__block-note">{f.settlement.note}</p>}
-                </div>
-              )}
-              {f.landmarks && f.landmarks.length > 0 && (
-                <div className="floor__block">
-                  <h4 className="floor__block-h">Landmarks</h4>
-                  <ul className="floor__landmarks">
-                    {f.landmarks.map((l) => (
-                      <li key={l.name}><strong>{l.name}</strong> — {l.note}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {f.boss && (
-                <div className="floor__block">
-                  <h4 className="floor__block-h">Floor Boss</h4>
-                  <p className="floor__block-name">{f.boss.name}</p>
-                  {f.boss.kind && <span className="floor__bosskind">{f.boss.kind}</span>}
-                  {f.boss.note && <p className="floor__block-note">{f.boss.note}</p>}
-                </div>
-              )}
-              {f.milestone && (
-                <div className="floor__block floor__block--milestone">
-                  <h4 className="floor__block-h">The Milestone</h4>
-                  <p className="floor__block-note">{f.milestone}</p>
-                </div>
-              )}
+    <article className="ifloor" data-index={index} ref={refCb} style={{ '--accent': f.accent || 'var(--accent-floor1)' }}>
+      <div className="ifloor__num">
+        <span className="ifloor__big">{String(f.n).padStart(2, '0')}</span>
+        <span className="ifloor__of">/ 10</span>
+      </div>
+      <div className="ifloor__body">
+        <div className="ifloor__thumb" aria-hidden="true">
+          {stats ? (
+            <div className="ifloor__assess">
+              <span className="ifloor__assess-k">Avg. Guild Grade</span>
+              <span className="ifloor__assess-grade" style={{ '--g': gradeColor(stats.avgGrade) }}>{stats.avgGrade}</span>
+              <span className="ifloor__assess-lvl">Lv {stats.levelMin}–{stats.levelMax}</span>
+              <span className="ifloor__assess-count">{stats.count} species catalogued</span>
             </div>
+          ) : (
+            <div className="ifloor__assess ifloor__assess--unknown">
+              <span className="ifloor__assess-grade ifloor__assess-grade--unknown">?</span>
+              <span className="ifloor__assess-k">Uncharted</span>
+              <span className="ifloor__assess-count">No Guild survey yet</span>
+            </div>
+          )}
+        </div>
+        <div className="ifloor__info">
+          <p className="ifloor__eyebrow">{f.biome}{f.settlement ? ` · ${f.settlement.name}` : ''}</p>
+          <h3 className="ifloor__name">{f.name}</h3>
+          <p className="ifloor__tag">“{f.tagline}”</p>
+          <p className="ifloor__sum">{f.summary}</p>
+          <div className="ifloor__meta">
+            {f.boss && <span className="ifloor__chip ifloor__chip--boss">Guardian · {f.boss.name}</span>}
+            <span className="ifloor__chip">{f.settlement ? (f.settlement.type === 'city' ? 'Hub City' : 'Settlement') : 'No settlement'}</span>
+            {f.milestone && <span className="ifloor__chip ifloor__chip--mile">Milestone</span>}
           </div>
+          {f.hasPage && navigate && (
+            <button className="ifloor__enter" onClick={() => navigate('#/floors/' + f.n)}>Enter the Floor →</button>
+          )}
         </div>
       </div>
     </article>
   );
 }
 
-function LockedFloor({ f, index, refCb }) {
+function SealedFloor({ f, index, refCb }) {
   return (
-    <article className="floor floor--locked" data-index={index} ref={refCb}>
-      <div className="floor__inner wrap">
-        <div className="floor__marker floor__marker--locked">
-          <span className="floor__big">{String(f.n).padStart(2, '0')}</span>
-        </div>
-        <div className="floor__head">
-          <p className="floor__eyebrow floor__eyebrow--locked">Higher Floor · Shrouded</p>
-          <h3 className="floor__name floor__name--locked">{f.name}</h3>
-          <p className="floor__tagline floor__tagline--locked">“{f.tagline}”</p>
+    <article className="ifloor ifloor--sealed" data-index={index} ref={refCb}>
+      <div className="ifloor__num ifloor__num--sealed"><span className="ifloor__big">{String(f.n).padStart(2, '0')}</span></div>
+      <div className="ifloor__body ifloor__body--sealed">
+        <div className="ifloor__seal" aria-hidden="true"><span>⛓</span></div>
+        <div className="ifloor__info">
+          <p className="ifloor__eyebrow ifloor__eyebrow--sealed">Higher Floor · Sealed</p>
+          <h3 className="ifloor__name ifloor__name--sealed">{f.name}</h3>
+          <p className="ifloor__tag ifloor__tag--sealed">“{f.tagline}”</p>
+          <p className="ifloor__sealednote">The stair above will not open until the Guardian below has fallen.</p>
         </div>
       </div>
     </article>
@@ -139,52 +104,27 @@ function LockedFloor({ f, index, refCb }) {
 
 export default function Floors({ navigate }) {
   const { active, refs } = useActiveFloor(FLOORS.length);
-  const [openN, setOpenN] = useState(1);
-  const [inView, setInView] = useState(false);
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const io = new IntersectionObserver(
-      ([e]) => setInView(e.isIntersecting),
-      { threshold: 0, rootMargin: '-10% 0px -10% 0px' }
-    );
-    if (sectionRef.current) io.observe(sectionRef.current);
-    return () => io.disconnect();
-  }, []);
-
   return (
-    <section id="floors" className="floors" ref={sectionRef}>
-      <div className="floors__intro wrap">
-        <p className="eyebrow reveal">The Spire</p>
-        <h2 className="floors__head reveal">Ten realms stand between you and the wish.</h2>
-        <p className="floors__lead reveal">
-          Each floor is a world entire — its own land, its own people, its own guardian barring the stair above.
-          To clear one is not to pass a level; it is to conquer a realm. The first five carry you from empty fields
-          to the first great city. What waits higher is not yet spoken of.
+    <Page variant="wide" className="ifloors">
+      <header className="ifloors__intro">
+        <p className="ifloors__eyebrow">The Spire</p>
+        <h2 className="ifloors__head">Ten realms stand between you and the wish.</h2>
+        <p className="ifloors__lead">
+          Each floor is a world entire — its own land, its own people, its own Guardian barring the stair above.
+          The first five carry you from empty fields to the first great city. What waits higher is not yet spoken of.
         </p>
-      </div>
+      </header>
 
-      <div className={inView ? 'spine-on' : ''}>
-        <SpineTracker floors={FLOORS} active={active} />
+      <div className="ifloors__layout">
+        <TowerSpine floors={FLOORS} active={active} />
+        <div className="ifloors__track">
+          {FLOORS.map((f, i) =>
+            f.status === 'locked'
+              ? <SealedFloor key={f.n} f={f} index={i} refCb={(el) => (refs.current[i] = el)} />
+              : <OpenFloor key={f.n} f={f} index={i} refCb={(el) => (refs.current[i] = el)} navigate={navigate} />
+          )}
+        </div>
       </div>
-
-      <div className="floors__track">
-        {FLOORS.map((f, i) =>
-          f.status === 'locked' ? (
-            <LockedFloor key={f.n} f={f} index={i} refCb={(el) => (refs.current[i] = el)} />
-          ) : (
-            <RevealedFloor
-              key={f.n}
-              f={f}
-              index={i}
-              refCb={(el) => (refs.current[i] = el)}
-              open={openN === f.n}
-              onToggle={() => setOpenN(openN === f.n ? null : f.n)}
-              navigate={navigate}
-            />
-          )
-        )}
-      </div>
-    </section>
+    </Page>
   );
 }

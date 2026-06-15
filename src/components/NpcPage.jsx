@@ -1,13 +1,14 @@
 import { FLOOR1 as F } from '../data/floor1.js';
 import { slugify } from '../lib/slug.js';
 import ArtSlot from './ArtSlot.jsx';
-import './EntryPage.css';
+import { Page, EditorialSplit } from './Layout.jsx';
+import { VellumPanel, GlassPanel, PanelHeader } from './Surfaces.jsx';
+import { pushRecent } from '../lib/userContext.js';
+import './DossierPage.css';
 
-// Build a lookup of NPCs with any known hook lines.
 function npcRecord(slug) {
   const name = F.npcs.hearthvale.find((n) => slugify(n) === slug);
   if (!name) return null;
-  // hooks reference some NPCs by first name or descriptor; match loosely
   const hooks = (F.npcs.hooks || []).filter((h) => {
     const first = name.split(' ')[0].toLowerCase();
     return h.toLowerCase().includes(name.toLowerCase()) || h.toLowerCase().includes(first);
@@ -19,64 +20,57 @@ export default function NpcPage({ slug, navigate }) {
   const rec = npcRecord(slug);
   if (!rec) {
     return (
-      <div className="entry">
-        <div className="entry__nav"><button className="entry__back" onClick={() => navigate('#/floors/1')}>← Floor 1</button></div>
-        <div className="entry__body"><p className="entry__p">No such name in the Hearthvale records.</p></div>
-      </div>
+      <Page className="dos"><button className="dos__back" onClick={() => navigate('#/floors/1')}>← Floor 1</button>
+        <GlassPanel><p style={{ color: 'var(--bone-dim)' }}>No such name in the Hearthvale records.</p></GlassPanel></Page>
     );
   }
+  pushRecent({ label: rec.name, route: '#/floors/1/npcs/' + slug, kind: 'npc' });
   const others = F.npcs.hearthvale.filter((n) => n !== rec.name).slice(0, 8);
-  return (
-    <div className="entry" style={{ '--accent': '#E8B954' }}>
-      <div className="entry__nav">
-        <button className="entry__back" onClick={() => navigate('#/floors/1')}>← Floor 1</button>
-        <span className="entry__crumb">The Verdant Reach · Hearthvale · <b>{rec.name}</b></span>
-      </div>
 
-      <header className="entry__banner">
-        <p className="entry__eyebrow">Named Soul of Hearthvale</p>
-        <h1 className="entry__name">{rec.name}</h1>
-        <p className="entry__sub">City of First Light</p>
+  return (
+    <Page variant="wide" className="dos" style={{ '--accent': 'var(--accent-authority)' }}>
+      <div className="dos__topnav">
+        <button className="dos__back" onClick={() => navigate('#/floors/1')}>← Floor 1</button>
+        <span className="dos__crumb">The Verdant Reach · Hearthvale · <b>{rec.name}</b></span>
+      </div>
+      <header className="dos__head">
+        <p className="dos__eyebrow">Named Soul of Hearthvale</p>
+        <h1 className="dos__title">{rec.name}</h1>
+        <p className="dos__sub">City of First Light</p>
       </header>
 
-      <div className="entry__body">
-        <div className="entry__hero">
-          <div className="entry__hero-art">
-            <ArtSlot
-              variant="portrait"
-              label="Portrait"
-              path={`images/npcs/${slugify(rec.name)}.png`}
-              src={`/images/npcs/${slugify(rec.name)}.png`}
-              alt={`${rec.name} portrait`}
-            />
+      <EditorialSplit
+        flip
+        aside={
+          <div className="dos__art">
+            <ArtSlot variant="portrait" label="Portrait" path={`images/npcs/${slugify(rec.name)}.png`} src={`/images/npcs/${slugify(rec.name)}.png`} alt={`${rec.name} portrait`} />
           </div>
-          <div>
-            {rec.hooks.length > 0 ? (
-              <div className="entry__panel entry__panel--accent">
-                <h2 className="entry__panel-h">What the Guild Notes</h2>
-                {rec.hooks.map((h) => <p key={h} className="entry__p" style={{ marginBottom: '0.6rem' }}>{h}</p>)}
-              </div>
-            ) : (
-              <p className="entry__p entry__p--dim">A known figure of Hearthvale. Their full story is not yet recorded here.</p>
-            )}
-            <div className="entry__coming" style={{ marginTop: 'var(--sp-3)' }}>
-              <p className="entry__coming-h">Expanded Entry — Coming</p>
-              <p className="entry__coming-t">Role, personality, questlines, relationships, and dialogue to be added.</p>
-            </div>
+        }
+      >
+        <VellumPanel>
+          {rec.hooks.length > 0 ? (
+            <>
+              <PanelHeader eyebrow="The Guild Notes" title="What is Known" />
+              {rec.hooks.map((h) => <p key={h} className="dos__p">{h}</p>)}
+            </>
+          ) : (
+            <p className="dos__p dos__p--dim">A known figure of Hearthvale. Their full story is not yet recorded here.</p>
+          )}
+          <div className="dos__coming">
+            <span className="dos__coming-h">Expanded Entry — Coming</span>
+            <span className="dos__coming-t">Role, personality, questlines, relationships, and dialogue to be added.</span>
           </div>
-        </div>
+        </VellumPanel>
+      </EditorialSplit>
 
-        {others.length > 0 && (
-          <section className="entry__sec">
-            <h2 className="entry__sec-h">Other Souls of Hearthvale</h2>
-            <div className="entry__related">
-              {others.map((n) => (
-                <button key={n} className="entry__relchip" onClick={() => navigate('#/floors/1/npcs/' + slugify(n))}>{n}</button>
-              ))}
-            </div>
-          </section>
-        )}
-      </div>
-    </div>
+      {others.length > 0 && (
+        <section className="dos__related">
+          <h2 className="dos__related-h">Other Souls of Hearthvale</h2>
+          <div className="dos__relrow">
+            {others.map((n) => <button key={n} className="dos__relchip" onClick={() => navigate('#/floors/1/npcs/' + slugify(n))}>{n}</button>)}
+          </div>
+        </section>
+      )}
+    </Page>
   );
 }

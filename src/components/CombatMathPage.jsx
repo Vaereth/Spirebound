@@ -1,180 +1,23 @@
 import { COMBAT_MATH, RANK_COMBAT, THREAT_GRADES, BOSS_MATH } from '../data/canon.js';
 import DamageCalc from './DamageCalc.jsx';
 import GradeBadge from './GradeBadge.jsx';
-import './EntryPage.css';
-import './SystemsPage.css';
+import { Page, Stack, StickyContents, DataSplit, CardMatrix } from './Layout.jsx';
+import { GlassPanel, StonePanel, PanelHeader } from './Surfaces.jsx';
+import SectionRail, { useSectionSpy } from './SectionRail.jsx';
 import './CombatMath.css';
+import './CombatMathPage.css';
 
-export default function CombatMathPage({ navigate }) {
-  const M = COMBAT_MATH;
-  return (
-    <div className="entry" style={{ '--accent': '#60E8DC' }}>
-      <div className="entry__nav">
-        <button className="entry__back" onClick={() => navigate('#/systems')}>← Stats &amp; Systems</button>
-        <span className="entry__crumb"><b>Combat Mathematics</b></span>
-      </div>
-
-      <header className="entry__banner">
-        <p className="entry__eyebrow">Core Game Systems · For the Number-Minded</p>
-        <h1 className="entry__name">Combat Mathematics</h1>
-        <p className="entry__sub">{M.principle}</p>
-      </header>
-
-      <div className="entry__body">
-        {/* Calculator first — the toy */}
-        <section className="entry__sec">
-          <h2 className="entry__sec-h entry__sec-h--display">Damage Calculator</h2>
-          <p className="entry__p entry__p--dim">Outgoing and incoming damage, computed live with the canon curves and calculation order.</p>
-          <div className="entry__panel entry__panel--accent" style={{ marginTop: 'var(--sp-3)' }}>
-            <DamageCalc />
-          </div>
-        </section>
-
-        {/* Offense */}
-        <section className="entry__sec">
-          <h2 className="entry__sec-h entry__sec-h--display">{M.offense.title}</h2>
-          <div className="cm-formula">{M.offense.formula}</div>
-          <p className="entry__p entry__p--dim">{M.offense.legend} {M.offense.note}</p>
-          <ScaleTable rows={M.offense.table} cols={['Effective Stat', 'Multiplier']} pick={(r) => [r.s, r.mult]} />
-        </section>
-
-        {/* Defense */}
-        <section className="entry__sec">
-          <h2 className="entry__sec-h entry__sec-h--display">{M.defense.title}</h2>
-          <div className="cm-formula">{M.defense.formula}</div>
-          <p className="entry__p entry__p--dim">{M.defense.legend} {M.defense.note}</p>
-          <ScaleTable rows={M.defense.table} cols={['Guard / Ward', 'Damage Taken', 'Reduction']} pick={(r) => [r.d, r.taken, r.red]} />
-        </section>
-
-        {/* Vitality */}
-        <section className="entry__sec">
-          <h2 className="entry__sec-h entry__sec-h--display">{M.vitality.title}</h2>
-          <div className="cm-formula">{M.vitality.formula}</div>
-          <p className="entry__p entry__p--dim">{M.vitality.note}</p>
-          <ScaleTable rows={M.vitality.table} cols={['Vitality', 'Health Multiplier']} pick={(r) => [r.v, r.mult]} />
-        </section>
-
-        {/* Mobility + misc grid */}
-        <section className="entry__sec">
-          <h2 className="entry__sec-h entry__sec-h--display">Mobility, Penetration, Crits &amp; More</h2>
-          <div className="entry__grid">
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">Mobility (capped curves)</h3>
-              {M.mobility.map((m) => (
-                <div key={m.k} className="cm-row"><span className="cm-row__k">{m.k}</span><span className="cm-row__cap">{m.cap}</span><code className="cm-row__f">{m.f}</code></div>
-              ))}
-            </div>
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">Affinity Modifiers</h3>
-              {M.affinity.map((a) => <div key={a.k} className="cm-pair"><span>{a.k}</span><b>{a.m}</b></div>)}
-            </div>
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">Blocking &amp; Parrying</h3>
-              {M.blocking.map((b) => <div key={b.k} className="cm-pair"><span>{b.k}</span><b>{b.m}</b></div>)}
-            </div>
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">Penetration &amp; Crits</h3>
-              <p className="entry__p" style={{ fontSize: '0.88rem' }}>{M.penetration}</p>
-              <p className="entry__p" style={{ fontSize: '0.88rem', marginTop: '0.5rem' }}>{M.crit}</p>
-            </div>
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">Dual-Attribute Scaling</h3>
-              <p className="entry__p" style={{ fontSize: '0.88rem' }}>{M.dualScaling}</p>
-            </div>
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">Limits &amp; Floors</h3>
-              <ul className="sys-list">{M.limits.map((l) => <li key={l}>{l}</li>)}</ul>
-            </div>
-          </div>
-        </section>
-
-        {/* Calc order */}
-        <section className="entry__sec">
-          <h2 className="entry__sec-h entry__sec-h--display">Calculation Order</h2>
-          <ol className="cm-order">{M.order.map((o, i) => <li key={i}>{o}</li>)}</ol>
-        </section>
-
-        {/* Rank combat rules */}
-        <section className="entry__sec">
-          <h2 className="entry__sec-h entry__sec-h--display">Rank Combat Rules</h2>
-          <div className="entry__grid">
-            {RANK_COMBAT.map((r) => (
-              <div key={r.rank} className="entry__panel entry__panel--accent">
-                <h3 className="entry__panel-h">{r.rank}</h3>
-                <p className="entry__p" style={{ fontSize: '0.9rem' }}>{r.rule}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Boss & Guardian math */}
-        <section className="entry__sec">
-          <h2 className="entry__sec-h entry__sec-h--display">Boss &amp; Guardian Math</h2>
-          <p className="entry__p entry__p--dim">The rules that support Floor Guardians like Fenrath, layered on top of the universal equations.</p>
-          <div className="entry__grid">
-            <div className="entry__panel entry__panel--accent">
-              <h3 className="entry__panel-h">Guardian Stability</h3>
-              <p className="entry__p" style={{ fontSize: '0.88rem' }}>{BOSS_MATH.stabilityFormula}</p>
-              <p className="entry__p" style={{ fontSize: '0.85rem', marginTop: '0.4rem' }}><b>Example —</b> {BOSS_MATH.stabilityExample}</p>
-              <p className="entry__p" style={{ fontSize: '0.85rem', marginTop: '0.4rem' }}><b>Interpolation —</b> {BOSS_MATH.stabilityInterp}</p>
-            </div>
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">Phase Health</h3>
-              <p className="entry__p" style={{ fontSize: '0.88rem' }}>{BOSS_MATH.phaseHealth}</p>
-            </div>
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">Phase Integrity</h3>
-              <p className="entry__p" style={{ fontSize: '0.88rem' }}>{BOSS_MATH.phaseIntegrity}</p>
-            </div>
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">Stagger Generation</h3>
-              <p className="entry__p" style={{ fontSize: '0.88rem' }}>{BOSS_MATH.staggerGen}</p>
-            </div>
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">Bleed &amp; Crushed Guard</h3>
-              <p className="entry__p" style={{ fontSize: '0.85rem' }}>{BOSS_MATH.bleed}</p>
-              <p className="entry__p" style={{ fontSize: '0.85rem', marginTop: '0.4rem' }}>{BOSS_MATH.crushedGuard}</p>
-            </div>
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">Status Caps</h3>
-              <ul className="sys-list">{BOSS_MATH.statusCaps.map((s) => <li key={s}>{s}</li>)}</ul>
-              <p className="entry__p" style={{ fontSize: '0.82rem', marginTop: '0.4rem' }}>{BOSS_MATH.statusRule}</p>
-            </div>
-            <div className="entry__panel entry__panel--accent">
-              <h3 className="entry__panel-h">Phase 3 Execution Rule</h3>
-              <p className="entry__p" style={{ fontSize: '0.88rem' }}>{BOSS_MATH.execution}</p>
-            </div>
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">Difficulty Application Order</h3>
-              <ol className="cm-order">{BOSS_MATH.diffOrder.map((o, i) => <li key={i}>{o}</li>)}</ol>
-            </div>
-          </div>
-        </section>
-
-        {/* Threat grade ladder */}
-        <section className="entry__sec">
-          <h2 className="entry__sec-h entry__sec-h--display">The Guild Threat-Grade Ladder</h2>
-          <p className="entry__p entry__p--dim">{THREAT_GRADES.note}</p>
-          <div className="cm-ladder">
-            {THREAT_GRADES.public.map((g) => (
-              <div key={g.g} className="cm-grade-row">
-                <GradeBadge grade={g.g} size="md" />
-                <div>
-                  <p className="cm-grade-name">{g.name}</p>
-                  <p className="cm-grade-desc">{g.desc}</p>
-                  <p className="cm-grade-resp"><b>Response:</b> {g.response}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-          <p className="entry__p entry__p--dim" style={{ marginTop: 'var(--sp-2)', fontStyle: 'italic' }}>
-            Restricted classes — Calamity, Cataclysm, Extinction, and Tower — appear only in the Sealed Archive.
-          </p>
-        </section>
-      </div>
-    </div>
-  );
-}
+const SECTIONS = [
+  { id: 'calc', label: 'Calculator' },
+  { id: 'offense', label: 'Offense' },
+  { id: 'defense', label: 'Defense' },
+  { id: 'vitality', label: 'Vitality' },
+  { id: 'modifiers', label: 'Modifiers' },
+  { id: 'order', label: 'Calc Order' },
+  { id: 'ranks', label: 'Rank Rules' },
+  { id: 'boss', label: 'Boss Math' },
+  { id: 'ladder', label: 'Threat Ladder' },
+];
 
 function ScaleTable({ rows, cols, pick }) {
   return (
@@ -182,12 +25,122 @@ function ScaleTable({ rows, cols, pick }) {
       <table className="cm-table">
         <thead><tr>{cols.map((c) => <th key={c}>{c}</th>)}</tr></thead>
         <tbody>
-          {rows.map((r, i) => {
-            const vals = pick(r);
-            return <tr key={i}>{vals.map((v, j) => <td key={j} className={j === 0 ? 'cm-table__k' : ''}>{v}</td>)}</tr>;
-          })}
+          {rows.map((r, i) => { const vals = pick(r); return <tr key={i}>{vals.map((v, j) => <td key={j} className={j === 0 ? 'cm-table__k' : ''}>{v}</td>)}</tr>; })}
         </tbody>
       </table>
     </div>
+  );
+}
+
+// formula beside a table/example
+function FormulaBlock({ id, title, formula, legend, children, setRef }) {
+  return (
+    <section id={id} ref={setRef(id)}>
+      <h2 className="cm2__h">{title}</h2>
+      <DataSplit
+        left={
+          <GlassPanel accent="var(--accent-interface)">
+            <PanelHeader eyebrow="Formula" />
+            <div className="cm-formula">{formula}</div>
+            {legend && <p className="cm2__p cm2__p--dim">{legend}</p>}
+          </GlassPanel>
+        }
+        right={children}
+      />
+    </section>
+  );
+}
+
+export default function CombatMathPage({ navigate }) {
+  const M = COMBAT_MATH;
+  const { active, setRef, go } = useSectionSpy(SECTIONS.map((s) => s.id));
+
+  return (
+    <Page variant="wide" className="cm2">
+      <div className="cm2__topnav">
+        <button className="cm2__back" onClick={() => navigate('#/systems')}>← Stats &amp; Systems</button>
+        <span className="cm2__crumb"><b>Combat Mathematics</b></span>
+      </div>
+      <header className="cm2__head">
+        <p className="cm2__eyebrow">Core Game Systems · For the Number-Minded</p>
+        <h1 className="cm2__title">Combat Mathematics</h1>
+        <p className="cm2__lead">{M.principle}</p>
+      </header>
+
+      <StickyContents rail={<SectionRail sections={SECTIONS} active={active} onGo={go} title="Combat Math" />}>
+        <Stack gap="section">
+          <section id="calc" ref={setRef('calc')}>
+            <h2 className="cm2__h">Damage Calculator</h2>
+            <p className="cm2__p cm2__p--dim">Outgoing and incoming damage, computed live with the canon curves and calculation order.</p>
+            <GlassPanel accent="var(--accent-interface)" style={{ marginTop: 'var(--sp-2)' }}><DamageCalc /></GlassPanel>
+          </section>
+
+          <FormulaBlock id="offense" title={M.offense.title} formula={M.offense.formula} legend={`${M.offense.legend} ${M.offense.note}`} setRef={setRef}>
+            <GlassPanel accent="var(--accent-interface)"><PanelHeader eyebrow="Scaling" /><ScaleTable rows={M.offense.table} cols={['Effective Stat', 'Multiplier']} pick={(r) => [r.s, r.mult]} /></GlassPanel>
+          </FormulaBlock>
+
+          <FormulaBlock id="defense" title={M.defense.title} formula={M.defense.formula} setRef={setRef}>
+            <GlassPanel accent="var(--accent-interface)"><PanelHeader eyebrow="Mitigation" /><ScaleTable rows={M.defense.table} cols={['Guard / Ward', 'Taken', 'Reduction']} pick={(r) => [r.d, r.taken, r.red]} /></GlassPanel>
+          </FormulaBlock>
+
+          <FormulaBlock id="vitality" title={M.vitality.title} formula={M.vitality.formula} setRef={setRef}>
+            <GlassPanel accent="var(--accent-interface)"><PanelHeader eyebrow="Health" /><ScaleTable rows={M.vitality.table} cols={['Vitality', 'Health Multiplier']} pick={(r) => [r.v, r.mult]} /></GlassPanel>
+          </FormulaBlock>
+
+          <section id="modifiers" ref={setRef('modifiers')}>
+            <h2 className="cm2__h">Mobility, Penetration, Crits &amp; More</h2>
+            <CardMatrix min={250}>
+              <GlassPanel accent="var(--accent-interface)"><PanelHeader eyebrow="Mobility" title="Capped Curves" />{M.mobility.map((m) => <div key={m.k} className="cm-row"><span className="cm-row__k">{m.k}</span><span className="cm-row__cap">{m.cap}</span><code className="cm-row__f">{m.f}</code></div>)}</GlassPanel>
+              <GlassPanel accent="var(--accent-interface)"><PanelHeader eyebrow="Affinity" title="Modifiers" />{M.affinity.map((a) => <div key={a.k} className="cm-pair"><span>{a.k}</span><b>{a.m}</b></div>)}</GlassPanel>
+              <GlassPanel accent="var(--accent-interface)"><PanelHeader eyebrow="Defense" title="Blocking & Parrying" />{M.blocking.map((b) => <div key={b.k} className="cm-pair"><span>{b.k}</span><b>{b.m}</b></div>)}</GlassPanel>
+              <GlassPanel accent="var(--accent-interface)"><PanelHeader eyebrow="Penetration & Crits" />{<><p className="cm2__p">{M.penetration}</p><p className="cm2__p">{M.crit}</p></>}</GlassPanel>
+              <GlassPanel accent="var(--accent-interface)"><PanelHeader eyebrow="Dual-Attribute Scaling" /><p className="cm2__p">{M.dualScaling}</p></GlassPanel>
+              <GlassPanel accent="var(--accent-interface)"><PanelHeader eyebrow="Limits & Floors" /><ul className="cm2__list">{M.limits.map((l) => <li key={l}>{l}</li>)}</ul></GlassPanel>
+            </CardMatrix>
+          </section>
+
+          <section id="order" ref={setRef('order')}>
+            <h2 className="cm2__h">Calculation Order</h2>
+            <GlassPanel accent="var(--accent-interface)"><ol className="cm-order">{M.order.map((o, i) => <li key={i}>{o}</li>)}</ol></GlassPanel>
+          </section>
+
+          <section id="ranks" ref={setRef('ranks')}>
+            <h2 className="cm2__h">Rank Combat Rules</h2>
+            <CardMatrix min={240}>
+              {RANK_COMBAT.map((r) => <GlassPanel key={r.rank} accent="var(--accent-interface)"><PanelHeader eyebrow="Rank" title={r.rank} /><p className="cm2__p">{r.rule}</p></GlassPanel>)}
+            </CardMatrix>
+          </section>
+
+          <section id="boss" ref={setRef('boss')}>
+            <h2 className="cm2__h">Boss &amp; Guardian Math</h2>
+            <p className="cm2__p cm2__p--dim">The rules that support Floor Guardians like Fenrath, layered on the universal equations.</p>
+            <CardMatrix min={260}>
+              <StonePanel accent="var(--accent-guardian)"><PanelHeader eyebrow="Guardian Stability" accent="var(--accent-guardian)" /><p className="cm2__p">{BOSS_MATH.stabilityFormula}</p><p className="cm2__p cm2__p--ex"><b>Example —</b> {BOSS_MATH.stabilityExample}</p><p className="cm2__p cm2__p--ex"><b>Interpolation —</b> {BOSS_MATH.stabilityInterp}</p></StonePanel>
+              <GlassPanel accent="var(--accent-guardian)"><PanelHeader eyebrow="Phase Health" accent="var(--accent-guardian)" /><p className="cm2__p">{BOSS_MATH.phaseHealth}</p></GlassPanel>
+              <GlassPanel accent="var(--accent-guardian)"><PanelHeader eyebrow="Phase Integrity" accent="var(--accent-guardian)" /><p className="cm2__p">{BOSS_MATH.phaseIntegrity}</p></GlassPanel>
+              <GlassPanel accent="var(--accent-guardian)"><PanelHeader eyebrow="Stagger Generation" accent="var(--accent-guardian)" /><p className="cm2__p">{BOSS_MATH.staggerGen}</p></GlassPanel>
+              <GlassPanel accent="var(--accent-guardian)"><PanelHeader eyebrow="Bleed & Crushed Guard" accent="var(--accent-guardian)" /><p className="cm2__p">{BOSS_MATH.bleed}</p><p className="cm2__p cm2__p--ex">{BOSS_MATH.crushedGuard}</p></GlassPanel>
+              <GlassPanel accent="var(--accent-guardian)"><PanelHeader eyebrow="Status Caps" accent="var(--accent-guardian)" /><ul className="cm2__list">{BOSS_MATH.statusCaps.map((s) => <li key={s}>{s}</li>)}</ul><p className="cm2__p cm2__p--dim">{BOSS_MATH.statusRule}</p></GlassPanel>
+              <StonePanel accent="var(--accent-blood)"><PanelHeader eyebrow="Phase 3 Execution Rule" accent="var(--accent-blood)" /><p className="cm2__p">{BOSS_MATH.execution}</p></StonePanel>
+              <GlassPanel accent="var(--accent-guardian)"><PanelHeader eyebrow="Difficulty Application Order" accent="var(--accent-guardian)" /><ol className="cm-order">{BOSS_MATH.diffOrder.map((o, i) => <li key={i}>{o}</li>)}</ol></GlassPanel>
+            </CardMatrix>
+          </section>
+
+          <section id="ladder" ref={setRef('ladder')}>
+            <h2 className="cm2__h">The Guild Threat-Grade Ladder</h2>
+            <p className="cm2__p cm2__p--dim">{THREAT_GRADES.note}</p>
+            <div className="cm-ladder">
+              {THREAT_GRADES.public.map((g) => (
+                <div key={g.g} className="cm-grade-row">
+                  <GradeBadge grade={g.g} size="md" />
+                  <div><p className="cm-grade-name">{g.name}</p><p className="cm-grade-desc">{g.desc}</p><p className="cm-grade-resp"><b>Response:</b> {g.response}</p></div>
+                </div>
+              ))}
+            </div>
+            <p className="cm2__p cm2__p--dim cm2__tbd">Restricted classes — Calamity, Cataclysm, Extinction, and Tower — appear only in the Sealed Archive.</p>
+          </section>
+        </Stack>
+      </StickyContents>
+    </Page>
   );
 }

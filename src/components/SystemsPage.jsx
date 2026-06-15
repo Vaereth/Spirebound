@@ -1,73 +1,62 @@
 import { NAMED_RARES, REGIONAL_ELITES } from '../data/canon.js';
 import { StatBars } from './StatBlock.jsx';
 import GradeBadge from './GradeBadge.jsx';
-import './EntryPage.css';
+import { Page, Stack, CardMatrix } from './Layout.jsx';
+import { GlassPanel, StonePanel, PanelHeader } from './Surfaces.jsx';
 import './SystemsPage.css';
 
 export default function SystemsPage({ navigate }) {
   return (
-    <div className="entry" style={{ '--accent': '#c98a4a' }}>
-      <div className="entry__nav">
-        <button className="entry__back" onClick={() => navigate('#/floors/1')}>← Floor 1</button>
-        <span className="entry__crumb">The Verdant Reach · <b>Named Rares &amp; Elites</b></span>
-        <button className="entry__back" onClick={() => navigate('#/systems')} style={{ marginLeft: 'auto' }}>Core Game Systems →</button>
+    <Page variant="wide" className="rare" style={{ '--accent': '#c98a4a' }}>
+      <div className="rare__topnav">
+        <button className="rare__back" onClick={() => navigate('#/floors/1')}>← Floor 1</button>
+        <span className="rare__crumb">The Verdant Reach · <b>Named Rares &amp; Elites</b></span>
+        <button className="rare__cta" onClick={() => navigate('#/systems')}>Core Game Systems →</button>
       </div>
-
-      <header className="entry__banner">
-        <p className="entry__eyebrow">Ascendant Guild Records · Floor 1</p>
-        <h1 className="entry__name">Named Rares &amp; Regional Elites</h1>
-        <p className="entry__sub">The individually-authored threats of the Verdant Reach. For the universal six-attribute system, see Core Game Systems.</p>
+      <header className="rare__head">
+        <p className="rare__eyebrow">Ascendant Guild Records · Floor 1</p>
+        <h1 className="rare__title">Named Rares &amp; Regional Elites</h1>
+        <p className="rare__lead">The individually-authored threats of the Verdant Reach. For the universal six-attribute system, see Core Game Systems.</p>
       </header>
 
-      <div className="entry__body">
-        {/* Named Rares */}
-        <section className="entry__sec" id="named-rares">
-          <h2 className="entry__sec-h entry__sec-h--display">Floor 1 Named Rares</h2>
-          <p className="entry__p entry__p--dim">Unique, conditional, individually authored individuals — shown separately from regional elites.</p>
-          <div className="entry__grid" style={{ marginTop: 'var(--sp-3)' }}>
+      <Stack gap="section">
+        <section id="named-rares">
+          <h2 className="rare__h">Floor 1 Named Rares</h2>
+          <p className="rare__p rare__p--dim">Unique, conditional, individually authored individuals — shown separately from regional elites.</p>
+          <CardMatrix min={300}>
             {NAMED_RARES.map((r) => (
-              <div key={r.name} className="entry__panel entry__panel--accent">
-                <div className="sys-rare__head">
-                  <h3 className="sys-rare__name">{r.name}</h3>
-                  <span className="sys-rare__species">{r.species} · {r.rank} · L{r.level}</span>
-                </div>
-                {r.grade && <div style={{ marginBottom: '0.5rem' }}><GradeBadge grade={r.grade} size="sm" /></div>}
-                {r.identity && <p className="entry__p" style={{ fontStyle: 'italic', fontSize: '0.92rem' }}>{r.identity}</p>}
+              <StonePanel key={r.name} accent="var(--accent-authority)">
+                <PanelHeader eyebrow={`${r.species} · ${r.rank} · L${r.level}`} title={r.name} accent="var(--accent-authority)"
+                  right={r.grade ? <GradeBadge grade={r.grade} size="sm" /> : null} />
+                {r.identity && <p className="rare__p rare__quote">{r.identity}</p>}
                 <StatBars stats={r.stats} total={r.total} maxScale={Math.max(40, ...Object.values(r.stats))} />
-                <div className="sys-rare__facts">
+                <div className="rare__facts">
                   {r.spawn && <p><b>Spawn:</b> {r.spawn}</p>}
                   {r.combat && <p><b>Combat:</b> {r.combat}</p>}
                   {r.consequence && <p><b>If slain:</b> {r.consequence}</p>}
-                  <p><b>Respawn:</b> {r.respawn}</p>
+                  {r.respawn && <p><b>Respawn:</b> {r.respawn}</p>}
                 </div>
-              </div>
+              </StonePanel>
             ))}
-          </div>
+          </CardMatrix>
         </section>
 
-        {/* Regional Elites */}
-        <section className="entry__sec" id="regional-elites">
-          <h2 className="entry__sec-h entry__sec-h--display">Regional Elites</h2>
-          <div className="entry__grid">
+        <section id="regional-elites">
+          <h2 className="rare__h">Regional Elites</h2>
+          <CardMatrix min={280}>
             {REGIONAL_ELITES.map((e) => (
-              <div key={e.name} className="entry__panel">
-                <div className="sys-rare__head">
-                  <h3 className="sys-rare__name">{e.name}</h3>
-                  <span className="sys-rare__species">Level {e.level}</span>
-                </div>
-                {e.grade && <div style={{ marginBottom: '0.5rem' }}><GradeBadge grade={e.grade} size="sm" /></div>}
-                <p className="entry__p" style={{ fontStyle: 'italic', fontSize: '0.92rem' }}>{e.identity}</p>
+              <GlassPanel key={e.name} accent="var(--accent-authority)">
+                <PanelHeader eyebrow={`Level ${e.level}`} title={e.name} accent="var(--accent-authority)"
+                  right={e.grade ? <GradeBadge grade={e.grade} size="sm" /> : null} />
+                <p className="rare__p rare__quote">{e.identity}</p>
                 <StatBars stats={e.stats} total={e.total} maxScale={Math.max(50, ...Object.values(e.stats))} />
-              </div>
+              </GlassPanel>
             ))}
-          </div>
+          </CardMatrix>
         </section>
 
-        <p className="entry__p entry__p--dim" style={{ textAlign: 'center', fontStyle: 'italic' }}>
-          A higher total does not automatically win. Mechanics, terrain, flight, groups, special rules, and executes all matter.
-        </p>
-      </div>
-    </div>
+        <p className="rare__p rare__p--dim rare__foot">A higher total does not automatically win. Mechanics, terrain, flight, groups, special rules, and executes all matter.</p>
+      </Stack>
+    </Page>
   );
 }
-

@@ -1,17 +1,14 @@
 import Bestiary from './Bestiary.jsx';
-import './EntryPage.css';
+import { Page } from './Layout.jsx';
 
 export default function BestiaryPage({ navigate }) {
   return (
-    <div className="entry" style={{ '--accent': '#5E9C68' }}>
-      <div className="entry__nav">
-        <button className="entry__back" onClick={() => navigate('#/floors/1')}>← Floor 1</button>
-        <span className="entry__crumb">The Verdant Reach · <b>Bestiary</b></span>
-        <button className="entry__back" onClick={() => navigate('#/floors/1/systems')} style={{ marginLeft: 'auto' }}>Stats &amp; Systems →</button>
+    <Page variant="wide" style={{ paddingTop: 'var(--sp-3)', paddingBottom: 'var(--sp-5)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', padding: 'var(--sp-2) 0 var(--sp-3)', flexWrap: 'wrap' }}>
+        <button onClick={() => navigate('#/floors/1')} style={{ cursor: 'pointer', fontFamily: 'var(--font-util)', fontSize: '0.8rem', color: 'var(--bone-dim)', background: 'var(--surface-2)', border: 'var(--edge)', borderRadius: '40px', padding: '0.5rem 1rem' }}>← Floor 1</button>
+        <span style={{ fontFamily: 'var(--font-util)', fontSize: '0.78rem', color: 'var(--bone-dim)' }}>The Verdant Reach · <b style={{ color: 'var(--bone)' }}>Bestiary</b></span>
       </div>
-      <div className="entry__body" style={{ paddingTop: 'var(--sp-4)' }}>
-        <Bestiary navigate={navigate} />
-      </div>
-    </div>
+      <Bestiary navigate={navigate} />
+    </Page>
   );
 }

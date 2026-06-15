@@ -20,20 +20,28 @@ import DeepLorePage from './components/DeepLorePage.jsx';
 import TopBar from './components/TopBar.jsx';
 import Breadcrumbs from './components/Breadcrumbs.jsx';
 import CommandPalette from './components/CommandPalette.jsx';
+import AppShell from './components/AppShell.jsx';
 import { useHashRoute } from './hooks/useHashRoute.js';
+import { setLastVisited } from './lib/userContext.js';
 import './styles/tokens.css';
 import './styles/global.css';
 
 function Footer() {
   return (
-    <footer style={{
-      textAlign: 'center', padding: '4rem 1rem', color: 'var(--bone-dim)',
-      fontFamily: 'var(--font-util)', fontSize: '0.8rem', letterSpacing: '0.2em',
-      textTransform: 'uppercase', borderTop: 'var(--edge)'
-    }}>
-      Spirebound · Design Bible · Work in progress
+    <footer className="site-foot">
+      Spirebound · Ascendant Archive · Work in progress
     </footer>
   );
+}
+
+// per-route ambient accent for the shell atmosphere
+function accentFor(parts) {
+  const [s0, s1, s2] = parts;
+  if (s0 === 'floors' && s1 === '1' && s2 === 'fenrath') return 'var(--accent-guardian)';
+  if (s0 === 'floors' && s1 === '1' && s2 === 'sealed') return 'var(--accent-blood)';
+  if (s0 === 'floors') return 'var(--accent-floor1)';
+  if (s0 === 'climbers' || s0 === 'heroes') return 'var(--accent-authority)';
+  return 'var(--accent-interface)';
 }
 
 // Everything that isn't the home view. Returns null when we ARE home.
@@ -81,21 +89,33 @@ export default function App() {
     return () => window.removeEventListener('keydown', onKey);
   }, [searchOpen]);
 
-  // The Tower hero + main hub mount ONCE and persist for the whole session.
+  // remember last visited route + restore scroll to top on route change
+  useEffect(() => {
+    setLastVisited('#' + (route.path === '/' ? '/' : route.path));
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, [route.path]);
+
+  const accent = accentFor(route.parts);
+
   return (
-    <>
+    <AppShell accent={accent}>
       <TopBar navigate={navigate} route={route} onOpenSearch={() => setSearchOpen(true)} />
       <Breadcrumbs route={route} navigate={navigate} />
 
+      {/* Home (Tower + hub) mounts ONCE and persists; toggled by display. */}
       <div style={{ display: isHome ? 'block' : 'none' }}>
         <Hero />
         <MainHub navigate={navigate} />
         <Footer />
       </div>
 
-      {!isHome && <RouteView route={route} navigate={navigate} />}
+      {!isHome && (
+        <main className="pageview" key={route.path}>
+          <RouteView route={route} navigate={navigate} />
+        </main>
+      )}
 
       <CommandPalette open={searchOpen} onClose={() => setSearchOpen(false)} navigate={navigate} />
-    </>
+    </AppShell>
   );
 }

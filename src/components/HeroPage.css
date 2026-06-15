@@ -1,0 +1,51 @@
+/* =====================================================================
+   CHARACTER PAGE — party-member menu. Art + identity hero, tabbed depth.
+   Shared structure; per-character accent + emblem geometry.
+   ===================================================================== */
+.chr { --accent: var(--rune); padding-top: var(--sp-3); padding-bottom: var(--sp-6); }
+
+.chr__topnav { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; padding: var(--sp-2) 0 var(--sp-3); }
+.chr__back { cursor: pointer; font-family: var(--font-util); font-size: 0.8rem; color: var(--bone-dim);
+  background: var(--surface-2); border: var(--edge); border-radius: 40px; padding: 0.5rem 1rem; transition: color, background-color, border-color, box-shadow, transform, opacity var(--t-fast) var(--ease); }
+.chr__back:hover { color: var(--bone); border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+.chr__back--next { margin-left: auto; }
+.chr__crumb { font-family: var(--font-util); font-size: 0.78rem; color: var(--bone-dim); }
+.chr__crumb b { color: var(--bone); }
+
+/* hero */
+.chr__hero { margin-bottom: var(--sp-4); }
+.chr__art { position: relative; border-radius: var(--radius); overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  background: radial-gradient(circle at 50% 20%, color-mix(in srgb, var(--accent) 16%, var(--ink-2)), var(--ink) 80%); }
+/* personal emblem watermark */
+.chr__emblem { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 0;
+  font-family: var(--font-display); font-weight: 900; font-size: 16rem; line-height: 1; color: var(--a); opacity: 0.07; pointer-events: none; }
+.chr__art > :not(.chr__emblem) { position: relative; z-index: 1; }
+
+.chr__identity { display: flex; flex-direction: column; gap: 0.5rem; }
+.chr__eyebrow { font-family: var(--font-util); font-size: var(--t-label); letter-spacing: 0.16em; text-transform: uppercase; color: color-mix(in srgb, var(--accent) 80%, var(--bone)); }
+.chr__name { font-family: var(--font-display); font-weight: 900; font-size: clamp(2.4rem, 5.5vw, 4rem); color: var(--summit); line-height: 0.92; text-shadow: 0 0 40px color-mix(in srgb, var(--accent) 30%, transparent); }
+.chr__epithet { font-family: var(--font-body); font-style: italic; font-size: 1.15rem; color: color-mix(in srgb, var(--accent) 55%, var(--bone)); }
+.chr__quote { font-family: var(--font-body); font-style: italic; font-size: 1.1rem; color: var(--summit); margin: 0.4rem 0; }
+.chr__rolechips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: var(--sp-1) 0; }
+.chr__role { font-family: var(--font-util); font-size: 0.74rem; letter-spacing: 0.04em; color: var(--ink); font-weight: 700;
+  background: var(--accent); border-radius: 4px; padding: 0.3rem 0.8rem; }
+.chr__chip { font-family: var(--font-util); font-size: 0.74rem; color: var(--bone-dim); background: var(--surface-2); border: var(--edge); border-radius: 4px; padding: 0.3rem 0.8rem; }
+.chr__weapon { display: flex; flex-direction: column; gap: 0.1rem; border-left: 2px solid color-mix(in srgb, var(--accent) 50%, transparent); padding-left: var(--sp-2); margin: var(--sp-1) 0; }
+.chr__weapon-k { font-family: var(--font-util); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--bone-dim); }
+.chr__weapon-v { font-family: var(--font-display); font-size: 1.1rem; color: var(--bone-f); }
+.chr__weapon-n { font-family: var(--font-util); font-size: 0.78rem; color: var(--bone-dim); }
+.chr__profile { margin-top: var(--sp-1); }
+.chr__radar { display: grid; place-content: center; }
+
+/* tabs + body */
+.chr__tabsrow { border-bottom: 1px solid var(--hairline); padding-bottom: var(--sp-2); margin-bottom: var(--sp-3); }
+.chr__sech { font-family: var(--font-display); font-size: 1.5rem; color: var(--summit); margin-bottom: var(--sp-3); }
+.chr__p { font-family: var(--font-body); color: #cbc3b4; font-size: 0.95rem; line-height: 1.65; }
+.chr__p--dim { color: var(--bone-dim); font-size: 0.86rem; }
+.chr__lead { font-family: var(--font-body); color: var(--bone); font-size: 1.05rem; line-height: 1.75; }
+.chr__field { margin-bottom: 0.6rem; }
+.chr__field-h { display: block; font-family: var(--font-util); font-size: 0.7rem; letter-spacing: 0.04em; text-transform: uppercase; color: color-mix(in srgb, var(--accent) 80%, var(--bone)); }
+.chr__field-t { font-family: var(--font-body); color: var(--bone-dim); font-size: 0.9rem; line-height: 1.5; margin-top: 0.15rem; }
+
+@media (max-width: 1199px) { .chr__emblem { font-size: 10rem; } }

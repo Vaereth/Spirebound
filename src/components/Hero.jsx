@@ -1,8 +1,15 @@
 import { useEffect, useRef } from 'react';
 import { SpireScene } from './SpireScene.js';
+import { getPref, setPref } from '../lib/userContext.js';
 import './Hero.css';
 
 export default function Hero() {
+  const seenIntro = getPref('seenIntro', false);
+  const skipToArchive = () => {
+    setPref('seenIntro', true);
+    const hub = document.querySelector('.mhub');
+    if (hub) hub.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
   const canvasRef = useRef(null);
   const heroRef = useRef(null);
   const overlayRef = useRef(null);
@@ -14,7 +21,9 @@ export default function Hero() {
     sceneRef.current = scene;
     scene.start();
 
-    const onScroll = () => {
+    let ticking = false;
+    const applyScroll = () => {
+      ticking = false;
       const el = heroRef.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
@@ -23,8 +32,13 @@ export default function Hero() {
       scene.setScroll(t);
       if (overlayRef.current) overlayRef.current.style.setProperty('--climb', t.toFixed(3));
     };
+    // Coalesce scroll events to one update per frame (was firing synchronously
+    // on every scroll event, writing to the 3D scene + a CSS var each time).
+    const onScroll = () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(applyScroll); }
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    applyScroll();
 
     // Pause the (expensive) 3D render loop whenever the hero isn't on screen.
     const vis = new IntersectionObserver(
@@ -41,8 +55,14 @@ export default function Hero() {
     );
     if (heroRef.current) vis.observe(heroRef.current);
 
-    // Also pause when the tab is hidden.
-    const onVisibility = () => { document.hidden ? scene.pause() : scene.resume(); };
+    // Pause/resume on tab visibility — but only resume if the hero is actually
+    // on-screen. offsetParent is null when an ancestor is display:none (i.e. we
+    // navigated to another route), so we don't wake the 3D loop on other pages.
+    const onVisibility = () => {
+      if (document.hidden) { scene.pause(); return; }
+      const el = heroRef.current;
+      if (el && el.offsetParent !== null) scene.resume();
+    };
     document.addEventListener('visibilitychange', onVisibility);
 
     return () => {
@@ -70,7 +90,10 @@ export default function Hero() {
 
         <div className="hero__foreground" aria-hidden="true" />
 
-        <a className="hero__scroll" href="#truth">Begin the ascent ↓</a>
+        <button className="hero__skip" onClick={skipToArchive}>
+          {seenIntro ? 'Enter the Archive →' : 'Skip Introduction →'}
+        </button>
+        <a className="hero__scroll" href="#truth" onClick={() => setPref('seenIntro', true)}>Begin the ascent ↓</a>
       </div>
     </section>
   );

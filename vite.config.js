@@ -1,7 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-export default defineConfig({
+// Use `command` (build vs serve) rather than NODE_ENV, which is undefined
+// while vite.config is evaluated during `vite build`. This guarantees the
+// correct base path on GitHub Pages (project site served from /Spirebound/).
+export default defineConfig(({ command }) => ({
   plugins: [react()],
-  base: process.env.NODE_ENV === 'production' ? '/Spirebound/' : '/',
-})
+  base: command === 'build' ? '/Spirebound/' : '/',
+}))

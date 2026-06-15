@@ -1,33 +1,19 @@
-/* ===================== SYSTEMS / STATS PAGE ===================== */
-.sys-table { width: 100%; border-collapse: collapse; }
-.sys-table td { padding: 0.4rem 0.2rem; border-bottom: var(--edge); color: var(--bone-dim); font-size: 0.92rem; }
-.sys-table td:first-child { color: var(--bone); }
-.sys-table__v { text-align: right; color: var(--accent) !important; font-family: var(--font-display); }
-
-.sys-list { list-style: none; display: grid; gap: 0.3rem; }
-.sys-list li { color: var(--bone-dim); padding-left: 1rem; position: relative; font-size: 0.92rem; }
-.sys-list li::before { content: '◇'; position: absolute; left: 0; color: var(--accent); font-size: 0.65rem; top: 0.25rem; }
-
-.sys-band { display: grid; grid-template-columns: 90px 1fr; gap: 0.6rem; padding: 0.5rem 0; border-top: var(--edge); }
-.sys-band:first-of-type { border-top: none; }
-.sys-band__lvl { font-family: var(--font-display); color: var(--accent); font-size: 0.95rem; }
-.sys-band__d { color: var(--bone-dim); font-size: 0.9rem; }
-
-.sys-rank { display: grid; grid-template-columns: 110px 1fr; gap: 0.6rem; padding: 0.4rem 0; border-top: var(--edge); }
-.sys-rank:first-of-type { border-top: none; }
-.sys-rank__k { font-family: var(--font-util); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
-.sys-rank__d { color: var(--bone-dim); font-size: 0.88rem; }
-
-.sys-rare__head { margin-bottom: 0.5rem; }
-.sys-rare__name { font-family: var(--font-display); font-size: 1.35rem; color: var(--bone); }
-.sys-rare__species { font-family: var(--font-util); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
-.sys-rare__facts { margin-top: var(--sp-2); display: grid; gap: 0.35rem; }
-.sys-rare__facts p { color: var(--bone-dim); font-size: 0.88rem; line-height: 1.5; }
-.sys-rare__facts b { color: var(--bone); }
-
-/* ---- Difficulty table ---- */
-.sys-difftable { display: grid; gap: var(--sp-2); }
-.sys-diff { padding: var(--sp-3); border: var(--edge); border-radius: var(--radius-lg); background: var(--ink-2); }
-.sys-diff__head { display: flex; align-items: baseline; justify-content: space-between; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.4rem; }
-.sys-diff__name { font-family: var(--font-display); font-size: 1.25rem; color: var(--bone-f, var(--bone)); }
-.sys-diff__mults { font-family: var(--font-util); font-size: 0.72rem; color: var(--accent); letter-spacing: 0.04em; }
+/* Named Rares & Elites page */
+.rare { --accent: #c98a4a; padding-top: var(--sp-3); padding-bottom: var(--sp-6); }
+.rare__topnav { display: flex; align-items: center; gap: var(--sp-2); padding: var(--sp-2) 0 var(--sp-3); flex-wrap: wrap; }
+.rare__back { cursor: pointer; font-family: var(--font-util); font-size: 0.8rem; color: var(--bone-dim); background: var(--surface-2); border: var(--edge); border-radius: 40px; padding: 0.5rem 1rem; transition: color, background-color, border-color, box-shadow, transform, opacity var(--t-fast) var(--ease); }
+.rare__back:hover { color: var(--gold); border-color: var(--edge-gold); }
+.rare__crumb { font-family: var(--font-util); font-size: 0.78rem; color: var(--bone-dim); } .rare__crumb b { color: var(--bone); }
+.rare__cta { margin-left: auto; cursor: pointer; font-family: var(--font-util); font-size: 0.78rem; color: var(--gold); background: color-mix(in srgb, var(--gold) 10%, transparent); border: var(--edge-gold); border-radius: 4px; padding: 0.5rem 1rem; }
+.rare__head { margin-bottom: var(--sp-4); max-width: var(--reading-width); }
+.rare__eyebrow { font-family: var(--font-util); font-size: var(--t-label); letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+.rare__title { font-family: var(--font-display); font-size: var(--t-h1); color: var(--summit); line-height: 1.05; margin: 0.2rem 0 0.5rem; }
+.rare__lead { font-family: var(--font-body); color: var(--bone-dim); font-size: 1.05rem; line-height: 1.7; }
+.rare__h { font-family: var(--font-display); font-size: var(--t-h2); color: var(--summit); margin-bottom: var(--sp-2); }
+.rare__p { font-family: var(--font-body); color: #cbc3b4; font-size: 0.92rem; line-height: 1.6; }
+.rare__p--dim { color: var(--bone-dim); font-size: 0.85rem; }
+.rare__quote { font-style: italic; color: #d6c2a0; margin-bottom: 0.5rem; }
+.rare__facts { margin-top: 0.6rem; display: flex; flex-direction: column; gap: 0.25rem; }
+.rare__facts p { font-family: var(--font-body); font-size: 0.82rem; color: var(--bone-dim); }
+.rare__facts b { color: var(--gold); }
+.rare__foot { text-align: center; font-style: italic; margin-top: var(--sp-3); }

@@ -1,14 +1,14 @@
 /* SPIREBOUND — global base */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--ink); }
 
 body {
   font-family: var(--font-body);
   font-size: var(--t-body);
   line-height: 1.7;
   color: var(--bone);
-  background: var(--ink);
+  background: transparent;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -41,7 +41,7 @@ a { color: inherit; text-decoration: none; }
 ::-webkit-scrollbar-thumb { background: var(--rune-dim); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--rune); }
 
-.wrap { width: min(100% - 2.5rem, var(--maxw)); margin-inline: auto; }
+.wrap { width: 100%; max-width: var(--page-max-width); margin-inline: auto; padding-inline: var(--page-gutter); }
 
 /* Utility: fade-up on scroll reveal */
 .reveal {
@@ -50,3 +50,15 @@ a { color: inherit; text-decoration: none; }
   transition: opacity 1s var(--ease), transform 1s var(--ease);
 }
 .reveal.in { opacity: 1; transform: none; }
+
+/* ===== Stage 1: global page framing ===== */
+.site-foot {
+  text-align: center; padding: var(--sp-5) var(--sp-2); color: var(--bone-dim);
+  font-family: var(--font-util); font-size: 0.75rem; letter-spacing: 0.22em;
+  text-transform: uppercase; border-top: 1px solid var(--hairline); margin-top: var(--sp-5);
+}
+
+/* shared wide page container for routes not yet migrated to <Page> */
+.pagewrap { width: 100%; max-width: var(--page-max-width); margin-inline: auto; padding-inline: var(--page-gutter); }
+.pagewrap--wide { max-width: var(--page-wide-width); }
+

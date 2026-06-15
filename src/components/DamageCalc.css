@@ -3,7 +3,7 @@
 .dc__schools { display: flex; gap: 0.4rem; margin-bottom: var(--sp-3); }
 .dc__school { cursor: pointer; flex: 1; padding: 0.6rem; border-radius: var(--radius);
   font-family: var(--font-util); font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--bone-dim); background: var(--ink-2); border: var(--edge); transition: all 0.25s var(--ease); }
+  color: var(--bone-dim); background: var(--ink-2); border: var(--edge); transition: color, background-color, border-color, box-shadow, transform, opacity 0.25s var(--ease); }
 .dc__school.is-on { color: var(--ink); background: var(--accent); border-color: var(--accent); font-weight: 700; }
 
 .dc__cols { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); }

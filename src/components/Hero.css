@@ -95,10 +95,19 @@
   font-family: var(--font-util); font-size: var(--t-small); letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--rune); border: var(--edge-rune); padding: 0.7rem 1.4rem; border-radius: 40px;
   background: rgba(8,9,14,0.4); backdrop-filter: blur(4px);
-  transition: all 0.4s var(--ease); animation: bob 2.4s ease-in-out infinite;
+  transition: color, background-color, border-color, box-shadow, transform, opacity 0.4s var(--ease); animation: bob 2.4s ease-in-out infinite;
 }
 .hero__scroll:hover { background: rgba(96,232,220,0.12); box-shadow: var(--glow-rune); }
 
 @keyframes fadeIn { to { opacity: 1; } }
 @keyframes titleIn { to { opacity: 1; transform: none; } }
 @keyframes bob { 0%,100%{transform:translateX(-50%) translateY(0);} 50%{transform:translateX(-50%) translateY(5px);} }
+
+/* returning-visitor skip / archive entry */
+.hero__skip {
+  position: absolute; top: calc(var(--topbar-h) + 16px); right: var(--page-gutter); z-index: 5;
+  cursor: pointer; font-family: var(--font-util); font-size: 0.76rem; letter-spacing: 0.08em;
+  color: var(--bone-dim); background: var(--surface-glass); border: 1px solid var(--hairline);
+  border-radius: 4px; padding: 0.5rem 1rem; backdrop-filter: blur(8px); transition: color, background-color, border-color, box-shadow, transform, opacity var(--t-fast) var(--ease);
+}
+.hero__skip:hover { color: var(--rune); border-color: var(--edge-rune); }

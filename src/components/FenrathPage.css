@@ -7,7 +7,7 @@
 /* breadcrumb */
 .fen2__crumb { display: flex; align-items: center; gap: var(--sp-2); padding: var(--sp-3) 0; flex-wrap: wrap; }
 .fen2__back { cursor: pointer; font-family: var(--font-util); font-size: 0.8rem; color: var(--bone-dim);
-  background: var(--surface-2); border: var(--edge); border-radius: 40px; padding: 0.5rem 1rem; transition: all var(--t-fast) var(--ease); }
+  background: var(--surface-2); border: var(--edge); border-radius: 40px; padding: 0.5rem 1rem; transition: color, background-color, border-color, box-shadow, transform, opacity var(--t-fast) var(--ease); }
 .fen2__back:hover { color: var(--bone); border-color: var(--edge-guardian); }
 .fen2__crumbtxt { font-family: var(--font-util); font-size: var(--t-label); letter-spacing: 0.1em; text-transform: uppercase; color: var(--bone-dim); }
 
@@ -58,7 +58,7 @@
 .fen2__proofcontrols { display: flex; flex-direction: column; gap: var(--sp-2); }
 .fen2__proofcards { display: grid; gap: var(--sp-2); }
 .fen2__proofcard { text-align: left; cursor: pointer; padding: var(--sp-3); border-radius: var(--radius);
-  background: var(--surface-1); border: 1px solid var(--hairline); clip-path: var(--notch-tl-br); transition: all var(--t-fast) var(--ease); }
+  background: var(--surface-1); border: 1px solid var(--hairline); clip-path: var(--notch-tl-br); transition: color, background-color, border-color, box-shadow, transform, opacity var(--t-fast) var(--ease); }
 .fen2__proofcard:hover { border-color: var(--edge-guardian); }
 .fen2__proofcard.is-on { background: color-mix(in srgb, var(--accent-guardian) 10%, var(--surface-1)); border-color: color-mix(in srgb, var(--accent-guardian) 45%, transparent); }
 .fen2__proofcard-top { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; }
@@ -90,7 +90,7 @@
 /* moves master-detail */
 .fen2__movelist { display: flex; flex-direction: column; gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); border-radius: var(--radius); overflow: hidden; max-height: 520px; overflow-y: auto; }
 .fen2__moverow { display: flex; flex-direction: column; align-items: flex-start; gap: 0.15rem; text-align: left; cursor: pointer;
-  background: var(--surface-1); border: none; border-left: 2px solid transparent; padding: 0.6rem 0.85rem; transition: all var(--t-fast) var(--ease); }
+  background: var(--surface-1); border: none; border-left: 2px solid transparent; padding: 0.6rem 0.85rem; transition: color, background-color, border-color, box-shadow, transform, opacity var(--t-fast) var(--ease); }
 .fen2__moverow:hover { background: var(--surface-2); }
 .fen2__moverow.is-on { background: color-mix(in srgb, var(--accent-guardian) 12%, var(--surface-1)); border-left-color: var(--accent-guardian); }
 .fen2__movename { font-family: var(--font-display); font-size: 0.96rem; color: var(--bone-f); }

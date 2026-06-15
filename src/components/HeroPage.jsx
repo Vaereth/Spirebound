@@ -1,143 +1,136 @@
+import { useState } from 'react';
 import { CAST } from '../data/cast.js';
 import { EluvainKit, FeiyanKit, StatRadar } from './Cast.jsx';
 import ArtSlot from './ArtSlot.jsx';
 import HeroLevel1Sheet from './HeroStats.jsx';
-import './EntryPage.css';
+import { Page, Stack, DataSplit, EditorialSplit, CardMatrix } from './Layout.jsx';
+import { GlassPanel, VellumPanel, StonePanel, PanelHeader } from './Surfaces.jsx';
+import { Tabs, QuickFacts } from './UIKit.jsx';
+import { pushRecent } from '../lib/userContext.js';
 import './Cast.css';
-
-function FieldRow({ k, v }) {
-  return (
-    <div className="entry__field">
-      <h3 className="entry__field-h">{k}</h3>
-      <p className="entry__field-t">{v}</p>
-    </div>
-  );
-}
+import './HeroPage.css';
 
 export default function HeroPage({ id, navigate }) {
   const c = CAST.find((x) => x.id === id);
+  const [tab, setTab] = useState('kit');
   if (!c) {
     return (
-      <div className="entry">
-        <div className="entry__nav"><button className="entry__back" onClick={() => navigate('#/')}>← Home</button></div>
-        <div className="entry__body"><p className="entry__p">No such climber.</p></div>
-      </div>
+      <Page className="chr"><button className="chr__back" onClick={() => navigate('#/climbers')}>← The Climbers</button>
+        <GlassPanel><p style={{ color: 'var(--bone-dim)' }}>No such climber.</p></GlassPanel></Page>
     );
   }
+  pushRecent({ label: c.name, route: '#/heroes/' + c.id, kind: 'climber' });
   const other = CAST.find((x) => x.id !== c.id);
 
+  const TABS = [
+    { id: 'kit', label: 'Kit & Signature' },
+    { id: 'identity', label: 'Combat Identity' },
+    { id: 'lore', label: 'Overview & Lore' },
+  ];
+
   return (
-    <div className="entry" style={{ '--accent': c.accent }}>
-      <div className="entry__nav">
-        <button className="entry__back" onClick={() => navigate('#/')}>← Home</button>
-        <span className="entry__crumb">The Climbers · <b>{c.name}</b></span>
-        {other && <button className="entry__back" onClick={() => navigate('#/heroes/' + other.id)} style={{ marginLeft: 'auto' }}>{other.name} →</button>}
+    <Page variant="wide" className="chr" style={{ '--accent': c.accent }}>
+      <div className="chr__topnav">
+        <button className="chr__back" onClick={() => navigate('#/climbers')}>← The Climbers</button>
+        <span className="chr__crumb">The Climbers · <b>{c.name}</b></span>
+        {other && <button className="chr__back chr__back--next" onClick={() => navigate('#/heroes/' + other.id)}>{other.name} →</button>}
       </div>
 
-      <header className="entry__banner">
-        <p className="entry__eyebrow">Climber {String(c.order).padStart(2, '0')}{c.isDefault ? ' · Default' : ''}</p>
-        <h1 className="entry__name">{c.name}</h1>
-        {c.epithet && <p className="entry__sub">{c.epithet}</p>}
-        <div className="entry__tags">
-          {c.identity?.role && <span className="entry__tag entry__tag--accent">{c.identity.role}</span>}
-          {c.identity?.damage && <span className="entry__tag">Damage · {c.identity.damage}</span>}
-          {c.identity?.skillCeiling && <span className="entry__tag">Skill Ceiling · {c.identity.skillCeiling}</span>}
-        </div>
-      </header>
-
-      <div className="entry__body">
-        {/* Landscape hero: art left, the essentials right — all visible at once */}
-        <div className="entry__hero">
-          <div className="entry__hero-art">
-            <ArtSlot
-              variant="splash"
-              label="Key Art / Splash"
-              path={`images/heroes/${c.id}-splash.png`}
-              src={`/images/heroes/${c.id}-splash.png`}
-              alt={`${c.name} key art`}
-            />
-            <div style={{ marginTop: 'var(--sp-3)' }}>
-              <ArtSlot
-                variant="portrait"
-                label="Portrait"
-                path={`images/heroes/${c.id}.png`}
-                src={`/images/heroes/${c.id}.png`}
-                alt={`${c.name} portrait`}
-              />
+      {/* PARTY-MENU HERO — art 45% + identity 55% */}
+      <div className="chr__hero">
+        <DataSplit
+          left={
+            <div className="chr__art">
+              <span className="chr__emblem" aria-hidden="true" style={{ '--a': c.accent }}>{c.name[0]}</span>
+              <ArtSlot variant="splash" label="Key Art / Splash" path={`images/heroes/${c.id}-splash.png`}
+                src={`/images/heroes/${c.id}-splash.png`} alt={`${c.name} key art`} />
             </div>
-          </div>
+          }
+          right={
+            <div className="chr__identity">
+              <p className="chr__eyebrow">Climber {String(c.order).padStart(2, '0')}{c.isDefault ? ' · Default' : ''}</p>
+              <h1 className="chr__name">{c.name}</h1>
+              {c.epithet && <p className="chr__epithet">{c.epithet}</p>}
+              {c.tagline && <p className="chr__quote">“{c.tagline}”</p>}
 
-          <div>
-            {c.tagline && <p className="entry__p" style={{ fontSize: '1.2rem', fontStyle: 'italic', color: 'var(--summit)', marginBottom: 'var(--sp-3)' }}>“{c.tagline}”</p>}
-
-            {c.stats && (
-              <div className="entry__panel entry__panel--accent" style={{ marginBottom: 'var(--sp-3)' }}>
-                <h3 className="entry__panel-h">Base Template Profile</h3>
-                <p className="entry__p entry__p--dim" style={{ fontSize: '0.82rem', marginBottom: 'var(--sp-2)' }}>The character's design feel — survivability, mitigation, movement, output, and skill ceiling. Not attribute values.</p>
-                <div className="entry__cols2">
-                  <div>
-                    {c.identity?.difficulty && <FieldRow k="Difficulty" v={c.identity.difficulty} />}
-                    {c.identity?.health && <FieldRow k="Base Health" v={c.identity.health} />}
-                    {c.identity?.defense && <FieldRow k="Base Guard" v={c.identity.defense} />}
-                    {c.identity?.mobility && <FieldRow k="Base Movement" v={c.identity.mobility} />}
-                    {c.identity?.damage && <FieldRow k="Base Output" v={c.identity.damage} />}
-                    {c.identity?.skillCeiling && <FieldRow k="Skill Ceiling" v={c.identity.skillCeiling} />}
-                  </div>
-                  <div><StatRadar stats={c.stats} accent={c.accent} /></div>
-                </div>
+              <div className="chr__rolechips">
+                {c.identity?.role && <span className="chr__role">{c.identity.role}</span>}
+                {c.identity?.damage && <span className="chr__chip">Damage · {c.identity.damage}</span>}
+                {c.identity?.skillCeiling && <span className="chr__chip">Ceiling · {c.identity.skillCeiling}</span>}
               </div>
-            )}
 
-            <div className="entry__panel" style={{ marginBottom: 'var(--sp-3)' }}>
-              <HeroLevel1Sheet />
-            </div>
-
-            {c.overview && (
-              <div className="entry__panel" style={{ marginBottom: 'var(--sp-3)' }}>
-                <h3 className="entry__panel-h">Overview</h3>
-                <p className="entry__p">{c.overview}</p>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Secondary facts in a full-width grid */}
-        <div className="entry__grid">
-          {c.coreFantasy && (
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">Core Fantasy</h3>
-              <p className="entry__p">{c.coreFantasy}</p>
-            </div>
-          )}
-          {c.weapons && (
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">Weapons</h3>
-              {c.weapons.map((w) => (
-                <div key={w.name} className="entry__field">
-                  <h4 className="entry__field-h">{w.name} · {w.hand}</h4>
-                  <p className="entry__field-t">{w.notes.join(' · ')}</p>
+              {c.weapons?.[0] && (
+                <div className="chr__weapon">
+                  <span className="chr__weapon-k">Primary Weapon</span>
+                  <span className="chr__weapon-v">{c.weapons[0].name}</span>
+                  <span className="chr__weapon-n">{c.weapons[0].notes?.slice(0, 3).join(' · ')}</span>
                 </div>
-              ))}
-            </div>
-          )}
-          {c.appearance && (
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">Appearance</h3>
-              <p className="entry__p entry__p--dim">{c.appearance.join(' · ')}</p>
-            </div>
-          )}
-        </div>
+              )}
 
-        <section className="entry__sec">
-          <h2 className="entry__sec-h entry__sec-h--display">Kit &amp; Signature</h2>
+              {c.stats && (
+                <GlassPanel accent={c.accent} className="chr__profile">
+                  <PanelHeader eyebrow="Base Template Profile" accent={c.accent} />
+                  <DataSplit
+                    left={
+                      <QuickFacts cols={1} facts={[
+                        c.identity?.difficulty && { k: 'Difficulty', v: c.identity.difficulty },
+                        c.identity?.health && { k: 'Base Health', v: c.identity.health },
+                        c.identity?.defense && { k: 'Base Guard', v: c.identity.defense },
+                        c.identity?.mobility && { k: 'Base Movement', v: c.identity.mobility },
+                      ].filter(Boolean)}
+                      />
+                    }
+                    right={<div className="chr__radar"><StatRadar stats={c.stats} accent={c.accent} /></div>}
+                  />
+                </GlassPanel>
+              )}
+            </div>
+          }
+        />
+      </div>
+
+      {/* tabbed depth */}
+      <div className="chr__tabsrow"><Tabs tabs={TABS} value={tab} onChange={setTab} accent={c.accent} /></div>
+
+      {tab === 'kit' && (
+        <section className="chr__kit">
+          <h2 className="chr__sech">Kit &amp; Signature</h2>
           {c.id === 'eluvain' ? <EluvainKit c={c} /> : <FeiyanKit c={c} />}
         </section>
+      )}
 
-        <div className="entry__coming">
-          <p className="entry__coming-h">Expanded Entry — Coming</p>
-          <p className="entry__coming-t">Backstory, the wish, talent trees, and full ability frame data to be added.</p>
-        </div>
-      </div>
-    </div>
+      {tab === 'identity' && (
+        <Stack gap="default">
+          <CardMatrix min={280}>
+            {c.coreFantasy && <GlassPanel accent={c.accent}><PanelHeader eyebrow="Core Fantasy" accent={c.accent} /><p className="chr__p">{c.coreFantasy}</p></GlassPanel>}
+            {c.weapons && (
+              <GlassPanel accent={c.accent}><PanelHeader eyebrow="Weapons" accent={c.accent} />
+                {c.weapons.map((w) => (
+                  <div key={w.name} className="chr__field"><span className="chr__field-h">{w.name} · {w.hand}</span><p className="chr__field-t">{w.notes.join(' · ')}</p></div>
+                ))}
+              </GlassPanel>
+            )}
+            {c.appearance && <GlassPanel accent={c.accent}><PanelHeader eyebrow="Appearance" accent={c.accent} /><p className="chr__p chr__p--dim">{c.appearance.join(' · ')}</p></GlassPanel>}
+          </CardMatrix>
+          <GlassPanel accent={c.accent}><HeroLevel1Sheet /></GlassPanel>
+        </Stack>
+      )}
+
+      {tab === 'lore' && (
+        <EditorialSplit
+          aside={
+            <VellumPanel>
+              <PanelHeader eyebrow="Status" title="Expanded Entry" />
+              <p className="chr__p chr__p--dim">Backstory, the wish, talent trees, and full ability frame data to be added.</p>
+            </VellumPanel>
+          }
+        >
+          <VellumPanel>
+            <PanelHeader eyebrow="The Climber" title="Overview" />
+            {c.overview && <p className="chr__lead">{c.overview}</p>}
+          </VellumPanel>
+        </EditorialSplit>
+      )}
+    </Page>
   );
 }

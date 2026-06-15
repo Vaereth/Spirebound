@@ -8,7 +8,7 @@
   display: inline-flex; align-items: center; gap: 0.45rem; cursor: pointer;
   font-family: var(--font-util); font-size: 0.82rem; color: var(--bone-dim);
   background: var(--surface-2); border: 1px solid var(--hairline);
-  clip-path: var(--notch-tl-br); padding: 0.5rem 1rem; transition: all var(--t-fast) var(--ease);
+  clip-path: var(--notch-tl-br); padding: 0.5rem 1rem; transition: color, background-color, border-color, box-shadow, transform, opacity var(--t-fast) var(--ease);
 }
 .uik-tab:hover { color: var(--bone); border-color: color-mix(in srgb, var(--tab-accent) 40%, transparent); }
 .uik-tab.is-on { color: var(--ink); background: var(--tab-accent); border-color: var(--tab-accent); font-weight: 700; }
@@ -39,7 +39,7 @@
 .uik-spoiler__warn { color: var(--bone-dim); font-size: 0.9rem; margin-bottom: var(--sp-2); }
 .uik-spoiler__btn { cursor: pointer; font-family: var(--font-util); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700;
   color: var(--bone); background: linear-gradient(180deg, color-mix(in srgb, var(--sp-accent) 38%, transparent), color-mix(in srgb, var(--sp-accent) 18%, transparent));
-  border: 1px solid color-mix(in srgb, var(--sp-accent) 55%, transparent); border-radius: 40px; padding: 0.75rem 1.5rem; transition: all var(--t-mid) var(--ease); }
+  border: 1px solid color-mix(in srgb, var(--sp-accent) 55%, transparent); border-radius: 40px; padding: 0.75rem 1.5rem; transition: color, background-color, border-color, box-shadow, transform, opacity var(--t-mid) var(--ease); }
 .uik-spoiler__btn:hover { box-shadow: 0 0 24px color-mix(in srgb, var(--sp-accent) 45%, transparent); transform: translateY(-2px); }
 .uik-spoiler__hide { float: right; cursor: pointer; font-family: var(--font-util); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em;
   color: var(--bone-dim); background: none; border: var(--edge); border-radius: 40px; padding: 0.3rem 0.8rem; margin-bottom: var(--sp-2); }
@@ -47,6 +47,6 @@
 /* ---- Segmented ---- */
 .uik-seg { display: flex; flex-wrap: wrap; gap: 0.4rem; --seg-accent: var(--accent-interface); }
 .uik-seg__chip { cursor: pointer; font-family: var(--font-util); font-size: 0.8rem; color: var(--bone-dim);
-  background: var(--surface-2); border: 1px solid var(--hairline); border-radius: 40px; padding: 0.45rem 0.95rem; transition: all var(--t-fast) var(--ease); }
+  background: var(--surface-2); border: 1px solid var(--hairline); border-radius: 40px; padding: 0.45rem 0.95rem; transition: color, background-color, border-color, box-shadow, transform, opacity var(--t-fast) var(--ease); }
 .uik-seg__chip:hover { color: var(--bone); }
 .uik-seg__chip.is-on { color: var(--ink); background: var(--seg-accent); border-color: var(--seg-accent); font-weight: 600; box-shadow: 0 0 16px color-mix(in srgb, var(--seg-accent) 35%, transparent); }

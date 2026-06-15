@@ -1,22 +1,56 @@
-/* ===================== MAIN SITE HUB ===================== */
-.mhub { background: var(--ink); border-top: var(--edge); padding: var(--sp-7) max(1.5rem, 4vw); }
-.mhub__inner { max-width: 1200px; margin: 0 auto; }
-.mhub__eyebrow { font-family: var(--font-util); font-size: var(--t-label); letter-spacing: 0.3em; text-transform: uppercase; color: var(--rune); }
-.mhub__head { font-family: var(--font-display); font-size: var(--t-h1); color: var(--bone); margin: var(--sp-1) 0 var(--sp-2); }
-.mhub__lead { color: var(--bone-dim); max-width: 64ch; line-height: 1.8; margin-bottom: var(--sp-5); }
+/* =====================================================================
+   MAIN ARCHIVE HUB — the central in-game menu. Hierarchy, not equal cards.
+   ===================================================================== */
+.mhub { padding-top: var(--sp-4); padding-bottom: var(--sp-6); }
 
-.mhub__tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--sp-3); }
-.mhub__tile { --accent: #60E8DC; position: relative; cursor: pointer; text-align: left; overflow: hidden;
-  display: flex; flex-direction: column; gap: 0.5rem; padding: var(--sp-4); min-height: 160px;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 12%, var(--ink-2)), var(--ink-2));
-  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); border-radius: var(--radius-lg);
-  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.35s var(--ease); }
-.mhub__tile::after { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 0.35s var(--ease);
-  background: radial-gradient(60% 80% at 80% 20%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 70%); }
-.mhub__tile:hover { transform: translateY(-4px); border-color: var(--accent);
-  box-shadow: 0 18px 50px rgba(0,0,0,0.45), 0 0 40px color-mix(in srgb, var(--accent) 22%, transparent); }
-.mhub__tile:hover::after { opacity: 1; }
-.mhub__tile-label { font-family: var(--font-display); font-size: 1.7rem; color: var(--bone); position: relative; z-index: 1; }
-.mhub__tile-sub { font-family: var(--font-util); font-size: 0.8rem; letter-spacing: 0.04em; color: var(--bone-dim); position: relative; z-index: 1; }
-.mhub__tile-arrow { position: absolute; bottom: var(--sp-4); right: var(--sp-4); color: var(--accent); font-size: 1.4rem; opacity: 0.6; transition: transform 0.35s var(--ease); z-index: 1; }
-.mhub__tile:hover .mhub__tile-arrow { transform: translateX(5px); opacity: 1; }
+.mhub__head { display: flex; align-items: center; gap: var(--sp-2); margin-bottom: var(--sp-4); }
+.mhub__sigil { color: var(--rune); filter: drop-shadow(0 0 10px color-mix(in srgb, var(--rune) 40%, transparent)); }
+.mhub__eyebrow { font-family: var(--font-util); font-size: var(--t-label); letter-spacing: 0.2em; text-transform: uppercase; color: var(--bone-dim); }
+.mhub__title { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 3rem); color: var(--summit); line-height: 1; }
+
+.mhub__dash { margin-bottom: var(--sp-3); }
+
+/* resume feature */
+.mhub__resume { display: flex; flex-direction: column; gap: 0.4rem; min-height: 100%; padding: var(--sp-4); justify-content: center; }
+.mhub__resume-eyebrow { font-family: var(--font-util); font-size: var(--t-label); letter-spacing: 0.18em; text-transform: uppercase; color: var(--rune); }
+.mhub__resume-title { font-family: var(--font-display); font-size: clamp(1.6rem, 3.5vw, 2.6rem); color: var(--bone-f); line-height: 1.05; }
+.mhub__resume-sub { font-family: var(--font-body); color: var(--bone-dim); max-width: 52ch; margin: 0.3rem 0 var(--sp-2); }
+.mhub__resume-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.mhub__btn { cursor: pointer; font-family: var(--font-util); font-size: 0.82rem; letter-spacing: 0.04em; color: var(--bone);
+  background: var(--surface-2); border: 1px solid var(--hairline-strong); clip-path: var(--notch-tl-br); padding: 0.7rem 1.3rem; transition: color, background-color, border-color, box-shadow, transform, opacity var(--t-fast) var(--ease); }
+.mhub__btn:hover { border-color: var(--edge-rune); color: var(--rune); }
+.mhub__btn--primary { background: linear-gradient(180deg, color-mix(in srgb, var(--rune) 30%, transparent), color-mix(in srgb, var(--rune) 14%, transparent));
+  border-color: color-mix(in srgb, var(--rune) 50%, transparent); color: var(--summit); font-weight: 600; }
+.mhub__btn--primary:hover { box-shadow: var(--glow-rune); color: #fff; }
+
+/* world state */
+.mhub__state { min-height: 100%; }
+
+/* destination cards */
+.mhub__primary { margin-bottom: var(--sp-2); }
+.mhub__secondary { margin-bottom: var(--sp-4); }
+.mhub__dest { position: relative; overflow: hidden; text-align: left; cursor: pointer; display: flex; flex-direction: column; gap: 0.3rem;
+  min-height: 150px; padding: var(--sp-3); --dest-accent: var(--accent-interface);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--dest-accent) 10%, var(--surface-1)), var(--surface-1) 70%);
+  border: 1px solid color-mix(in srgb, var(--dest-accent) 26%, transparent);
+  clip-path: var(--notch-tl-br); transition: transform var(--t-mid) var(--ease), border-color var(--t-mid) var(--ease), box-shadow var(--t-mid) var(--ease); }
+.mhub__dest:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--dest-accent) 55%, transparent);
+  box-shadow: 0 12px 36px color-mix(in srgb, var(--dest-accent) 16%, transparent); }
+.mhub__dest--sm { min-height: 120px; }
+.mhub__dest-glyph { font-size: 1.5rem; color: var(--dest-accent); filter: drop-shadow(0 0 8px color-mix(in srgb, var(--dest-accent) 40%, transparent)); }
+.mhub__dest-label { font-family: var(--font-display); font-size: 1.35rem; color: var(--bone-f); margin-top: auto; }
+.mhub__dest-sub { font-family: var(--font-util); font-size: 0.78rem; color: var(--bone-dim); }
+.mhub__dest-seam { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; transform: scaleX(0); transform-origin: left;
+  background: linear-gradient(90deg, var(--dest-accent), transparent); transition: transform var(--t-mid) var(--ease); }
+.mhub__dest:hover .mhub__dest-seam { transform: scaleX(1); }
+.mhub__dest--locked { opacity: 0.78; }
+.mhub__dest--locked:hover { opacity: 1; }
+.mhub__dest-lock { font-family: var(--font-util); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-blood); }
+
+/* recents */
+.mhub__recents { border-top: 1px solid var(--hairline); padding-top: var(--sp-3); }
+.mhub__recents-h { display: block; font-family: var(--font-util); font-size: var(--t-label); letter-spacing: 0.16em; text-transform: uppercase; color: var(--bone-dim); margin-bottom: 0.7rem; }
+.mhub__recents-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.mhub__recent { cursor: pointer; font-family: var(--font-util); font-size: 0.8rem; color: var(--bone-dim);
+  background: var(--surface-2); border: 1px solid var(--hairline); border-radius: 40px; padding: 0.4rem 0.95rem; transition: color, background-color, border-color, box-shadow, transform, opacity var(--t-fast) var(--ease); }
+.mhub__recent:hover { color: var(--rune); border-color: var(--edge-rune); }

@@ -1,0 +1,43 @@
+/* =====================================================================
+   REGIONS — master-detail World Panels with per-region material identity.
+   ===================================================================== */
+.reg { --accent: var(--accent-floor1); padding-top: var(--sp-3); padding-bottom: var(--sp-6); }
+.reg__topnav { display: flex; align-items: center; gap: var(--sp-2); padding: var(--sp-2) 0 var(--sp-3); flex-wrap: wrap; }
+.reg__back { cursor: pointer; font-family: var(--font-util); font-size: 0.8rem; color: var(--bone-dim); background: var(--surface-2); border: var(--edge); border-radius: 40px; padding: 0.5rem 1rem; transition: color, background-color, border-color, box-shadow, transform, opacity var(--t-fast) var(--ease); }
+.reg__back:hover { color: var(--bone); border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+.reg__crumb { font-family: var(--font-util); font-size: 0.78rem; color: var(--bone-dim); } .reg__crumb b { color: var(--bone); }
+
+.reg__head { margin-bottom: var(--sp-4); max-width: var(--reading-width); }
+.reg__eyebrow { font-family: var(--font-util); font-size: var(--t-label); letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
+.reg__title { font-family: var(--font-display); font-size: var(--t-h1); color: var(--summit); line-height: 1.05; margin: 0.2rem 0 0.5rem; }
+.reg__lead { font-family: var(--font-body); color: var(--bone-dim); font-size: 1.05rem; line-height: 1.7; }
+
+.reg__md { margin-bottom: var(--sp-3); }
+.reg__list { display: flex; flex-direction: column; gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); border-radius: var(--radius); overflow: hidden; position: sticky; top: var(--rail-top); }
+.reg__listitem { --accent: var(--rune); display: grid; grid-template-columns: 28px 1fr auto; align-items: center; gap: 0.6rem; cursor: pointer; text-align: left;
+  background: var(--surface-1); border: none; border-left: 2px solid transparent; padding: 0.7rem 0.9rem; transition: color, background-color, border-color, box-shadow, transform, opacity var(--t-fast) var(--ease); }
+.reg__listitem:hover { background: var(--surface-2); }
+.reg__listitem.is-on { background: color-mix(in srgb, var(--accent) 12%, var(--surface-1)); border-left-color: var(--accent); }
+.reg__listglyph { font-size: 1.1rem; color: var(--accent); }
+.reg__listname { font-family: var(--font-display); font-size: 1.05rem; color: var(--bone-f); }
+.reg__listdir { font-family: var(--font-util); font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--bone-dim); }
+
+/* region hero — material identity */
+.reg__hero { display: grid; grid-template-columns: 120px 1fr; gap: 0; padding: 0; overflow: hidden; }
+.reg__heroband { display: grid; place-content: center; background: color-mix(in srgb, var(--accent) 18%, var(--ink-2)); border-right: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); }
+.reg__heroglyph { font-size: 3rem; color: color-mix(in srgb, var(--accent) 75%, var(--bone)); opacity: 0.8; }
+.reg__heroinfo { padding: var(--sp-3); }
+.reg__heroeyebrow { font-family: var(--font-util); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: color-mix(in srgb, var(--accent) 80%, var(--bone)); }
+.reg__heroname { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.6rem, 3vw, 2.4rem); color: var(--summit); line-height: 1; margin: 0.2rem 0 0.4rem; }
+.reg__heroterrain { font-family: var(--font-body); color: var(--bone-dim); font-size: 0.95rem; line-height: 1.6; }
+/* per-material hero texture */
+.reg__hero--water .reg__heroband { background-image: repeating-linear-gradient(180deg, transparent, transparent 6px, color-mix(in srgb, var(--accent) 14%, transparent) 7px, transparent 8px); }
+.reg__hero--fields .reg__heroband { background-image: repeating-linear-gradient(90deg, transparent, transparent 10px, color-mix(in srgb, var(--accent) 12%, transparent) 11px); }
+.reg__hero--stone .reg__heroband { background-image: repeating-linear-gradient(45deg, transparent, transparent 8px, color-mix(in srgb, var(--accent) 10%, transparent) 9px); }
+.reg__hero--ruins .reg__heroband { filter: saturate(0.7); }
+
+.reg__p { font-family: var(--font-body); color: #cbc3b4; font-size: 0.95rem; line-height: 1.65; }
+.reg__travel { margin-top: var(--sp-3); }
+
+@media (max-width: 1199px) { .reg__list { position: static; } }
+@media (max-width: 560px) { .reg__hero { grid-template-columns: 1fr; } .reg__heroband { height: 80px; } }

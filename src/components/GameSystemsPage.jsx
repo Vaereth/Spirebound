@@ -1,176 +1,186 @@
+import { useState } from 'react';
 import { ATTRIBUTES, CLASSIFICATIONS, PLAYER_PROGRESSION, LEVEL_BANDS, RANK_SYSTEM, HERO_STATS_EXPLAINER, DIFFICULTY } from '../data/canon.js';
-import './EntryPage.css';
-import './SystemsPage.css';
+import { Page, Stack, StickyContents, DataSplit, CardMatrix } from './Layout.jsx';
+import { GlassPanel, VellumPanel, StonePanel, PanelHeader } from './Surfaces.jsx';
+import { Tabs, QuickFacts, CompareTable, Segmented } from './UIKit.jsx';
+import SectionRail, { useSectionSpy } from './SectionRail.jsx';
+import './GameSystemsPage.css';
+
+const SECTIONS = [
+  { id: 'attributes', label: 'Attributes' },
+  { id: 'progression', label: 'Progression' },
+  { id: 'ranks', label: 'Levels & Ranks' },
+  { id: 'classes', label: 'Classifications' },
+  { id: 'difficulty', label: 'Difficulty' },
+];
 
 export default function GameSystemsPage({ navigate }) {
+  const { active, setRef, go } = useSectionSpy(SECTIONS.map((s) => s.id));
+  const [diffMode, setDiffMode] = useState('compare');
+  const [diffTier, setDiffTier] = useState(1);
+
+  const diffCols = DIFFICULTY.tiers.map((t) => t.name);
+  const diffRows = [
+    { k: 'Damage', v: DIFFICULTY.tiers.map((t) => t.dmg) },
+    { k: 'Health', v: DIFFICULTY.tiers.map((t) => t.hp) },
+    { k: 'Stagger', v: DIFFICULTY.tiers.map((t) => t.stag) },
+  ];
+  const tier = DIFFICULTY.tiers[diffTier];
+
   return (
-    <div className="entry" style={{ '--accent': '#60E8DC' }}>
-      <div className="entry__nav">
-        <button className="entry__back" onClick={() => navigate('#/')}>← Home</button>
-        <span className="entry__crumb"><b>Stats &amp; Systems</b></span>
+    <Page variant="wide" className="sys">
+      <div className="sys__topnav">
+        <button className="sys__back" onClick={() => navigate('#/')}>← Archive</button>
+        <span className="sys__crumb"><b>Stats &amp; Systems</b></span>
+        <button className="sys__cta" onClick={() => navigate('#/systems/combat')}>⚔ Combat Mathematics →</button>
       </div>
 
-      <header className="entry__banner">
-        <p className="entry__eyebrow">Core Game Systems</p>
-        <h1 className="entry__name">Stats &amp; Systems</h1>
-        <p className="entry__sub">Every combat-capable being in the Spire — hero, beast, guardian, or god — shares one language of power.</p>
+      <header className="sys__head">
+        <p className="sys__eyebrow">Core Game Systems</p>
+        <h1 className="sys__title">Stats &amp; Systems</h1>
+        <p className="sys__lead">Every combat-capable being in the Spire — hero, beast, guardian, or god — shares one language of power.</p>
       </header>
 
-      <div className="entry__body">
-        <section className="entry__sec">
-          <button className="entry__back" style={{ fontSize: '0.82rem', padding: '0.7rem 1.3rem' }} onClick={() => navigate('#/systems/combat')}>
-            ⚔ Combat Mathematics &amp; Damage Calculator →
-          </button>
-        </section>
+      <StickyContents rail={<SectionRail sections={SECTIONS} active={active} onGo={go} title="Systems" />}>
+        <Stack gap="section">
+          {/* ATTRIBUTES */}
+          <section id="attributes" ref={setRef('attributes')}>
+            <h2 className="sys__h">The Six Universal Attributes</h2>
+            <CardMatrix min={240}>
+              {ATTRIBUTES.map((a) => (
+                <GlassPanel key={a.key} accent="var(--accent-interface)">
+                  <PanelHeader eyebrow="Attribute" title={a.name} />
+                  <p className="sys__p">{a.desc}</p>
+                </GlassPanel>
+              ))}
+            </CardMatrix>
+          </section>
 
-        <section className="entry__sec">
-          <h2 className="entry__sec-h entry__sec-h--display">The Six Universal Attributes</h2>
-          <div className="entry__grid">
-            {ATTRIBUTES.map((a) => (
-              <div key={a.key} className="entry__panel entry__panel--accent">
-                <h3 className="entry__panel-h">{a.name}</h3>
-                <p className="entry__p">{a.desc}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          {/* PROGRESSION */}
+          <section id="progression" ref={setRef('progression')}>
+            <h2 className="sys__h">Player Attribute Progression</h2>
+            <p className="sys__p sys__p--lead">{PLAYER_PROGRESSION.intro}</p>
+            <DataSplit
+              left={
+                <GlassPanel accent="var(--accent-interface)">
+                  <PanelHeader eyebrow="Points by Level" />
+                  <CompareTable firstHeader="Level" cols={['Points']} rows={PLAYER_PROGRESSION.table.map((r) => ({ k: r.lvl, v: [r.pts] }))} />
+                  <p className="sys__p sys__p--dim">{PLAYER_PROGRESSION.finalTotal}</p>
+                </GlassPanel>
+              }
+              right={
+                <Stack gap="default">
+                  <GlassPanel accent="var(--accent-interface)">
+                    <PanelHeader eyebrow="The Character Sheet" />
+                    <ul className="sys__list">{PLAYER_PROGRESSION.sheet.map((s) => <li key={s}>{s}</li>)}</ul>
+                    {PLAYER_PROGRESSION.formulas.map((f) => <p key={f} className="sys__p sys__p--mono">{f}</p>)}
+                  </GlassPanel>
+                  <GlassPanel accent="var(--accent-interface)">
+                    <PanelHeader eyebrow="Soft Caps" />
+                    <CompareTable firstHeader="Band" cols={['Effect']} rows={PLAYER_PROGRESSION.softCaps.map((s) => ({ k: s.band, v: [s.effect] }))} />
+                    <p className="sys__p sys__p--dim">{PLAYER_PROGRESSION.note}</p>
+                  </GlassPanel>
+                </Stack>
+              }
+            />
+            <VellumPanel className="sys__explainer">
+              <PanelHeader eyebrow={HERO_STATS_EXPLAINER.title} title="How Hero Stats Work" />
+              <DataSplit
+                left={<ul className="sys__list">{HERO_STATS_EXPLAINER.points.map((p) => <li key={p}>{p}</li>)}</ul>}
+                right={<p className="sys__p">{HERO_STATS_EXPLAINER.sheet}</p>}
+              />
+            </VellumPanel>
+          </section>
 
-        <section className="entry__sec">
-          <h2 className="entry__sec-h entry__sec-h--display">Player Attribute Progression</h2>
-          <p className="entry__p">{PLAYER_PROGRESSION.intro}</p>
-          <div className="entry__grid" style={{ marginTop: 'var(--sp-3)' }}>
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">Points by Level</h3>
-              <table className="sys-table"><tbody>
-                {PLAYER_PROGRESSION.table.map((r) => (
-                  <tr key={r.lvl}><td>{r.lvl}</td><td className="sys-table__v">{r.pts}</td></tr>
+          {/* RANKS */}
+          <section id="ranks" ref={setRef('ranks')}>
+            <h2 className="sys__h">Level Bands &amp; Creature Ranks</h2>
+            <CardMatrix min={280}>
+              <GlassPanel accent="var(--accent-floor1)">
+                <PanelHeader eyebrow="Floor 1" title="Level Bands" accent="var(--accent-floor1)" />
+                {LEVEL_BANDS.map((b) => (
+                  <div key={b.lvl} className="sys__band"><span className="sys__band-k">{b.lvl}</span><span className="sys__band-d">{b.desc}</span></div>
                 ))}
-              </tbody></table>
-              <p className="entry__p entry__p--dim" style={{ marginTop: 'var(--sp-2)' }}>{PLAYER_PROGRESSION.finalTotal}</p>
-            </div>
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">The Character Sheet</h3>
-              <ul className="sys-list">{PLAYER_PROGRESSION.sheet.map((s) => <li key={s}>{s}</li>)}</ul>
-              {PLAYER_PROGRESSION.formulas.map((f) => <p key={f} className="entry__p" style={{ marginTop: '0.6rem', fontSize: '0.92rem' }}>{f}</p>)}
-            </div>
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">Soft Caps (natural investment)</h3>
-              <table className="sys-table"><tbody>
-                {PLAYER_PROGRESSION.softCaps.map((s) => (
-                  <tr key={s.band}><td>{s.band}</td><td>{s.effect}</td></tr>
+              </GlassPanel>
+              <GlassPanel accent="var(--accent-interface)">
+                <PanelHeader eyebrow="Ecological" title="Ranks" />
+                <p className="sys__p sys__p--dim">{RANK_SYSTEM.ecological.join(' → ')}</p>
+                {RANK_SYSTEM.defs.map((r) => (
+                  <div key={r.rank} className="sys__rank"><span className="sys__rank-k">{r.rank}</span><span className="sys__rank-d">{r.d}</span></div>
                 ))}
-              </tbody></table>
-              <p className="entry__p entry__p--dim" style={{ marginTop: 'var(--sp-2)', fontSize: '0.85rem' }}>{PLAYER_PROGRESSION.note}</p>
-            </div>
-          </div>
-        </section>
+              </GlassPanel>
+              <GlassPanel accent="var(--accent-authority)">
+                <PanelHeader eyebrow="Named Rares" title="Respawn Types" accent="var(--accent-authority)" />
+                {RANK_SYSTEM.respawn.map((r) => (
+                  <div key={r.type} className="sys__rank"><span className="sys__rank-k">{r.type}</span><span className="sys__rank-d">{r.d}</span></div>
+                ))}
+              </GlassPanel>
+            </CardMatrix>
+          </section>
 
-        <section className="entry__sec">
-          <h2 className="entry__sec-h entry__sec-h--display">{HERO_STATS_EXPLAINER.title}</h2>
-          <div className="entry__grid">
-            <div className="entry__panel entry__panel--accent">
-              <ul className="sys-list">
-                {HERO_STATS_EXPLAINER.points.map((p) => <li key={p} style={{ marginBottom: '0.5rem' }}>{p}</li>)}
-              </ul>
-            </div>
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">The Character Sheet</h3>
-              <p className="entry__p">{HERO_STATS_EXPLAINER.sheet}</p>
-            </div>
-          </div>
-        </section>
-
-        <section className="entry__sec">
-          <h2 className="entry__sec-h entry__sec-h--display">Level Bands &amp; Creature Ranks</h2>
-          <div className="entry__grid">
-            <div className="entry__panel entry__panel--accent">
-              <h3 className="entry__panel-h">Floor 1 Level Bands</h3>
-              {LEVEL_BANDS.map((b) => (
-                <div key={b.lvl} className="sys-band"><span className="sys-band__lvl">{b.lvl}</span><span className="sys-band__d">{b.desc}</span></div>
+          {/* CLASSIFICATIONS */}
+          <section id="classes" ref={setRef('classes')}>
+            <h2 className="sys__h">Supporting Classifications</h2>
+            <CardMatrix min={240}>
+              {Object.entries(CLASSIFICATIONS).map(([k, vals]) => (
+                <GlassPanel key={k} accent="var(--accent-interface)">
+                  <PanelHeader eyebrow="Classification" title={k} />
+                  <div className="sys__tags">{vals.map((v) => <span key={v} className="sys__tag">{v}</span>)}</div>
+                </GlassPanel>
               ))}
+            </CardMatrix>
+          </section>
+
+          {/* DIFFICULTY — selector + compare-all */}
+          <section id="difficulty" ref={setRef('difficulty')}>
+            <h2 className="sys__h">Difficulty</h2>
+            <p className="sys__p sys__p--lead">{DIFFICULTY.intro}</p>
+            <p className="sys__ladder">{DIFFICULTY.ladder}</p>
+
+            <div className="sys__diffmode">
+              <Tabs value={diffMode} onChange={setDiffMode} tabs={[{ id: 'compare', label: 'Compare All' }, { id: 'single', label: 'Single Tier' }]} />
+              {diffMode === 'single' && (
+                <Segmented items={diffCols.map((c, i) => ({ id: String(i), label: c, on: diffTier === i }))} onToggle={(id) => setDiffTier(Number(id))} />
+              )}
             </div>
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">Ecological Ranks</h3>
-              <p className="entry__p entry__p--dim" style={{ fontSize: '0.85rem', marginBottom: '0.5rem' }}>{RANK_SYSTEM.ecological.join(' → ')}</p>
-              {RANK_SYSTEM.defs.map((r) => (
-                <div key={r.rank} className="sys-rank"><span className="sys-rank__k">{r.rank}</span><span className="sys-rank__d">{r.d}</span></div>
+
+            {diffMode === 'compare' ? (
+              <CompareTable firstHeader="System" cols={diffCols} rows={diffRows} />
+            ) : (
+              <GlassPanel accent={diffTier === 4 ? 'var(--accent-blood)' : 'var(--accent-interface)'} className="sys__difftier">
+                <PanelHeader eyebrow={`DMG ${tier.dmg} · HP ${tier.hp} · Stagger ${tier.stag}`} title={tier.name}
+                  accent={diffTier === 4 ? 'var(--accent-blood)' : 'var(--accent-interface)'} />
+                <p className="sys__p">{tier.purpose}</p>
+                <ul className="sys__list">{tier.rules.map((r) => <li key={r}>{r}</li>)}</ul>
+              </GlassPanel>
+            )}
+
+            {/* The Unbroken Oath — solemn Guardian Stone treatment */}
+            <StonePanel accent="var(--accent-blood)" className="sys__oath">
+              <PanelHeader eyebrow="The Unbroken Oath" title="One Life" accent="var(--accent-blood)" />
+              <DataSplit
+                left={<div><h4 className="sys__minihead">The One-Life Rule</h4><p className="sys__p">{DIFFICULTY.oath.rule}</p></div>}
+                right={<div><h4 className="sys__minihead">The Memorial System</h4><p className="sys__p">{DIFFICULTY.oath.memorial}</p></div>}
+              />
+            </StonePanel>
+
+            <h3 className="sys__subh">Mechanic Layers</h3>
+            <CardMatrix min={240}>
+              {DIFFICULTY.layers.map((l) => (
+                <GlassPanel key={l.name} accent="var(--accent-interface)">
+                  <PanelHeader eyebrow={l.when} title={l.name} />
+                  <p className="sys__p sys__p--dim">{l.ex}</p>
+                </GlassPanel>
               ))}
-            </div>
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">Named-Rare Respawn Types</h3>
-              {RANK_SYSTEM.respawn.map((r) => (
-                <div key={r.type} className="sys-rank"><span className="sys-rank__k">{r.type}</span><span className="sys-rank__d">{r.d}</span></div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="entry__sec">
-          <h2 className="entry__sec-h entry__sec-h--display">Supporting Classifications</h2>
-          <div className="entry__grid">
-            {Object.entries(CLASSIFICATIONS).map(([k, vals]) => (
-              <div key={k} className="entry__panel">
-                <h3 className="entry__panel-h">{k}</h3>
-                <div className="entry__related">{vals.map((v) => <span key={v} className="entry__tag">{v}</span>)}</div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="entry__sec">
-          <h2 className="entry__sec-h entry__sec-h--display">Difficulty</h2>
-          <p className="entry__p">{DIFFICULTY.intro}</p>
-          <p className="entry__p" style={{ fontStyle: 'italic', color: 'var(--summit)', marginTop: 'var(--sp-2)' }}>{DIFFICULTY.ladder}</p>
-
-          <div className="sys-difftable" style={{ marginTop: 'var(--sp-3)' }}>
-            {DIFFICULTY.tiers.map((t) => (
-              <div key={t.name} className="sys-diff">
-                <div className="sys-diff__head">
-                  <h3 className="sys-diff__name">{t.name}</h3>
-                  <span className="sys-diff__mults">DMG {t.dmg} · HP {t.hp} · Stagger {t.stag}</span>
-                </div>
-                <p className="entry__p" style={{ fontSize: '0.9rem' }}>{t.purpose}</p>
-                <ul className="sys-list" style={{ marginTop: '0.4rem' }}>{t.rules.map((r) => <li key={r}>{r}</li>)}</ul>
-              </div>
-            ))}
-          </div>
-
-          <div className="entry__grid" style={{ marginTop: 'var(--sp-3)' }}>
-            <div className="entry__panel entry__panel--accent">
-              <h3 className="entry__panel-h">The One-Life Rule</h3>
-              <p className="entry__p" style={{ fontSize: '0.9rem' }}>{DIFFICULTY.oath.rule}</p>
-            </div>
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">The Memorial System</h3>
-              <p className="entry__p" style={{ fontSize: '0.9rem' }}>{DIFFICULTY.oath.memorial}</p>
-            </div>
-          </div>
-
-          <h3 className="entry__sec-h" style={{ marginTop: 'var(--sp-4)', fontSize: '1.1rem' }}>Mechanic Layers</h3>
-          <div className="entry__grid">
-            {DIFFICULTY.layers.map((l) => (
-              <div key={l.name} className="entry__panel">
-                <h4 className="entry__panel-h">{l.name}</h4>
-                <p className="entry__p" style={{ fontSize: '0.85rem' }}><b style={{ color: 'var(--accent)' }}>{l.when}</b></p>
-                <p className="entry__p" style={{ fontSize: '0.85rem' }}>{l.ex}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="entry__panel" style={{ marginTop: 'var(--sp-3)' }}>
-            <h3 className="entry__panel-h">The Safe-Combination Rule</h3>
-            <p className="entry__p" style={{ fontSize: '0.9rem' }}>{DIFFICULTY.safeRule}</p>
-          </div>
-
-          <p className="entry__p entry__p--dim" style={{ marginTop: 'var(--sp-2)', fontSize: '0.82rem', fontStyle: 'italic' }}>
-            Provisional — to be revisited after Fenrath's full encounter is complete. {DIFFICULTY.tbd}
-          </p>
-        </section>
-
-        <p className="entry__p entry__p--dim" style={{ textAlign: 'center', fontStyle: 'italic' }}>
-          Per-floor creatures, named rares, and regional elites are catalogued within each floor's own archive.
-        </p>
-      </div>
-    </div>
+            </CardMatrix>
+            <GlassPanel accent="var(--accent-interface)" className="sys__saferule">
+              <PanelHeader eyebrow="Encounter Design" title="The Safe-Combination Rule" />
+              <p className="sys__p">{DIFFICULTY.safeRule}</p>
+            </GlassPanel>
+            <p className="sys__p sys__p--dim sys__tbd">Provisional — to be revisited after Fenrath's full encounter is complete. {DIFFICULTY.tbd}</p>
+          </section>
+        </Stack>
+      </StickyContents>
+    </Page>
   );
 }

@@ -1,0 +1,44 @@
+/* =====================================================================
+   STATS & SYSTEMS — sticky-contents, glass panels, wide tables,
+   difficulty selector + compare-all, solemn Oath in Guardian Stone.
+   ===================================================================== */
+.sys { padding-top: var(--sp-3); padding-bottom: var(--sp-6); }
+.sys__topnav { display: flex; align-items: center; gap: var(--sp-2); padding: var(--sp-2) 0 var(--sp-3); flex-wrap: wrap; }
+.sys__back { cursor: pointer; font-family: var(--font-util); font-size: 0.8rem; color: var(--bone-dim); background: var(--surface-2); border: var(--edge); border-radius: 40px; padding: 0.5rem 1rem; transition: color, background-color, border-color, box-shadow, transform, opacity var(--t-fast) var(--ease); }
+.sys__back:hover { color: var(--rune); border-color: var(--edge-rune); }
+.sys__crumb { font-family: var(--font-util); font-size: 0.78rem; color: var(--bone-dim); } .sys__crumb b { color: var(--bone); }
+.sys__cta { margin-left: auto; cursor: pointer; font-family: var(--font-util); font-size: 0.78rem; color: var(--rune); background: color-mix(in srgb, var(--rune) 10%, transparent); border: 1px solid color-mix(in srgb, var(--rune) 32%, transparent); border-radius: 4px; padding: 0.5rem 1rem; transition: color, background-color, border-color, box-shadow, transform, opacity var(--t-fast) var(--ease); }
+.sys__cta:hover { box-shadow: var(--glow-rune); }
+
+.sys__head { margin-bottom: var(--sp-4); max-width: var(--reading-width); }
+.sys__eyebrow { font-family: var(--font-util); font-size: var(--t-label); letter-spacing: 0.2em; text-transform: uppercase; color: var(--rune); }
+.sys__title { font-family: var(--font-display); font-size: var(--t-h1); color: var(--summit); line-height: 1.05; margin: 0.2rem 0 0.5rem; }
+.sys__lead { font-family: var(--font-body); color: var(--bone-dim); font-size: 1.05rem; line-height: 1.7; }
+
+.sys__h { font-family: var(--font-display); font-size: var(--t-h2); color: var(--summit); margin-bottom: var(--sp-3); }
+.sys__subh { font-family: var(--font-display); font-size: 1.25rem; color: var(--bone-f); margin: var(--sp-3) 0 var(--sp-2); }
+.sys__minihead { font-family: var(--font-util); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bone-dim); margin-bottom: 0.4rem; }
+.sys__p { font-family: var(--font-body); color: #cbc3b4; font-size: 0.95rem; line-height: 1.65; }
+.sys__p--lead { font-size: 1.02rem; margin-bottom: var(--sp-2); }
+.sys__p--dim { color: var(--bone-dim); font-size: 0.85rem; margin-top: 0.6rem; }
+.sys__p--mono { font-family: var(--font-util); font-size: 0.85rem; color: var(--rune); margin-top: 0.5rem; }
+.sys__ladder { font-family: var(--font-body); font-style: italic; color: var(--summit); font-size: 1.05rem; margin-bottom: var(--sp-3); }
+.sys__list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+.sys__list li { font-family: var(--font-body); color: #cbc3b4; font-size: 0.92rem; line-height: 1.5; padding-left: 1.1rem; position: relative; }
+.sys__list li::before { content: '◆'; position: absolute; left: 0; color: var(--rune); font-size: 0.6rem; top: 0.3rem; }
+
+.sys__band { display: flex; gap: 0.7rem; padding: 0.4rem 0; border-bottom: 1px solid var(--hairline); }
+.sys__band-k { font-family: var(--font-util); font-size: 0.78rem; color: var(--accent-floor1); min-width: 3rem; font-variant-numeric: tabular-nums; }
+.sys__band-d { font-family: var(--font-body); font-size: 0.88rem; color: var(--bone-dim); }
+.sys__rank { display: flex; flex-direction: column; gap: 0.1rem; padding: 0.4rem 0; border-bottom: 1px solid var(--hairline); }
+.sys__rank-k { font-family: var(--font-util); font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--bone); }
+.sys__rank-d { font-family: var(--font-body); font-size: 0.86rem; color: var(--bone-dim); }
+.sys__tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.sys__tag { font-family: var(--font-util); font-size: 0.74rem; color: var(--bone-dim); background: var(--surface-2); border: var(--edge); border-radius: 40px; padding: 0.25rem 0.7rem; }
+
+.sys__explainer { margin-top: var(--sp-3); }
+.sys__diffmode { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; margin-bottom: var(--sp-3); }
+.sys__difftier { margin-top: var(--sp-1); }
+.sys__oath { margin-top: var(--sp-3); }
+.sys__saferule, .sys__tbd { margin-top: var(--sp-3); }
+.sys__tbd { font-style: italic; }

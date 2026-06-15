@@ -1,0 +1,54 @@
+/* =====================================================================
+   APP SHELL ATMOSPHERE
+   A dark foundation with subtle layered depth instead of flat black.
+   All layers are GPU-cheap (gradients/masks), pointer-inert, and respect
+   reduced-motion. Tinted by --shell-accent per route.
+   ===================================================================== */
+.shell { --shell-accent: var(--accent-interface); position: relative; min-height: 100vh; isolation: isolate; }
+
+.shell__atmos { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden;
+  /* Own compositor layer: prevents the fixed gradient/mask stack from
+     repainting on every scroll frame. */
+  transform: translateZ(0);
+  will-change: transform;
+  background:
+    radial-gradient(120% 80% at 50% -10%, #161a24 0%, var(--ink) 55%),
+    var(--ink);
+}
+
+/* deep vignette for focus */
+.shell__vignette { position: absolute; inset: 0;
+  background: radial-gradient(130% 100% at 50% 0%, transparent 40%, rgba(0,0,0,0.55) 100%); }
+
+/* faint rune-lattice geometry */
+.shell__runefield { position: absolute; inset: 0; opacity: 0.05;
+  background-image:
+    linear-gradient(0deg, transparent 0, transparent 119px, color-mix(in srgb, var(--shell-accent) 60%, transparent) 120px),
+    linear-gradient(90deg, transparent 0, transparent 119px, color-mix(in srgb, var(--shell-accent) 60%, transparent) 120px);
+  background-size: 120px 120px;
+  -webkit-mask: radial-gradient(80% 60% at 50% 30%, #000, transparent 80%);
+          mask: radial-gradient(80% 60% at 50% 30%, #000, transparent 80%);
+}
+
+/* tower pillar silhouettes rising at the edges */
+.shell__pillars { position: absolute; inset: 0; opacity: 0.5;
+  background:
+    linear-gradient(90deg, rgba(8,9,13,0.9) 0%, transparent 14%, transparent 86%, rgba(8,9,13,0.9) 100%);
+  -webkit-mask: linear-gradient(180deg, transparent, #000 30%);
+          mask: linear-gradient(180deg, transparent, #000 30%);
+}
+
+/* one soft accent glow high on the page — the "light from above" */
+.shell__glow { position: absolute; top: -10%; left: 50%; width: 70vw; height: 50vh; transform: translateX(-50%);
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--shell-accent) 12%, transparent), transparent 75%);
+  opacity: 0.6; filter: blur(8px); }
+
+.shell__content { position: relative; z-index: 1; }
+
+/* page-entry transition: a quick rune resolution (fade + settle) */
+.pageview { animation: pageview-in var(--t-slow) var(--ease-out) both; }
+@keyframes pageview-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) { .pageview { animation: none; } }

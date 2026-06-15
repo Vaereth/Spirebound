@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { DEEP_LORE, FENRATH_STATS, FENRATH_GRADES, THREAT_GRADES, CORRUPT_GOD_GRADE } from '../data/canon.js';
 import { StatPanel, StatBars } from './StatBlock.jsx';
 import GradeBadge from './GradeBadge.jsx';
-import './EntryPage.css';
+import { Page, Stack, DataSplit, CardMatrix } from './Layout.jsx';
+import { StonePanel, GlassPanel, VellumPanel, PanelHeader } from './Surfaces.jsx';
 import './DeepLore.css';
 
 export default function DeepLorePage({ navigate }) {
@@ -11,10 +12,10 @@ export default function DeepLorePage({ navigate }) {
 
   if (!revealed) {
     return (
-      <div className="entry dl" style={{ '--accent': '#9a2f23' }}>
-        <div className="entry__nav">
-          <button className="entry__back" onClick={() => navigate('#/floors/1')}>← The Verdant Reach</button>
-          <span className="entry__crumb">Restricted · <b>Sealed Archive</b></span>
+      <Page className="dl" style={{ '--accent': 'var(--accent-blood)' }}>
+        <div className="dl__topnav">
+          <button className="dl__back" onClick={() => navigate('#/floors/1')}>← The Verdant Reach</button>
+          <span className="dl__crumb">Restricted · <b>Sealed Archive</b></span>
         </div>
         <div className="dl__gate">
           <span className="dl__seal" aria-hidden="true">⛓</span>
@@ -26,69 +27,64 @@ export default function DeepLorePage({ navigate }) {
           </p>
           <p className="dl__gate-warn dl__gate-warn--strong">These are deliberate spoilers. They are not meant for new climbers.</p>
           <div className="dl__gate-actions">
-            <button className="dl__reveal" onClick={() => setRevealed(true)}>I understand — unseal the archive</button>
+            <button className="dl__reveal" onClick={() => setRevealed(true)}>⚠ I understand — unseal the archive</button>
             <button className="dl__decline" onClick={() => navigate('#/floors/1')}>Take me back</button>
           </div>
         </div>
-      </div>
+      </Page>
     );
   }
 
   return (
-    <div className="entry dl" style={{ '--accent': '#9a2f23' }}>
-      <div className="entry__nav">
-        <button className="entry__back" onClick={() => navigate('#/floors/1')}>← The Verdant Reach</button>
-        <span className="entry__crumb">Restricted · <b>Sealed Archive — Unsealed</b></span>
-        <button className="entry__back" onClick={() => setRevealed(false)} style={{ marginLeft: 'auto' }}>Re-seal</button>
+    <Page variant="wide" className="dl dl--open" style={{ '--accent': 'var(--accent-blood)' }}>
+      <div className="dl__topnav">
+        <button className="dl__back" onClick={() => navigate('#/floors/1')}>← The Verdant Reach</button>
+        <span className="dl__crumb">Restricted · <b>Sealed Archive — Unsealed</b></span>
+        <button className="dl__back dl__back--reseal" onClick={() => setRevealed(false)}>⛓ Re-seal</button>
       </div>
 
-      <header className="entry__banner">
-        <p className="entry__eyebrow">Restricted Records · Spoilers</p>
-        <h1 className="entry__name">The Truth Beneath the First Step</h1>
-        <p className="entry__sub">Floor 1 is not merely the first floor. It is the lid above the prison.</p>
+      <header className="dl__head">
+        <p className="dl__eyebrow">Restricted Records · Spoilers</p>
+        <h1 className="dl__title">The Truth Beneath the First Step</h1>
+        <p className="dl__sub">Floor 1 is not merely the first floor. It is the lid above the prison.</p>
       </header>
 
-      <div className="entry__body">
-        {/* The Hundredfold Seal */}
-        <section className="entry__sec">
-          <h2 className="entry__sec-h entry__sec-h--display">{D.seal.title}</h2>
-          <p className="entry__p">{D.seal.summary}</p>
-          <div className="entry__grid" style={{ marginTop: 'var(--sp-3)' }}>
-            <div className="entry__panel entry__panel--accent">
-              <h3 className="entry__panel-h">Every Guardian's Two Functions</h3>
-              <ul className="dl__list">{D.seal.functions.map((f) => <li key={f}>{f}</li>)}</ul>
-            </div>
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">Killing a Guardian</h3>
-              <ul className="dl__list">{D.seal.kill.map((f) => <li key={f}>{f}</li>)}</ul>
-            </div>
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">Reviving a Guardian</h3>
-              <ul className="dl__list">{D.seal.revive.map((f) => <li key={f}>{f}</li>)}</ul>
-            </div>
-          </div>
-          <h3 className="entry__panel-h" style={{ marginTop: 'var(--sp-3)' }}>Article States</h3>
-          <div className="entry__grid">
+      <Stack gap="section">
+        {/* Hundredfold Seal */}
+        <section>
+          <h2 className="dl__h">{D.seal.title}</h2>
+          <p className="dl__p dl__p--lead">{D.seal.summary}</p>
+          <CardMatrix min={240}>
+            <StonePanel accent="var(--accent-blood)"><PanelHeader eyebrow="Every Guardian" title="Two Functions" accent="var(--accent-blood)" /><ul className="dl__list">{D.seal.functions.map((f) => <li key={f}>{f}</li>)}</ul></StonePanel>
+            <GlassPanel accent="var(--accent-blood)"><PanelHeader eyebrow="Killing a Guardian" accent="var(--accent-blood)" /><ul className="dl__list">{D.seal.kill.map((f) => <li key={f}>{f}</li>)}</ul></GlassPanel>
+            <GlassPanel accent="var(--accent-blood)"><PanelHeader eyebrow="Reviving a Guardian" accent="var(--accent-blood)" /><ul className="dl__list">{D.seal.revive.map((f) => <li key={f}>{f}</li>)}</ul></GlassPanel>
+          </CardMatrix>
+          <h3 className="dl__subh">Article States</h3>
+          <CardMatrix min={200}>
             {D.seal.states.map((s) => (
-              <div key={s.s} className="dl__state"><span className="dl__state-k">{s.s}</span><span className="dl__state-d">{s.d}</span></div>
+              <GlassPanel key={s.s} accent="var(--accent-blood)"><span className="dl__state-k">{s.s}</span><p className="dl__p dl__p--dim">{s.d}</p></GlassPanel>
             ))}
-          </div>
+          </CardMatrix>
         </section>
 
         {/* Corruption cause */}
-        <section className="entry__sec">
-          <h2 className="entry__sec-h entry__sec-h--display">{D.corruptionCause.title}</h2>
-          <p className="entry__p">{D.corruptionCause.canon}</p>
-          <div className="entry__panel" style={{ marginTop: 'var(--sp-3)' }}>
-            <h3 className="entry__panel-h">Encroachment Sequence</h3>
-            <div className="dl__seq">{D.corruptionCause.sequence.map((s, i) => <span key={s} className="dl__seq-step">{i + 1}. {s}</span>)}</div>
-          </div>
-          <p className="entry__p" style={{ marginTop: 'var(--sp-2)', fontStyle: 'italic', color: 'var(--summit)' }}>{D.corruptionCause.revivalRule}</p>
+        <section>
+          <h2 className="dl__h">{D.corruptionCause.title}</h2>
+          <DataSplit
+            left={<VellumPanel sealed><PanelHeader eyebrow="Canon" title="The Cause" /><p className="dl__p">{D.corruptionCause.canon}</p></VellumPanel>}
+            right={
+              <GlassPanel accent="var(--accent-blood)">
+                <PanelHeader eyebrow="Encroachment Sequence" accent="var(--accent-blood)" />
+                <div className="dl__seq">{D.corruptionCause.sequence.map((s, i) => <span key={s} className="dl__seq-step">{i + 1}. {s}</span>)}</div>
+                <p className="dl__p dl__quote">{D.corruptionCause.revivalRule}</p>
+              </GlassPanel>
+            }
+          />
         </section>
 
         {/* Fenrath gated stats */}
-        <section className="entry__sec">
-          <h2 className="entry__sec-h entry__sec-h--display">Fenrath — Beyond the Public Record</h2>
+        <section>
+          <h2 className="dl__h">Fenrath — Beyond the Public Record</h2>
           <div className="dl__grades">
             {FENRATH_GRADES.restricted.map((g) => (
               <div key={g.state} className="dl__grade-row">
@@ -97,101 +93,92 @@ export default function DeepLorePage({ navigate }) {
               </div>
             ))}
           </div>
-          <div className="entry__grid" style={{ marginTop: 'var(--sp-3)' }}>
-            <div className="entry__panel entry__panel--accent">
-              <h3 className="entry__panel-h">{FENRATH_STATS.proofless.label} · Total {FENRATH_STATS.proofless.total}</h3>
-              <StatBars stats={FENRATH_STATS.proofless.stats} total={FENRATH_STATS.proofless.total} maxScale={110} />
-              <ul className="dl__list" style={{ marginTop: 'var(--sp-2)' }}>{FENRATH_STATS.proofless.props.map((p) => <li key={p}>{p}</li>)}</ul>
-            </div>
-            <div className="entry__panel">
-              <h3 className="entry__panel-h">{FENRATH_STATS.flawless.label}</h3>
-              <p className="entry__p entry__p--dim" style={{ fontStyle: 'italic' }}>{FENRATH_STATS.flawless.trigger}</p>
-              <ul className="dl__list" style={{ marginTop: 'var(--sp-2)' }}>{FENRATH_STATS.flawless.props.map((p) => <li key={p}>{p}</li>)}</ul>
-            </div>
-          </div>
+          <DataSplit
+            left={
+              <StonePanel accent="var(--accent-guardian)">
+                <PanelHeader eyebrow={`Total ${FENRATH_STATS.proofless.total}`} title={FENRATH_STATS.proofless.label} accent="var(--accent-guardian)" />
+                <StatBars stats={FENRATH_STATS.proofless.stats} total={FENRATH_STATS.proofless.total} maxScale={110} />
+                <ul className="dl__list">{FENRATH_STATS.proofless.props.map((p) => <li key={p}>{p}</li>)}</ul>
+              </StonePanel>
+            }
+            right={
+              <GlassPanel accent="var(--accent-guardian)">
+                <PanelHeader eyebrow="Flawless" title={FENRATH_STATS.flawless.label} accent="var(--accent-guardian)" />
+                <p className="dl__p dl__p--dim dl__quote">{FENRATH_STATS.flawless.trigger}</p>
+                <ul className="dl__list">{FENRATH_STATS.flawless.props.map((p) => <li key={p}>{p}</li>)}</ul>
+              </GlassPanel>
+            }
+          />
         </section>
 
         {/* Seven Buried Elites */}
-        <section className="entry__sec">
-          <h2 className="entry__sec-h entry__sec-h--display">The Seven Buried Elites</h2>
-          <div style={{ marginBottom: 'var(--sp-2)' }}><GradeBadge grade="SSS" size="md" title="All seven: SSS — engagement prohibited" /></div>
-          <p className="entry__p">{D.sevenElites.intro} <b style={{ color: '#d98a6a' }}>All seven are SSS Grade — engagement prohibited. The full seven-elite ritual sequence is a Calamity-Class Operation.</b></p>
-          <div className="entry__grid" style={{ marginTop: 'var(--sp-3)' }}>
+        <section>
+          <h2 className="dl__h">The Seven Buried Elites</h2>
+          <div className="dl__sssline"><GradeBadge grade="SSS" size="md" /><p className="dl__p">{D.sevenElites.intro} <b className="dl__warn">All seven are SSS Grade — engagement prohibited. The full seven-elite ritual sequence is a Calamity-Class Operation.</b></p></div>
+          <CardMatrix min={300}>
             {D.sevenElites.list.map((e) => (
-              <div key={e.name} className="entry__panel entry__panel--accent">
-                <div className="sys-rare__head">
-                  <h3 className="sys-rare__name">{e.name}</h3>
-                  <span className="sys-rare__species" style={{ color: '#d98a6a' }}>{e.concept} · {e.level} · Total {e.total}</span>
-                </div>
-                <p className="entry__p" style={{ fontStyle: 'italic', fontSize: '0.9rem' }}>{e.identity}</p>
+              <StonePanel key={e.name} accent="var(--accent-blood)">
+                <PanelHeader eyebrow={`${e.concept} · ${e.level} · Total ${e.total}`} title={e.name} accent="var(--accent-blood)" />
+                <p className="dl__p dl__quote">{e.identity}</p>
                 <StatBars stats={e.stats} total={e.total} maxScale={110} />
-              </div>
+              </StonePanel>
             ))}
-          </div>
-          <p className="entry__p" style={{ marginTop: 'var(--sp-2)', fontStyle: 'italic', color: 'var(--summit)' }}>{D.sevenElites.consequence}</p>
+          </CardMatrix>
+          <p className="dl__p dl__quote">{D.sevenElites.consequence}</p>
         </section>
 
         {/* The corrupt god */}
-        <section className="entry__sec">
-          <h2 className="entry__sec-h entry__sec-h--display">{D.corruptGod.title}</h2>
-          <div style={{ marginBottom: 'var(--sp-2)' }}><GradeBadge grade="Tower Class" size="lg" /></div>
-          <p className="entry__p entry__p--dim">Final true name: {D.corruptGod.finalName}</p>
-          <p className="entry__p" style={{ fontStyle: 'italic', color: 'var(--summit)' }}>{CORRUPT_GOD_GRADE.note}</p>
-          <div className="entry__related" style={{ margin: 'var(--sp-2) 0' }}>
-            {D.corruptGod.classifications.map((c) => <span key={c} className="entry__tag entry__tag--accent">{c}</span>)}
-          </div>
-          <p className="entry__p">{D.corruptGod.summary}</p>
-
-          <div className="dl__god">
-            <div className="entry__panel entry__panel--accent">
-              <h3 className="entry__panel-h">Stat Profile · Total {D.corruptGod.total}</h3>
-              <StatPanel stats={D.corruptGod.stats} total={D.corruptGod.total} accent="#9a2f23" maxScale={910} />
-              <ul className="dl__list" style={{ marginTop: 'var(--sp-2)' }}>{D.corruptGod.statNotes.map((n) => <li key={n}>{n}</li>)}</ul>
-            </div>
-          </div>
-
-          <p className="entry__p" style={{ marginTop: 'var(--sp-3)' }}>{D.corruptGod.encounter}</p>
-          <div className="entry__grid" style={{ marginTop: 'var(--sp-2)' }}>
-            {D.corruptGod.phases.map((p) => (
-              <div key={p.name} className="entry__panel">
-                <h3 className="entry__panel-h">{p.name}</h3>
-                <p className="entry__p" style={{ fontSize: '0.9rem' }}>{p.d}</p>
+        <section>
+          <h2 className="dl__h">{D.corruptGod.title}</h2>
+          <StonePanel accent="var(--accent-blood)">
+            <div className="dl__godhead">
+              <GradeBadge grade="Tower Class" size="lg" />
+              <div>
+                <p className="dl__p dl__p--dim">Final true name: {D.corruptGod.finalName}</p>
+                <p className="dl__p dl__quote">{CORRUPT_GOD_GRADE.note}</p>
               </div>
+            </div>
+            <div className="dl__godtags">{D.corruptGod.classifications.map((c) => <span key={c} className="dl__tag">{c}</span>)}</div>
+            <p className="dl__p">{D.corruptGod.summary}</p>
+            <DataSplit
+              left={<div><h4 className="dl__minihead">Stat Profile · Total {D.corruptGod.total}</h4><StatPanel stats={D.corruptGod.stats} total={D.corruptGod.total} accent="#9a2f23" maxScale={910} /></div>}
+              right={<div><h4 className="dl__minihead">Notes</h4><ul className="dl__list">{D.corruptGod.statNotes.map((n) => <li key={n}>{n}</li>)}</ul></div>}
+            />
+          </StonePanel>
+          <p className="dl__p dl__p--lead">{D.corruptGod.encounter}</p>
+          <CardMatrix min={220}>
+            {D.corruptGod.phases.map((p) => (
+              <GlassPanel key={p.name} accent="var(--accent-blood)"><PanelHeader eyebrow="Phase" title={p.name} accent="var(--accent-blood)" /><p className="dl__p dl__p--dim">{p.d}</p></GlassPanel>
             ))}
-          </div>
-
-          <div className="entry__panel" style={{ marginTop: 'var(--sp-3)' }}>
-            <h3 className="entry__panel-h">Reward — {D.corruptGod.reward.name}</h3>
-            <div className="entry__related">{D.corruptGod.reward.props.map((p) => <span key={p} className="entry__tag">{p}</span>)}</div>
-            <p className="entry__p entry__p--dim" style={{ marginTop: '0.6rem', fontSize: '0.85rem' }}>{D.corruptGod.reward.note}</p>
-          </div>
+          </CardMatrix>
+          <GlassPanel accent="var(--accent-authority)" className="dl__reward">
+            <PanelHeader eyebrow="Reward" title={D.corruptGod.reward.name} accent="var(--accent-authority)" />
+            <div className="dl__godtags">{D.corruptGod.reward.props.map((p) => <span key={p} className="dl__tag">{p}</span>)}</div>
+            <p className="dl__p dl__p--dim">{D.corruptGod.reward.note}</p>
+          </GlassPanel>
         </section>
 
         {/* Floor 100 */}
-        <section className="entry__sec">
-          <h2 className="entry__sec-h entry__sec-h--display">{D.floor100.title}</h2>
-          <div style={{ marginBottom: 'var(--sp-2)' }}><GradeBadge grade="Extinction Class" size="md" title="Provisional — TBD" /></div>
-          <p className="entry__p">{D.floor100.summary} <span className="entry__p--dim">Provisional grade: Extinction Class (TBD until designed).</span></p>
+        <section>
+          <h2 className="dl__h">{D.floor100.title}</h2>
+          <StonePanel accent="var(--accent-blood)">
+            <div className="dl__godhead"><GradeBadge grade="Extinction Class" size="md" /><p className="dl__p">{D.floor100.summary} <span className="dl__p--dim">Provisional grade: Extinction Class (TBD until designed).</span></p></div>
+          </StonePanel>
         </section>
 
         {/* Restricted threat classes */}
-        <section className="entry__sec">
-          <h2 className="entry__sec-h entry__sec-h--display">Restricted Threat Classes</h2>
-          <p className="entry__p entry__p--dim">Beyond the public E–SSS ladder. These appear only in restricted records.</p>
-          <div className="dl__grades" style={{ marginTop: 'var(--sp-3)' }}>
+        <section>
+          <h2 className="dl__h">Restricted Threat Classes</h2>
+          <p className="dl__p dl__p--dim">Beyond the public E–SSS ladder. These appear only in restricted records.</p>
+          <div className="dl__grades">
             {THREAT_GRADES.restricted.map((g) => (
-              <div key={g.g} className="dl__grade-row">
-                <GradeBadge grade={g.g} size="md" />
-                <div><p className="dl__grade-note">{g.desc}</p></div>
-              </div>
+              <div key={g.g} className="dl__grade-row"><GradeBadge grade={g.g} size="md" /><p className="dl__grade-note">{g.desc}</p></div>
             ))}
           </div>
         </section>
 
-        <p className="entry__p entry__p--dim" style={{ textAlign: 'center', fontStyle: 'italic' }}>
-          Anything marked TBD is not yet canon and must not be invented.
-        </p>
-      </div>
-    </div>
+        <p className="dl__p dl__p--dim dl__tbd">Anything marked TBD is not yet canon and must not be invented.</p>
+      </Stack>
+    </Page>
   );
 }

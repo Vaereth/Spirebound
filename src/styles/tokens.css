@@ -101,8 +101,8 @@
 
   /* ---------- Sticky offsets & z-index ---------- */
   --topbar-h: 56px;
-  --sticky-top: calc(var(--topbar-h) + 8px);
-  --rail-top: calc(var(--topbar-h) + 16px);
+  --sticky-top: calc(var(--topbar-h) + 44px);
+  --rail-top: calc(var(--topbar-h) + 52px);
   --z-base: 1;
   --z-rail: 20;
   --z-topbar: 40;
@@ -131,3 +131,6 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* directive alias: --page-width === --page-max-width */
+:root { --page-width: var(--page-max-width); }
