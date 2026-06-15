@@ -37,25 +37,26 @@
 .lb-tocrow__mark { font-size: 0.7rem; color: var(--gold); }
 
 /* ---------- the book ---------- */
-.lb-book { position: relative; display: flex; align-items: stretch; width: min(100%, 1240px); height: clamp(620px, 72vh, 850px); margin: 0 auto; outline: none; }
+.lb-book { position: relative; display: flex; align-items: stretch; width: min(100%, 1580px); height: min(74vh, 820px); min-height: 620px; margin: 0 auto; outline: none; }
 .lb-book:focus-visible { box-shadow: 0 0 0 2px var(--gold); border-radius: 8px; }
 
 .lb-spread { position: relative; flex: 1; display: grid; grid-template-columns: 1fr 1fr; min-width: 0;
-  background: var(--vellum-edge); border-radius: 6px; box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,0,0,0.5);
+  background: #0e0c09; border-radius: 8px; padding: 10px; gap: 0;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(201,162,75,0.08);
   overflow: hidden; }
 .lb-book--single .lb-spread { grid-template-columns: 1fr; }
 
-.lb-page { position: relative; overflow: hidden;
+.lb-page { position: relative; overflow: hidden; border-radius: 3px;
   background:
-    radial-gradient(120% 90% at 50% 0%, rgba(255,240,210,0.04), transparent 60%),
-    linear-gradient(180deg, var(--vellum-1), var(--vellum-2));
-  /* subtle grain */
-  background-blend-mode: overlay, normal; }
+    radial-gradient(120% 90% at 50% 0%, rgba(255,240,210,0.045), transparent 60%),
+    linear-gradient(180deg, var(--vellum-1), var(--vellum-2)); }
 .lb-page::before { /* faint paper grain */
   content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0.5;
   background-image: radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 3px 3px; }
-.lb-page--left { box-shadow: inset -18px 0 30px -18px rgba(0,0,0,0.7); border-right: 1px solid rgba(0,0,0,0.4); }
-.lb-page--right { box-shadow: inset 18px 0 30px -18px rgba(0,0,0,0.7); }
+/* deep gutter shadow toward the spine — this is what makes it read as two facing pages */
+.lb-page--left { border-radius: 3px 0 0 3px; box-shadow: inset -28px 0 36px -22px rgba(0,0,0,0.85), inset 0 0 50px -30px rgba(0,0,0,0.6); margin-right: 7px; }
+.lb-page--right { border-radius: 0 3px 3px 0; box-shadow: inset 28px 0 36px -22px rgba(0,0,0,0.85), inset 0 0 50px -30px rgba(0,0,0,0.6); margin-left: 7px; }
+.lb-page--single { border-radius: 3px; }
 .lb-page--dark { background: linear-gradient(180deg, #1a1614, #14110e); --ink: #c6b69a; }
 .lb-page--dark::after { content: ''; position: absolute; inset: 0; pointer-events: none; box-shadow: inset 0 0 60px rgba(154,47,35,0.12); }
 
@@ -70,29 +71,33 @@
 .lb-page__stamp { position: absolute; top: 0.9rem; right: 1rem; color: var(--gold); opacity: 0.25; font-size: 0.9rem; }
 .lb-page--left .lb-page__stamp { right: auto; left: 1rem; }
 
-/* spine */
-.lb-spine { position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: 2px;
-  background: linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.6), rgba(0,0,0,0.1)); pointer-events: none; }
+/* spine — a real central fold with depth and a thin gold seam */
+.lb-spine { position: absolute; top: 8px; bottom: 8px; left: 50%; transform: translateX(-50%); width: 24px; pointer-events: none; z-index: 2;
+  background:
+    linear-gradient(90deg, transparent, rgba(0,0,0,0.55) 35%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.55) 65%, transparent);
+}
+.lb-spine::after { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: 1px;
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--gold) 45%, transparent) 12%, color-mix(in srgb, var(--gold) 45%, transparent) 88%, transparent); }
 .lb-book--single .lb-spine { display: none; }
 
-/* masthead on opening page */
-.lb-masthead { position: relative; margin-bottom: 1rem; }
-.lb-masthead__num { font-family: var(--font-display); font-size: 1.4rem; color: var(--gold); }
-.lb-masthead__title { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.3rem, 2.4vw, 1.9rem); color: var(--summit); line-height: 1.1; margin: 0.1rem 0 0.5rem; }
-.lb-masthead__meta { display: flex; flex-direction: column; gap: 0.15rem; font-family: var(--font-util); font-size: 0.68rem; letter-spacing: 0.03em; color: var(--ink-dim); }
-.lb-masthead__sigil { position: absolute; top: 0; right: 0; font-size: 1.8rem; color: var(--gold); opacity: 0.4; }
-.lb-rule { display: block; height: 1px; margin-top: 0.8rem; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--gold) 50%, transparent), transparent); }
+/* masthead on opening page — compact so body content starts high */
+.lb-masthead { position: relative; margin-bottom: 0.7rem; }
+.lb-masthead__num { font-family: var(--font-display); font-size: 1.2rem; color: var(--gold); }
+.lb-masthead__title { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.25rem, 2.1vw, 1.7rem); color: var(--summit); line-height: 1.08; margin: 0 0 0.3rem; }
+.lb-masthead__meta { display: flex; flex-wrap: wrap; gap: 0.1rem 0.9rem; font-family: var(--font-util); font-size: 0.64rem; letter-spacing: 0.02em; color: var(--ink-dim); }
+.lb-masthead__sigil { position: absolute; top: -0.2rem; right: 0; font-size: 1.5rem; color: var(--gold); opacity: 0.4; }
+.lb-rule { display: block; height: 1px; margin-top: 0.55rem; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--gold) 50%, transparent), transparent); }
 
 /* prose blocks */
 .lb-para, .lb-verse, .lb-quote, .lb-speaker, .lb-annotation, .lb-redaction {
   font-family: var(--font-body); color: var(--ink); font-size: clamp(1rem, 1.15vw, 1.15rem); line-height: 1.62; max-width: 52ch; }
-.lb-para { margin-bottom: 0.7rem; }
+.lb-para { margin-bottom: 0.6rem; }
 .lb-verse { margin-bottom: 0.2rem; text-align: center; font-style: italic; }
 .lb-quote { margin: 0.5rem 0; font-style: italic; color: #e0d2b0; padding-left: 0.9rem; border-left: 2px solid color-mix(in srgb, var(--gold) 40%, transparent); }
-.lb-speaker { margin: 0.7rem 0 0.15rem; font-family: var(--font-util); font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); }
-.lb-speaker + .lb-para { margin-left: 0.9rem; }
-.lb-annotation { margin: 0.6rem 0; font-style: italic; font-size: 0.92rem; color: var(--ink-dim); }
-.lb-redaction { margin: 0.6rem 0; font-family: var(--font-util); font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; color: #8a7f6a; background: repeating-linear-gradient(90deg, rgba(0,0,0,0.25), rgba(0,0,0,0.25) 8px, transparent 8px, transparent 16px); padding: 0.3rem 0.5rem; border-radius: 3px; }
+.lb-speaker { margin: 0.55rem 0 0.1rem; font-family: var(--font-util); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); }
+.lb-speaker + .lb-para { margin-left: 0.9rem; margin-bottom: 0.35rem; }
+.lb-annotation { margin: 0.55rem 0; font-style: italic; font-size: 0.92rem; color: var(--ink-dim); }
+.lb-redaction { margin: 0.5rem 0; display: inline-block; font-family: var(--font-util); font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: #8a7f6a; background: repeating-linear-gradient(90deg, rgba(0,0,0,0.25), rgba(0,0,0,0.25) 8px, transparent 8px, transparent 16px); padding: 0.25rem 0.5rem; border-radius: 3px; }
 
 /* outer page edges (click to turn) */
 .lb-edge { position: relative; flex: 0 0 38px; display: grid; place-items: center; cursor: pointer; border: none;
@@ -122,7 +127,7 @@
 .lb-sealed__gate { color: var(--ink-dim); }
 
 /* controls bar (always visible, under the book) */
-.lb-controls { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); margin-top: var(--sp-2); width: min(100%, 1240px); margin-left: auto; margin-right: auto; }
+.lb-controls { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); margin-top: var(--sp-2); width: min(100%, 1580px); margin-left: auto; margin-right: auto; }
 .lb-navbtn { cursor: pointer; font-family: var(--font-util); font-size: 0.8rem; color: var(--bone); background: var(--surface-2); border: var(--edge); border-radius: 40px; padding: 0.55rem 1rem; max-width: 42%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color, border-color var(--t-fast) var(--ease); }
 .lb-navbtn:hover:not(:disabled) { color: var(--gold); border-color: color-mix(in srgb, var(--gold) 40%, transparent); }
 .lb-navbtn:disabled { opacity: 0.35; cursor: default; }
