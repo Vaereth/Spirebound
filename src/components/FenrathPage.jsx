@@ -10,6 +10,7 @@ import { StatBars } from './StatBlock.jsx';
 import GradeBadge, { gradeColor } from './GradeBadge.jsx';
 import ArtSlot from './ArtSlot.jsx';
 import { getPref, setPref } from '../lib/userContext.js';
+import LoreBook from './LoreBook.jsx';
 import './FenrathPage.css';
 
 const ATTR_ORDER = ['vitality', 'might', 'guard', 'arcana', 'ward', 'mobility'];
@@ -109,9 +110,6 @@ export default function FenrathPage({ navigate }) {
   // ---- lore collection ----
   const [loreAct, setLoreAct] = useState('I');
   const [selRecordIdx, setSelRecordIdx] = useState(1);
-  const visibleRecords = L.records.filter((r) => r.act === loreAct);
-  const selRecord = L.records.find((r) => r.idx === selRecordIdx) || visibleRecords[0];
-  const recordViewable = (r) => loreAll || !r.sealed;
 
   // ---- dialogue category ----
   const dialogueGroups = useMemo(() => {
@@ -450,43 +448,19 @@ export default function FenrathPage({ navigate }) {
 
           {/* ---------- LORE COLLECTION (master-detail) ---------- */}
           <section id="lore" ref={setRef('lore')}>
-            <SecHead n="10" title={L.collectionTitle} sub="Ilyen's concealed archive — eighteen records scattered across Floor 1." />
-            <div className="fen2__loremode">
-              <Segmented accent="var(--accent-authority)" items={L.acts.map((a) => ({ id: a.n, label: `${a.n} · ${a.title}`, on: loreAct === a.n }))}
-                onToggle={(id) => { setLoreAct(id); const first = L.records.find((r) => r.act === id); if (first) setSelRecordIdx(first.idx); }} />
-              <button className={`fen2__chip ${loreAll ? 'is-on' : ''}`} onClick={() => setLoreAll((v) => !v)}>
-                {loreAll ? '◆ Revealing all lore' : '◇ Player progress mode'}
-              </button>
-            </div>
-            <MasterDetail className="fen2__lorebook"
-              master={
-                <div className="fen2__loreindex" role="listbox" aria-label="Lore records">
-                  {visibleRecords.map((r) => (
-                    <button key={r.idx} role="option" aria-selected={selRecord?.idx === r.idx}
-                      className={`fen2__lorerow ${selRecord?.idx === r.idx ? 'is-on' : ''} ${r.sealed && !loreAll ? 'is-sealed' : ''}`}
-                      onClick={() => setSelRecordIdx(r.idx)}>
-                      <span className="fen2__loren">{r.n}</span>
-                      <span className="fen2__loremeta">
-                        <span className="fen2__loretitle">{r.sealed && !loreAll ? 'Sealed Record' : r.title}</span>
-                        <span className="fen2__loresrc">{r.sealed && !loreAll ? r.gate : `${r.type} · ${r.region}`}</span>
-                      </span>
-                      <span className="fen2__lorestate">{r.sealed && !loreAll ? '⛓' : '◆'}</span>
-                    </button>
-                  ))}
-                </div>
-              }
-              detail={selRecord && (
-                recordViewable(selRecord) ? (
-                  <LoreRecord record={selRecord} all={L.records} onNav={setSelRecordIdx} ceremonial={selRecord.idx === 18} />
-                ) : (
-                  <VellumPanel className="fen2__vellum">
-                    <PanelHeader eyebrow="Sealed Record" title={selRecord.n} />
-                    <p className="fen2__lore">This record is sealed in Player Progress mode.</p>
-                    <p className="fen2__lore fen2__lore--dim"><b>Unlock —</b> {selRecord.gate}.</p>
-                    <button className="fen2__chip" style={{ marginTop: 'var(--sp-2)' }} onClick={() => setLoreAll(true)}>Reveal all lore</button>
-                  </VellumPanel>
-                )
-              )}
+            <header className="fen2__sechead fen2__sechead--compact">
+              <span className="fen2__secn">10</span>
+              <h2 className="fen2__h">The Lore Collection</h2>
+            </header>
+            <LoreBook
+              records={L.records}
+              acts={L.acts}
+              act={loreAct}
+              setAct={(id) => { setLoreAct(id); const first = L.records.find((r) => r.act === id); if (first) setSelRecordIdx(first.idx); }}
+              selIdx={selRecordIdx}
+              setSelIdx={setSelRecordIdx}
+              loreAll={loreAll}
+              setLoreAll={setLoreAll}
             />
           </section>
 
@@ -571,45 +545,6 @@ function SysCard({ title, body }) {
 }
 function Field({ k, v }) {
   return <div className="fen2__field"><span className="fen2__fieldk">{k}</span><span className="fen2__fieldv">{v}</span></div>;
-}
-function LoreRecord({ record, all, onNav, ceremonial }) {
-  const [showCoda, setShowCoda] = useState(false);
-  useEffect(() => {
-    setShowCoda(false);
-    if (!ceremonial) return;
-    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) { setShowCoda(true); return; }
-    const t = setTimeout(() => setShowCoda(true), 1400);
-    return () => clearTimeout(t);
-  }, [record.idx, ceremonial]);
-
-  const prev = all.find((r) => r.idx === record.idx - 1);
-  const next = all.find((r) => r.idx === record.idx + 1);
-  // For the ceremonial entry, split the final Ilyen coda (last paragraph) for delayed reveal
-  const paras = record.body.split('\n\n');
-  const main = ceremonial ? paras.slice(0, -1) : paras;
-  const coda = ceremonial ? paras[paras.length - 1] : null;
-
-  return (
-    <VellumPanel className={`fen2__vellum fen2__record ${ceremonial ? 'fen2__record--ceremony' : ''}`}>
-      <PanelHeader eyebrow={`${record.type} · ${record.region}`} title={`${record.n}. ${record.title}`} />
-      <div className="fen2__recmeta">
-        <span><b>Found —</b> {record.found}</span>
-        <span><b>Author —</b> {record.author}</span>
-        {record.proof && <span><b>Proof —</b> {record.proof}</span>}
-      </div>
-      <Divider />
-      <div className="fen2__recbody">
-        {main.map((p, i) => <p key={i} className="fen2__lore">{p}</p>)}
-        {coda && showCoda && <p className="fen2__lore fen2__lore--coda">{coda}</p>}
-      </div>
-      <div className="fen2__recnav">
-        <button className="fen2__chip" disabled={!prev} onClick={() => prev && onNav(prev.idx)}>← {prev ? prev.n : ''}</button>
-        <span className="fen2__recpos">{record.idx} / {all.length}</span>
-        <button className="fen2__chip" disabled={!next} onClick={() => next && onNav(next.idx)}>{next ? next.n : ''} →</button>
-      </div>
-    </VellumPanel>
-  );
 }
 function pick(s) {
   return { vitality: s.vitality, might: s.might, guard: s.guard, arcana: s.arcana, ward: s.ward, mobility: s.mobility };

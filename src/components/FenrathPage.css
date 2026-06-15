@@ -157,7 +157,7 @@
 
 /* lore / vellum prose */
 .fen2__vellum { --vell: #d9c9a8; }
-.fen2__lore { font-family: var(--font-body); color: #cdbfa4; font-size: 0.96rem; line-height: 1.75; max-width: 72ch; margin-bottom: 0.9rem; }
+.fen2__lore { font-family: var(--font-body); color: #cdbfa4; font-size: 0.95rem; line-height: 1.6; max-width: 80ch; margin-bottom: 0.5rem; }
 .fen2__lore--lead { font-size: 1.04rem; color: #e0d2b4; }
 .fen2__lore--dim { color: var(--bone-dim); }
 .fen2__lore--coda { font-style: italic; color: #c8a87e; animation: fen2-coda 0.9s var(--ease-out) both; }
@@ -227,3 +227,6 @@
 .fen2__moves, .fen2__lorebook { margin-top: var(--sp-2); }
 .fen2__wayfarer { height: 100%; }
 .fen2__record { }
+
+/* compact section header for the lore book (rail carries title/count) */
+.fen2__sechead--compact { margin-bottom: var(--sp-2); }

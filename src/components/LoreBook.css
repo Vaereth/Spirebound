@@ -1,0 +1,152 @@
+/* =====================================================================
+   LORE BOOK — a true two-page interactive volume (Destiny-style),
+   in Spirebound's medieval high-fantasy vellum identity.
+   ===================================================================== */
+.lb { --vellum-1: #2a2620; --vellum-2: #221f1a; --vellum-edge: #17140f;
+  --ink: #d8c9a8; --ink-dim: #a99a7e; --gold: var(--accent-authority, #c9a24b);
+  width: 100%; }
+.lb__toolbar { display: flex; justify-content: flex-end; margin-bottom: var(--sp-2); }
+
+.lb__layout { display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: var(--sp-3); align-items: start; }
+.lb__reader { min-width: 0; }
+
+/* ---------- contents rail ---------- */
+.lb-rail { position: sticky; top: var(--rail-top); border: 1px solid var(--hairline); border-radius: var(--radius); background: var(--surface-1); overflow: hidden; }
+.lb-rail__head { padding: var(--sp-2); border-bottom: 1px solid var(--hairline); }
+.lb-rail__count { font-family: var(--font-util); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
+.lb-rail__title { font-family: var(--font-display); font-size: 1.05rem; color: var(--summit); line-height: 1.15; margin: 0.2rem 0; }
+.lb-rail__sub { font-family: var(--font-body); font-size: 0.78rem; color: var(--bone-dim); }
+.lb-rail__modes { display: flex; gap: 0.3rem; margin-top: var(--sp-2); }
+.lb-chip { cursor: pointer; font-family: var(--font-util); font-size: 0.7rem; color: var(--bone-dim); background: var(--surface-2); border: var(--edge); border-radius: 40px; padding: 0.35rem 0.7rem; transition: color, background-color, border-color var(--t-fast) var(--ease); }
+.lb-chip:hover { color: var(--bone); }
+.lb-chip.is-on { color: var(--summit); border-color: color-mix(in srgb, var(--gold) 50%, transparent); background: color-mix(in srgb, var(--gold) 14%, transparent); }
+
+.lb-rail__acts { max-height: 60vh; overflow-y: auto; }
+.lb-act__head { display: flex; align-items: center; gap: 0.45rem; width: 100%; text-align: left; cursor: pointer; background: none; border: none; padding: 0.55rem 0.7rem; border-top: 1px solid var(--hairline); transition: background-color var(--t-fast) var(--ease); }
+.lb-act__head:hover { background: var(--surface-2); }
+.lb-act__chevron { color: var(--gold); font-size: 0.7rem; width: 0.8rem; }
+.lb-act__label { font-family: var(--font-util); font-size: 0.7rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--bone); }
+.lb-act__list { list-style: none; padding: 0 0 0.3rem; }
+.lb-tocrow { display: grid; grid-template-columns: 30px 1fr 16px; align-items: center; gap: 0.4rem; width: 100%; text-align: left; cursor: pointer;
+  background: none; border: none; border-left: 2px solid transparent; padding: 0.4rem 0.7rem 0.4rem 1.1rem; transition: background-color var(--t-fast) var(--ease); }
+.lb-tocrow:hover { background: var(--surface-2); }
+.lb-tocrow.is-on { background: color-mix(in srgb, var(--gold) 12%, var(--surface-1)); border-left-color: var(--gold); }
+.lb-tocrow.is-sealed { opacity: 0.6; }
+.lb-tocrow__n { font-family: var(--font-display); font-size: 0.82rem; color: var(--gold); }
+.lb-tocrow__t { font-family: var(--font-body); font-size: 0.84rem; color: var(--bone-f); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lb-tocrow__mark { font-size: 0.7rem; color: var(--gold); }
+
+/* ---------- the book ---------- */
+.lb-book { position: relative; display: flex; align-items: stretch; width: min(100%, 1240px); height: clamp(620px, 72vh, 850px); margin: 0 auto; outline: none; }
+.lb-book:focus-visible { box-shadow: 0 0 0 2px var(--gold); border-radius: 8px; }
+
+.lb-spread { position: relative; flex: 1; display: grid; grid-template-columns: 1fr 1fr; min-width: 0;
+  background: var(--vellum-edge); border-radius: 6px; box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,0,0,0.5);
+  overflow: hidden; }
+.lb-book--single .lb-spread { grid-template-columns: 1fr; }
+
+.lb-page { position: relative; overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(255,240,210,0.04), transparent 60%),
+    linear-gradient(180deg, var(--vellum-1), var(--vellum-2));
+  /* subtle grain */
+  background-blend-mode: overlay, normal; }
+.lb-page::before { /* faint paper grain */
+  content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0.5;
+  background-image: radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 3px 3px; }
+.lb-page--left { box-shadow: inset -18px 0 30px -18px rgba(0,0,0,0.7); border-right: 1px solid rgba(0,0,0,0.4); }
+.lb-page--right { box-shadow: inset 18px 0 30px -18px rgba(0,0,0,0.7); }
+.lb-page--dark { background: linear-gradient(180deg, #1a1614, #14110e); --ink: #c6b69a; }
+.lb-page--dark::after { content: ''; position: absolute; inset: 0; pointer-events: none; box-shadow: inset 0 0 60px rgba(154,47,35,0.12); }
+
+.lb-page__inner { position: relative; height: 100%; overflow: hidden; padding: clamp(1.4rem, 3vw, 2.6rem) clamp(1.4rem, 3vw, 2.4rem); display: flex; flex-direction: column; }
+.lb-page__body { overflow: hidden; }
+/* allow scroll fallback only if accessibility text scaling overflows */
+@media (min-resolution: 0.001dpcm) { .lb-page__body { overflow-y: auto; scrollbar-width: thin; } }
+
+.lb-page__no { position: absolute; bottom: 0.8rem; left: 50%; transform: translateX(-50%); font-family: var(--font-util); font-size: 0.7rem; color: var(--ink-dim); opacity: 0.6; }
+.lb-page--left .lb-page__no { left: 1.6rem; transform: none; }
+.lb-page--right .lb-page__no { left: auto; right: 1.6rem; transform: none; }
+.lb-page__stamp { position: absolute; top: 0.9rem; right: 1rem; color: var(--gold); opacity: 0.25; font-size: 0.9rem; }
+.lb-page--left .lb-page__stamp { right: auto; left: 1rem; }
+
+/* spine */
+.lb-spine { position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: 2px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.6), rgba(0,0,0,0.1)); pointer-events: none; }
+.lb-book--single .lb-spine { display: none; }
+
+/* masthead on opening page */
+.lb-masthead { position: relative; margin-bottom: 1rem; }
+.lb-masthead__num { font-family: var(--font-display); font-size: 1.4rem; color: var(--gold); }
+.lb-masthead__title { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.3rem, 2.4vw, 1.9rem); color: var(--summit); line-height: 1.1; margin: 0.1rem 0 0.5rem; }
+.lb-masthead__meta { display: flex; flex-direction: column; gap: 0.15rem; font-family: var(--font-util); font-size: 0.68rem; letter-spacing: 0.03em; color: var(--ink-dim); }
+.lb-masthead__sigil { position: absolute; top: 0; right: 0; font-size: 1.8rem; color: var(--gold); opacity: 0.4; }
+.lb-rule { display: block; height: 1px; margin-top: 0.8rem; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--gold) 50%, transparent), transparent); }
+
+/* prose blocks */
+.lb-para, .lb-verse, .lb-quote, .lb-speaker, .lb-annotation, .lb-redaction {
+  font-family: var(--font-body); color: var(--ink); font-size: clamp(1rem, 1.15vw, 1.15rem); line-height: 1.62; max-width: 52ch; }
+.lb-para { margin-bottom: 0.7rem; }
+.lb-verse { margin-bottom: 0.2rem; text-align: center; font-style: italic; }
+.lb-quote { margin: 0.5rem 0; font-style: italic; color: #e0d2b0; padding-left: 0.9rem; border-left: 2px solid color-mix(in srgb, var(--gold) 40%, transparent); }
+.lb-speaker { margin: 0.7rem 0 0.15rem; font-family: var(--font-util); font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); }
+.lb-speaker + .lb-para { margin-left: 0.9rem; }
+.lb-annotation { margin: 0.6rem 0; font-style: italic; font-size: 0.92rem; color: var(--ink-dim); }
+.lb-redaction { margin: 0.6rem 0; font-family: var(--font-util); font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; color: #8a7f6a; background: repeating-linear-gradient(90deg, rgba(0,0,0,0.25), rgba(0,0,0,0.25) 8px, transparent 8px, transparent 16px); padding: 0.3rem 0.5rem; border-radius: 3px; }
+
+/* outer page edges (click to turn) */
+.lb-edge { position: relative; flex: 0 0 38px; display: grid; place-items: center; cursor: pointer; border: none;
+  background: linear-gradient(90deg, var(--vellum-edge), transparent); color: var(--gold); font-size: 1.6rem;
+  transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease); }
+.lb-edge--right { background: linear-gradient(270deg, var(--vellum-edge), transparent); }
+.lb-edge span { opacity: 0.5; transition: opacity var(--t-fast) var(--ease), transform var(--t-fast) var(--ease); }
+.lb-edge:hover:not(:disabled) span { opacity: 1; }
+.lb-edge--left:hover:not(:disabled) span { transform: translateX(-3px); }
+.lb-edge--right:hover:not(:disabled) span { transform: translateX(3px); }
+.lb-edge:hover:not(:disabled) { background: linear-gradient(90deg, color-mix(in srgb, var(--gold) 14%, var(--vellum-edge)), transparent); }
+.lb-edge--right:hover:not(:disabled) { background: linear-gradient(270deg, color-mix(in srgb, var(--gold) 14%, var(--vellum-edge)), transparent); }
+.lb-edge:disabled { cursor: default; opacity: 0.25; }
+.lb-edge:focus-visible { outline: 2px solid var(--gold); outline-offset: -4px; }
+
+/* page-turn animation (restrained) */
+.lb-book.is-turning-fwd .lb-spread { animation: lb-fwd 0.22s var(--ease); }
+.lb-book.is-turning-back .lb-spread { animation: lb-back 0.22s var(--ease); }
+@keyframes lb-fwd { from { opacity: 0.4; transform: translateX(6px); } to { opacity: 1; transform: none; } }
+@keyframes lb-back { from { opacity: 0.4; transform: translateX(-6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .lb-book.is-turning-fwd .lb-spread, .lb-book.is-turning-back .lb-spread { animation: none; } }
+
+/* sealed */
+.lb-sealed { grid-column: 1 / -1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; text-align: center; padding: var(--sp-5); color: var(--ink); }
+.lb-sealed__icon { font-size: 2.4rem; color: #c2502f; }
+.lb-sealed h3 { font-family: var(--font-display); font-size: 1.5rem; color: #d98a6a; }
+.lb-sealed__gate { color: var(--ink-dim); }
+
+/* controls bar (always visible, under the book) */
+.lb-controls { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); margin-top: var(--sp-2); width: min(100%, 1240px); margin-left: auto; margin-right: auto; }
+.lb-navbtn { cursor: pointer; font-family: var(--font-util); font-size: 0.8rem; color: var(--bone); background: var(--surface-2); border: var(--edge); border-radius: 40px; padding: 0.55rem 1rem; max-width: 42%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color, border-color var(--t-fast) var(--ease); }
+.lb-navbtn:hover:not(:disabled) { color: var(--gold); border-color: color-mix(in srgb, var(--gold) 40%, transparent); }
+.lb-navbtn:disabled { opacity: 0.35; cursor: default; }
+.lb-controls__pos { font-family: var(--font-util); font-size: 0.78rem; color: var(--bone-dim); font-variant-numeric: tabular-nums; }
+
+/* ---------- fullscreen reading mode ---------- */
+.lb-fs { position: fixed; inset: 0; z-index: 120; background: rgba(8,7,6,0.96); display: flex; flex-direction: column; padding: var(--sp-3); backdrop-filter: blur(4px); }
+.lb-fs__bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--sp-2); }
+.lb-fs__title { font-family: var(--font-display); font-size: 1.1rem; color: var(--summit); }
+.lb-fs__body { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--sp-2); }
+.lb-fs__toc { width: min(100%, 1240px); }
+.lb-fs__toc summary { cursor: pointer; font-family: var(--font-util); font-size: 0.8rem; color: var(--gold); }
+.lb-fs .lb-book { height: min(80vh, 900px); }
+.lb__reader--fs { width: 100%; display: flex; flex-direction: column; align-items: center; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1199px) {
+  .lb__layout { grid-template-columns: 1fr; }
+  .lb-rail { position: static; max-height: none; }
+  .lb-rail__acts { max-height: none; }
+}
+@media (max-width: 820px) {
+  .lb-book { height: clamp(540px, 70vh, 760px); }
+  .lb-edge { flex-basis: 30px; }
+  .lb-para, .lb-verse, .lb-quote, .lb-speaker, .lb-annotation { font-size: 1rem; }
+  .lb-navbtn { font-size: 0.74rem; padding: 0.5rem 0.7rem; }
+}
