@@ -60,10 +60,8 @@
 .lb-page--dark { background: linear-gradient(180deg, #1a1614, #14110e); --ink: #c6b69a; }
 .lb-page--dark::after { content: ''; position: absolute; inset: 0; pointer-events: none; box-shadow: inset 0 0 60px rgba(154,47,35,0.12); }
 
-.lb-page__inner { position: relative; height: 100%; overflow: hidden; padding: clamp(1.4rem, 3vw, 2.6rem) clamp(1.4rem, 3vw, 2.4rem); display: flex; flex-direction: column; }
-.lb-page__body { overflow: hidden; }
-/* allow scroll fallback only if accessibility text scaling overflows */
-@media (min-resolution: 0.001dpcm) { .lb-page__body { overflow-y: auto; scrollbar-width: thin; } }
+.lb-page__inner { position: relative; height: 100%; overflow: hidden; padding: clamp(1.2rem, 2.4vw, 2rem) clamp(1.3rem, 2.6vw, 2.2rem); display: flex; flex-direction: column; }
+.lb-page__body { overflow: hidden; flex: 1; min-height: 0; }
 
 .lb-page__no { position: absolute; bottom: 0.8rem; left: 50%; transform: translateX(-50%); font-family: var(--font-util); font-size: 0.7rem; color: var(--ink-dim); opacity: 0.6; }
 .lb-page--left .lb-page__no { left: 1.6rem; transform: none; }
@@ -155,3 +153,20 @@
   .lb-para, .lb-verse, .lb-quote, .lb-speaker, .lb-annotation { font-size: 1rem; }
   .lb-navbtn { font-size: 0.74rem; padding: 0.5rem 0.7rem; }
 }
+
+/* hidden measuring spread — identical CSS to the real spread (so body area is
+   exact), overlaid and invisible, removed from interaction & a11y. Both probe
+   pages are absolutely positioned to each fill the full page height so single
+   (mobile) and dual (desktop) modes measure the true available area. */
+.lb-measure { position: absolute; inset: 0; pointer-events: none; visibility: hidden; z-index: -1; display: flex; }
+.lb-measure > .lb-spread { flex: 1; position: relative; }
+.lb-measure > .lb-spread > .lb-page { position: absolute; top: 10px; bottom: 10px; }
+.lb-measure > .lb-spread > .lb-page:first-child { left: 10px; right: 50%; }
+.lb-measure > .lb-spread > .lb-page:last-child { left: 50%; right: 10px; }
+.lb-book--single .lb-measure > .lb-spread > .lb-page { left: 10px; right: 10px; }
+
+/* loading state while pagination measures */
+.lb-loading { grid-column: 1 / -1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; color: var(--ink-dim); font-family: var(--font-util); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.lb-loading__mark { font-size: 1.6rem; color: var(--gold); opacity: 0.6; animation: lb-pulse 1.4s ease-in-out infinite; }
+@keyframes lb-pulse { 0%,100% { opacity: 0.3; } 50% { opacity: 0.8; } }
+@media (prefers-reduced-motion: reduce) { .lb-loading__mark { animation: none; } }

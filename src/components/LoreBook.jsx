@@ -1,5 +1,7 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import { paginate, toSpreads } from '../lib/lorePaginate.js';
+import { toSpreads } from '../lib/lorePaginate.js';
+import { useLorePagination } from '../lib/useLorePagination.js';
+import { getPref, setPref } from '../lib/userContext.js';
 import './LoreBook.css';
 
 /* Render a single semantic block */
@@ -67,20 +69,67 @@ export default function LoreBook({ records, acts, act, setAct, selIdx, setSelIdx
   const reduceMotion = typeof window !== 'undefined' && window.matchMedia
     && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const pages = useMemo(() => (viewable ? paginate(record) : []), [record.idx, viewable]);
+  // ---- measure the real page body area so pagination is exact, not estimated ----
+  const measureRef = useRef(null);      // empty ordinary page body → ordinary page height
+  const measureFirstRef = useRef(null); // first page body (with masthead sibling) → first page height
+  const [dims, setDims] = useState(null); // { pageWidth, bodyHeight, firstBodyHeight }
+
+  const remeasure = useCallback(() => {
+    const body = measureRef.current;
+    const firstBody = measureFirstRef.current;
+    if (!body) return;
+    const w = body.clientWidth;
+    const h = body.clientHeight;
+    // first page body measured directly from a probe whose masthead sits in the
+    // same flex inner as the body — identical geometry to the real first page.
+    const fh = firstBody ? firstBody.clientHeight : h;
+    if (w > 0 && h > 0) setDims({ pageWidth: w, bodyHeight: h, firstBodyHeight: fh });
+  }, []);
+
+  useEffect(() => {
+    remeasure();
+    const ro = new ResizeObserver(remeasure);
+    if (measureRef.current) ro.observe(measureRef.current);
+    if (measureFirstRef.current) ro.observe(measureFirstRef.current);
+    window.addEventListener('resize', remeasure);
+    return () => { ro.disconnect(); window.removeEventListener('resize', remeasure); };
+  }, [remeasure, perSpread]);
+
+  const measuredPages = useLorePagination(record, {
+    pageWidth: dims?.pageWidth,
+    bodyHeight: dims?.bodyHeight,
+    firstBodyHeight: dims?.firstBodyHeight,
+    textScale: 1,
+    ready: viewable && !!dims,
+  });
+  const pages = viewable ? (measuredPages || []) : [];
+  const computing = viewable && !measuredPages;
   const spreads = useMemo(() => toSpreads(pages, perSpread), [pages, perSpread]);
 
   const [spreadIdx, setSpreadIdx] = useState(0);
   const [turning, setTurning] = useState(null); // 'fwd' | 'back' | null
-  useEffect(() => { setSpreadIdx(0); }, [record.idx, perSpread]);
+  // restore last-read spread for the current record (persisted)
+  useEffect(() => {
+    const saved = getPref('loreSpread:' + record.idx, 0);
+    setSpreadIdx(typeof saved === 'number' ? saved : 0);
+  }, [record.idx, perSpread]);
+  useEffect(() => { setPref('loreSpread:' + record.idx, spreadIdx); setPref('loreLastRecord', record.idx); }, [spreadIdx, record.idx]);
+
+  // text size (persisted)
+  const [textSize, setTextSize] = useState(() => getPref('loreTextSize', 1));
+  useEffect(() => { setPref('loreTextSize', textSize); }, [textSize]);
+
+  // mark record read (persisted)
+  useEffect(() => { if (viewable) { const r = getPref('loreRead', {}); if (!r[record.idx]) setPref('loreRead', { ...r, [record.idx]: true }); } }, [record.idx, viewable]);
 
   const orderedIdxs = records.map((r) => r.idx);
   const pos = orderedIdxs.indexOf(record.idx);
   const prevRecord = records[pos - 1];
   const nextRecord = records[pos + 1];
 
-  const atFirstSpread = spreadIdx === 0;
-  const atLastSpread = spreadIdx >= spreads.length - 1;
+  const safeSpreadIdx = Math.min(spreadIdx, Math.max(0, spreads.length - 1));
+  const atFirstSpread = safeSpreadIdx === 0;
+  const atLastSpread = safeSpreadIdx >= spreads.length - 1;
 
   const animateTo = useCallback((dir, fn) => {
     if (reduceMotion) { fn(); return; }
@@ -132,8 +181,8 @@ export default function LoreBook({ records, acts, act, setAct, selIdx, setSelIdx
   useEffect(() => { setOpenAct(act); }, [act]);
 
   const recordsByAct = (a) => records.filter((r) => r.act === a);
-  const currentSpread = spreads[spreadIdx] || [];
-  const firstPageNumber = spreadIdx * perSpread + 1;
+  const currentSpread = spreads[safeSpreadIdx] || [];
+  const firstPageNumber = safeSpreadIdx * perSpread + 1;
 
   const Rail = (
     <nav className="lb-rail" aria-label="Lore contents">
@@ -200,21 +249,52 @@ export default function LoreBook({ records, acts, act, setAct, selIdx, setSelIdx
             <p className="lb-sealed__gate"><b>Unlock —</b> {record.gate}.</p>
             <button className="lb-chip is-on" onClick={() => setLoreAll(true)}>Reveal all lore</button>
           </div>
+        ) : computing ? (
+          <div className="lb-loading" aria-live="polite"><span className="lb-loading__mark" aria-hidden="true">✦</span><span>Turning to the page…</span></div>
         ) : (
           currentSpread.map((pageBlocks, i) => (
-            <Page key={spreadIdx + '-' + i} record={record} blocks={pageBlocks}
+            <Page key={safeSpreadIdx + '-' + i} record={record} blocks={pageBlocks}
               pageNo={firstPageNumber + i} totalPages={pages.length}
-              masthead={spreadIdx === 0 && i === 0}
+              masthead={safeSpreadIdx === 0 && i === 0}
               side={perSpread === 1 ? 'single' : (i === 0 ? 'left' : 'right')}
               region={REGION_GLYPH[record.region] || '✦'} />
           ))
         )}
-        {viewable && <span className="lb-spine" aria-hidden="true" />}
+        {viewable && !computing && perSpread === 2 && <span className="lb-spine" aria-hidden="true" />}
       </div>
 
       {/* outer right edge */}
       <button className="lb-edge lb-edge--right" aria-label="Next page"
         disabled={atLastSpread && !nextRecord} onClick={goForward}><span aria-hidden="true">›</span></button>
+
+      {/* hidden measuring spread: identical CSS to the real spread so the
+          measured body area is exactly the true available area */}
+      <div className="lb-measure" aria-hidden="true">
+        <div className={`lb-spread ${perSpread === 1 ? '' : ''}`}>
+          <div className={`lb-page ${perSpread === 1 ? 'lb-page--single' : 'lb-page--left'}`}>
+            <div className="lb-page__inner">
+              <div className="lb-page__body" ref={measureRef} />
+            </div>
+          </div>
+          <div className={`lb-page ${perSpread === 1 ? 'lb-page--single' : 'lb-page--right'}`}>
+            <div className="lb-page__inner">
+              <header className="lb-masthead">
+                <span className="lb-masthead__num">{record.n}</span>
+                <h3 className="lb-masthead__title">{record.title}</h3>
+                <div className="lb-masthead__meta">
+                  <span>{record.type}</span>
+                  <span>Author · {record.author}</span>
+                  <span>Found · {record.found}</span>
+                  {record.proof && <span>Proof · {record.proof}</span>}
+                </div>
+                <span className="lb-masthead__sigil" aria-hidden="true">{REGION_GLYPH[record.region] || '✦'}</span>
+                <span className="lb-rule" />
+              </header>
+              <div className="lb-page__body" ref={measureFirstRef} />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 

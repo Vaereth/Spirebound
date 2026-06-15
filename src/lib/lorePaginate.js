@@ -36,7 +36,10 @@ export function classifyBlock(text) {
 function isVerseRecord(type) { return /song|poem|verse|ballad/i.test(type || ''); }
 
 export function toBlocks(record) {
-  const raw = record.body.split(/\n\n+/).map((s) => s.trim()).filter(Boolean);
+  const raw = record.body.split(/\n\n+/)
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .filter((s) => !/^[=*_~\-]{4,}$/.test(s)); // drop separator-rule artifacts
   const verse = isVerseRecord(record.type);
   return raw.map((chunk) => {
     const b = classifyBlock(chunk);
