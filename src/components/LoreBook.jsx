@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { toSpreads } from '../lib/lorePaginate.js';
 import { useLorePagination } from '../lib/useLorePagination.js';
 import { getPref, setPref } from '../lib/userContext.js';
@@ -153,12 +154,14 @@ export default function LoreBook({ records, acts, act, setAct, selIdx, setSelIdx
     const onKey = (e) => {
       if (e.key === 'ArrowRight') { e.preventDefault(); goForward(); }
       else if (e.key === 'ArrowLeft') { e.preventDefault(); goBack(); }
-      else if (e.key === 'Escape' && fullscreen) setFullscreen(false);
     };
     const el = bookRef.current;
     if (el) el.addEventListener('keydown', onKey);
     return () => { if (el) el.removeEventListener('keydown', onKey); };
   });
+
+  // global Escape closes Reading Mode regardless of focus (defined after the
+  // fullscreen state below)
 
   // swipe
   const touch = useRef(null);
@@ -174,6 +177,13 @@ export default function LoreBook({ records, acts, act, setAct, selIdx, setSelIdx
   useEffect(() => {
     document.body.style.overflow = fullscreen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
+  }, [fullscreen]);
+  // global Escape closes Reading Mode regardless of focus
+  useEffect(() => {
+    if (!fullscreen) return;
+    const onEsc = (e) => { if (e.key === 'Escape') setFullscreen(false); };
+    window.addEventListener('keydown', onEsc);
+    return () => window.removeEventListener('keydown', onEsc);
   }, [fullscreen]);
 
   // collapsible acts in rail
@@ -325,28 +335,27 @@ export default function LoreBook({ records, acts, act, setAct, selIdx, setSelIdx
     </div>
   );
 
-  if (fullscreen) {
-    return (
-      <div className="lb lb--fs">
-        <div className="lb-fs" role="dialog" aria-modal="true" aria-label="Reading mode">
-          <div className="lb-fs__bar">
-            <span className="lb-fs__title">{record.n}. {record.title}</span>
-            <button className="lb-chip" onClick={() => setFullscreen(false)}>✕ Close (Esc)</button>
-          </div>
-          <div className="lb-fs__body">
-            {readerBlock}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="lb">
       <div className="lb__toolbar">
         <button className="lb-chip" onClick={() => setFullscreen(true)}>⛶ Open Reading Mode</button>
       </div>
-      {readerBlock}
+      {!fullscreen && readerBlock}
+
+      {fullscreen && createPortal(
+        <div className="lb lb--fs">
+          <div className="lb-fs" role="dialog" aria-modal="true" aria-label="Reading mode">
+            <div className="lb-fs__bar">
+              <span className="lb-fs__title">{record.n}. {record.title}</span>
+              <button className="lb-chip lb-fs__close" onClick={() => setFullscreen(false)}>✕ Close (Esc)</button>
+            </div>
+            <div className="lb-fs__body">
+              {readerBlock}
+            </div>
+          </div>
+        </div>,
+        document.body,
+      )}
     </div>
   );
 }
