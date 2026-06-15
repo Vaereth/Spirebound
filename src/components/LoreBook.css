@@ -132,14 +132,17 @@
 .lb-controls__pos { font-family: var(--font-util); font-size: 0.78rem; color: var(--bone-dim); font-variant-numeric: tabular-nums; }
 
 /* ---------- fullscreen reading mode ---------- */
-.lb-fs { position: fixed; inset: 0; z-index: 120; background: rgba(8,7,6,0.96); display: flex; flex-direction: column; padding: var(--sp-3); backdrop-filter: blur(4px); }
-.lb-fs__bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--sp-2); }
+.lb-fs { position: fixed; inset: 0; z-index: 120; background: rgba(8,7,6,0.97); display: flex; flex-direction: column; padding: var(--sp-3); }
+.lb-fs__bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--sp-2); flex: 0 0 auto; }
 .lb-fs__title { font-family: var(--font-display); font-size: 1.1rem; color: var(--summit); }
-.lb-fs__body { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--sp-2); }
-.lb-fs__toc { width: min(100%, 1240px); }
-.lb-fs__toc summary { cursor: pointer; font-family: var(--font-util); font-size: 0.8rem; color: var(--gold); }
-.lb-fs .lb-book { height: min(80vh, 900px); }
-.lb__reader--fs { width: 100%; display: flex; flex-direction: column; align-items: center; }
+.lb-fs__body { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
+/* in reading mode the layout is just the centered book; the rail is hidden
+   (records are reachable via the book's own page-turn + next-record controls) */
+.lb-fs .lb__layout { display: block; width: 100%; }
+.lb-fs .lb-rail { display: none; }
+.lb-fs .lb__reader { width: 100%; display: flex; flex-direction: column; align-items: center; }
+.lb-fs .lb-book { height: min(82vh, 940px); width: min(100%, 1580px); }
+.lb-fs .lb-controls { width: min(100%, 1580px); }
 
 /* ---------- responsive ---------- */
 @media (max-width: 1199px) {

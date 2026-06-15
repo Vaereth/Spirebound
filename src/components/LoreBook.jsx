@@ -315,39 +315,38 @@ export default function LoreBook({ records, acts, act, setAct, selIdx, setSelIdx
     </div>
   );
 
-  return (
-    <div className={`lb ${fullscreen ? 'lb--fs' : ''}`}>
-      {!fullscreen && (
-        <div className="lb__toolbar">
-          <button className="lb-chip" onClick={() => setFullscreen(true)}>⛶ Open Reading Mode</button>
-        </div>
-      )}
-      <div className="lb__layout">
-        {Rail}
-        <div className="lb__reader">
-          {BookInner}
-          {Controls}
-        </div>
+  const readerBlock = (
+    <div className="lb__layout">
+      {Rail}
+      <div className={`lb__reader ${fullscreen ? 'lb__reader--fs' : ''}`}>
+        {BookInner}
+        {Controls}
       </div>
+    </div>
+  );
 
-      {fullscreen && (
+  if (fullscreen) {
+    return (
+      <div className="lb lb--fs">
         <div className="lb-fs" role="dialog" aria-modal="true" aria-label="Reading mode">
           <div className="lb-fs__bar">
             <span className="lb-fs__title">{record.n}. {record.title}</span>
             <button className="lb-chip" onClick={() => setFullscreen(false)}>✕ Close (Esc)</button>
           </div>
           <div className="lb-fs__body">
-            <details className="lb-fs__toc">
-              <summary>Contents</summary>
-              {Rail}
-            </details>
-            <div className="lb__reader lb__reader--fs">
-              {BookInner}
-              {Controls}
-            </div>
+            {readerBlock}
           </div>
         </div>
-      )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="lb">
+      <div className="lb__toolbar">
+        <button className="lb-chip" onClick={() => setFullscreen(true)}>⛶ Open Reading Mode</button>
+      </div>
+      {readerBlock}
     </div>
   );
 }
