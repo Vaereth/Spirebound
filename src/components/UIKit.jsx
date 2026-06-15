@@ -43,7 +43,7 @@ export function QuickFacts({ facts, cols = 2, className = '' }) {
 // cols: string[]; rows: [{k, v: string[]}]
 export function CompareTable({ cols, rows, firstHeader = '', accent = 'var(--accent-interface)', className = '' }) {
   return (
-    <div className={`uik-tablewrap ${className}`} style={{ '--tbl-accent': accent }}>
+    <div className={`uik-tablewrap ${cols.length >= 3 ? 'uik-tablewrap--wide' : ''} ${className}`} style={{ '--tbl-accent': accent }}>
       <table className="uik-table">
         <thead>
           <tr><th className="uik-table__corner">{firstHeader}</th>{cols.map((c) => <th key={c}>{c}</th>)}</tr>
