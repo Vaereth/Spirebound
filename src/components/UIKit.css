@@ -23,11 +23,14 @@
 
 /* ---- Compare table ---- */
 .uik-tablewrap { --tbl-accent: var(--accent-interface); overflow-x: auto; border: 1px solid var(--hairline); border-radius: var(--radius); }
-.uik-table { width: 100%; border-collapse: collapse; min-width: 520px; }
+.uik-table { width: 100%; border-collapse: collapse; }
+/* Only force a scroll-width on genuinely wide multi-column tables (4+ cols),
+   so narrow 2-column tables (e.g. Points by Level) simply fit with no scrollbar. */
+.uik-tablewrap--wide .uik-table { min-width: 520px; }
 .uik-table th { font-family: var(--font-util); font-size: 0.64rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--tbl-accent);
   text-align: right; padding: 0.6rem 0.85rem; border-bottom: 1px solid color-mix(in srgb, var(--tbl-accent) 24%, transparent); background: var(--surface-2); white-space: nowrap; }
 .uik-table__corner, .uik-table th:first-child { text-align: left; }
-.uik-table td { padding: 0.5rem 0.85rem; text-align: right; color: var(--bone); font-family: var(--font-util); font-size: 0.84rem; font-variant-numeric: tabular-nums; border-bottom: 1px solid rgba(231,227,214,0.045); }
+.uik-table td { padding: 0.5rem 0.85rem; text-align: right; color: var(--bone); font-family: var(--font-util); font-size: 0.84rem; font-variant-numeric: tabular-nums; border-bottom: 1px solid rgba(231,227,214,0.045); white-space: normal; overflow-wrap: anywhere; }
 .uik-table__rowh { text-align: left !important; color: var(--bone-dim) !important; position: sticky; left: 0; background: var(--surface-1); }
 .uik-table tbody tr:hover td { background: rgba(96,232,220,0.03); }
 
