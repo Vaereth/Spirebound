@@ -1,0 +1,149 @@
+/* =====================================================================
+   THE RISEN LIGHT COINAGE — currency page
+   Extends the Spirebound system: gold/parchment/stone, celestial blue
+   reserved for the Stellar and high-value accents. Wide, panelled, game-menu.
+   ===================================================================== */
+.cur { --cur-gold: var(--accent-authority); --cur-blue: var(--accent-air); }
+.cur__layout { margin-top: var(--sp-4, 2rem); }
+
+/* ---------- hero ---------- */
+.cur__hero { margin-bottom: var(--sp-4, 2rem); overflow: hidden; }
+.cur__heroinner { max-width: 1100px; }
+.cur__eyebrow { font-family: var(--font-util); font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--cur-gold); }
+.cur__title { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.1rem, 5vw, 3.4rem); color: var(--summit); line-height: 1.04; margin: 0.3rem 0 0.2rem; }
+.cur__tagline { font-family: var(--font-display); font-style: italic; font-size: clamp(1rem, 2vw, 1.3rem); color: var(--gold); margin-bottom: var(--sp-2); }
+.cur__intro { font-family: var(--font-body); color: var(--bone); font-size: 1.02rem; line-height: 1.65; max-width: 70ch; }
+.cur__herocoins { display: flex; flex-wrap: wrap; gap: clamp(0.8rem, 3vw, 2rem); margin: var(--sp-4, 2rem) 0 var(--sp-3); }
+.cur__herocoin { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; }
+.cur__herocoin-name { font-family: var(--font-display); font-size: 0.92rem; color: var(--bone-f); }
+.cur__herocoin-sh { font-family: var(--font-util); font-size: 0.66rem; letter-spacing: 0.1em; color: var(--bone-dim); }
+.cur__ladder { display: flex; flex-wrap: wrap; gap: 0.5rem 1.2rem; margin-bottom: var(--sp-3); }
+.cur__ladderstep { font-family: var(--font-util); font-size: 0.8rem; color: var(--bone-dim); display: inline-flex; align-items: center; gap: 0.5rem; }
+.cur__ladderstep b { color: var(--bone-f); }
+.cur__ladderarrow { color: var(--cur-gold); }
+.cur__principle { display: flex; flex-direction: column; gap: 0.2rem; border-left: 3px solid var(--cur-gold); padding: 0.4rem 0 0.4rem 1.2rem; margin: 0; }
+.cur__principle span { font-family: var(--font-display); font-size: clamp(1.05rem, 2.4vw, 1.5rem); color: var(--summit); font-style: italic; }
+.cur__principle span:last-child { color: var(--gold); }
+
+/* ---------- section heads ---------- */
+.cur__sechead { display: flex; gap: var(--sp-2); align-items: baseline; margin-bottom: var(--sp-3); }
+.cur__secn { font-family: var(--font-display); font-size: 1rem; color: var(--cur-gold); opacity: 0.8; }
+.cur__h { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.4rem, 3vw, 2rem); color: var(--summit); line-height: 1.1; }
+.cur__subh { font-family: var(--font-display); font-size: 1.15rem; color: var(--bone-f); margin: var(--sp-3) 0 var(--sp-2); }
+.cur__p { font-family: var(--font-body); color: var(--bone); font-size: 0.95rem; line-height: 1.6; }
+.cur__p--dim { color: var(--bone-dim); }
+.cur__minihead { font-family: var(--font-util); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cur-gold); margin-bottom: 0.6rem; }
+
+/* ---------- denomination picker + detail ---------- */
+.cur__coinrow { display: flex; flex-wrap: wrap; gap: clamp(0.6rem, 2vw, 1.6rem); justify-content: center; margin-bottom: var(--sp-3); }
+.cur__coinpick { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; width: 110px; }
+.cur__coinpick-name { font-family: var(--font-display); font-size: 0.95rem; color: var(--bone-f); }
+.cur__coinpick-role { font-family: var(--font-util); font-size: 0.6rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--bone-dim); text-align: center; }
+.cur__detail { }
+.cur__detailcoin { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+.cur__detailsh { font-family: var(--font-util); font-size: 0.8rem; letter-spacing: 0.12em; color: var(--bone-dim); }
+.cur__flavour { font-family: var(--font-body); font-style: italic; color: var(--gold); font-size: 1rem; margin-bottom: var(--sp-2); }
+
+/* ---------- conversion ---------- */
+.cur__laddergrid, .cur__baselist { display: flex; flex-direction: column; gap: 0.4rem; }
+.cur__ladderrow, .cur__baserow { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; font-family: var(--font-util); font-size: 0.85rem; color: var(--bone-dim); padding: 0.3rem 0; border-bottom: 1px solid var(--hairline); }
+.cur__ladderrow b, .cur__baserow b { color: var(--gold); font-variant-numeric: tabular-nums; }
+.cur-conv { display: flex; flex-direction: column; gap: var(--sp-2); }
+.cur-conv__controls { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+.cur-conv__field { display: flex; flex-direction: column; gap: 0.3rem; flex: 1; min-width: 120px; }
+.cur-conv__label { font-family: var(--font-util); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--bone-dim); }
+.cur-conv__input, .cur-conv__select { font-family: var(--font-body); font-size: 1rem; color: var(--bone-f); background: var(--surface-2); border: 1px solid var(--hairline); border-radius: var(--radius); padding: 0.6rem 0.8rem; }
+.cur-conv__input:focus, .cur-conv__select:focus { outline: 2px solid var(--cur-gold); outline-offset: 1px; }
+.cur-conv__result { display: flex; flex-direction: column; gap: 0.2rem; background: color-mix(in srgb, var(--cur-gold) 8%, var(--surface-2)); border: 1px solid color-mix(in srgb, var(--cur-gold) 30%, transparent); border-radius: var(--radius); padding: var(--sp-2); }
+.cur-conv__resultlabel { font-family: var(--font-util); font-size: 0.64rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cur-gold); }
+.cur-conv__resultval { font-family: var(--font-display); font-size: 1.8rem; color: var(--summit); font-variant-numeric: tabular-nums; }
+.cur-conv__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.cur-conv__total { font-family: var(--font-util); font-size: 0.8rem; color: var(--bone-dim); }
+.cur-conv__toggle { align-self: flex-start; cursor: pointer; font-family: var(--font-util); font-size: 0.74rem; color: var(--bone-dim); background: var(--surface-2); border: 1px solid var(--hairline); border-radius: 40px; padding: 0.4rem 0.85rem; }
+.cur-conv__toggle:hover { color: var(--bone); }
+.cur-conv__equiv { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 0.4rem; }
+.cur-conv__eqrow { display: flex; flex-direction: column; gap: 0.1rem; background: var(--surface-1); border: 1px solid var(--hairline); border-radius: var(--radius); padding: 0.5rem; text-align: center; }
+.cur-conv__eqname { font-family: var(--font-util); font-size: 0.6rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--bone-dim); }
+.cur-conv__eqval { font-family: var(--font-display); font-size: 1.05rem; color: var(--bone-f); font-variant-numeric: tabular-nums; }
+
+/* ---------- prices ---------- */
+.cur__pricelist { display: flex; flex-direction: column; gap: 0.1rem; }
+.cur__pricerow { display: flex; align-items: baseline; justify-content: space-between; gap: 0.8rem; padding: 0.4rem 0; border-bottom: 1px solid var(--hairline); }
+.cur__priceitem { font-family: var(--font-body); font-size: 0.9rem; color: var(--bone); }
+.cur__priceval { font-family: var(--font-display); font-size: 1rem; color: var(--gold); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cur__reasons { margin-top: var(--sp-3); }
+.cur__chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.cur__chip { font-family: var(--font-util); font-size: 0.74rem; color: var(--bone-dim); background: var(--surface-2); border: 1px solid var(--hairline); border-radius: 40px; padding: 0.35rem 0.75rem; }
+
+/* ---------- stellar ---------- */
+.cur__stellar { border: 1px solid color-mix(in srgb, var(--cur-blue) 30%, transparent); }
+.cur__stellarcoin { display: grid; place-items: center; padding: var(--sp-2); }
+.cur__power { display: flex; flex-direction: column; gap: 0.5rem; margin: var(--sp-2) 0; }
+.cur__powerline { font-family: var(--font-body); color: var(--bone-f); font-size: 0.98rem; line-height: 1.5; padding-left: 0.9rem; border-left: 2px solid color-mix(in srgb, var(--cur-blue) 50%, transparent); }
+.cur__practice { font-family: var(--font-body); color: var(--bone-dim); font-size: 0.9rem; font-style: italic; }
+.cur__warn { display: flex; flex-direction: column; gap: 0.15rem; margin-top: var(--sp-3); padding-top: var(--sp-2); border-top: 1px solid var(--hairline); }
+.cur__warn span { font-family: var(--font-display); font-size: 1.05rem; color: var(--cur-blue); }
+.cur__warn span:last-child { color: var(--bone-dim); font-style: italic; font-size: 0.92rem; }
+.cur__unresolved { font-family: var(--font-util); font-size: 0.72rem; color: var(--bone-dim); margin-top: var(--sp-2); font-style: italic; }
+
+/* ---------- trust layers ---------- */
+.cur__trustlayers { display: flex; flex-direction: column; gap: var(--sp-2); }
+.cur__trustlayer { display: flex; gap: var(--sp-2); align-items: flex-start; background: var(--surface-1); border: 1px solid var(--hairline); border-left: 3px solid var(--cur-gold); border-radius: var(--radius); padding: var(--sp-2) var(--sp-3); }
+.cur__trustnum { font-family: var(--font-display); font-size: 1.6rem; color: var(--cur-gold); line-height: 1; }
+.cur__trusttitle { font-family: var(--font-display); font-size: 1.15rem; color: var(--summit); margin-bottom: 0.3rem; }
+.cur__verifladder { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.5rem; }
+.cur__verifstep { background: var(--surface-1); border: 1px solid var(--hairline); border-radius: var(--radius); padding: var(--sp-2); border-top: 3px solid color-mix(in srgb, var(--cur-gold) calc(40% + var(--i) * 14%), transparent); }
+.cur__verifname { display: block; font-family: var(--font-display); font-size: 1rem; color: var(--bone-f); margin-bottom: 0.3rem; }
+.cur__verifmethod { font-family: var(--font-body); font-size: 0.82rem; color: var(--bone-dim); line-height: 1.45; }
+
+/* ---------- 100 floors ---------- */
+.cur__floorstmt { margin-bottom: var(--sp-3); text-align: center; }
+.cur__bigstatement { font-family: var(--font-display); font-size: clamp(1.3rem, 3vw, 2rem); color: var(--summit); font-style: italic; }
+.cur__list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.cur__list li { font-family: var(--font-body); font-size: 0.92rem; color: var(--bone); line-height: 1.5; padding-left: 1.1rem; position: relative; }
+.cur__list li::before { content: '◆'; position: absolute; left: 0; color: var(--cur-gold); font-size: 0.6rem; top: 0.35em; }
+.cur__list--tight li { font-size: 0.86rem; }
+.cur__antitriv { font-family: var(--font-display); font-size: 1.1rem; color: var(--gold); font-style: italic; border-left: 3px solid var(--cur-gold); padding-left: 1rem; margin-top: var(--sp-2); }
+.cur__segments { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: var(--sp-2); }
+.cur__segment { font-family: var(--font-util); font-size: 0.74rem; color: var(--bone-f); background: color-mix(in srgb, var(--cur-gold) 10%, var(--surface-2)); border: 1px solid color-mix(in srgb, var(--cur-gold) 28%, transparent); border-radius: var(--radius); padding: 0.4rem 0.7rem; }
+
+/* ---------- coin/vault/ledger ---------- */
+.cur__moneylayer { height: 100%; }
+.cur__ledgernote { margin-top: var(--sp-3); }
+
+/* ---------- living economy ---------- */
+.cur__flow { display: flex; flex-direction: column; gap: 0.6rem; }
+.cur__flowtrigger { font-family: var(--font-display); font-size: 1.1rem; color: var(--summit); }
+.cur__flowchain { display: flex; flex-direction: column; gap: 0.3rem; }
+.cur__flowstep { font-family: var(--font-body); font-size: 0.88rem; color: var(--bone); display: flex; align-items: center; gap: 0.5rem; }
+.cur__flowarrow { color: var(--cur-gold); font-size: 0.8rem; }
+.cur__surfaces { margin-top: var(--sp-3); }
+
+/* ---------- monetary trust ---------- */
+.cur__trustcol { height: 100%; }
+.cur__forgotten, .cur__forgottensafe { margin-top: var(--sp-2); }
+.cur__forgotten .cur__p, .cur__forgottensafe .cur__p { margin-bottom: 0.6rem; color: #cdbfa4; }
+.cur__forgottenname { font-family: var(--font-display); font-style: italic; color: var(--accent-blood); }
+
+/* ---------- where coin goes ---------- */
+.cur__where { height: 100%; }
+
+/* ---------- accordion ---------- */
+.cur__accordion { display: flex; flex-direction: column; gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); border-radius: var(--radius); overflow: hidden; }
+.cur__acchead { display: flex; align-items: center; justify-content: space-between; width: 100%; text-align: left; cursor: pointer; background: var(--surface-1); border: none; padding: var(--sp-2) var(--sp-3); font-family: var(--font-display); font-size: 1rem; color: var(--bone-f); transition: background-color var(--t-fast) var(--ease); }
+.cur__acchead:hover { background: var(--surface-2); }
+.cur__acc.is-open .cur__acchead { color: var(--summit); background: color-mix(in srgb, var(--cur-gold) 8%, var(--surface-1)); }
+.cur__accmark { color: var(--cur-gold); font-size: 1.2rem; }
+.cur__accbody { background: var(--surface-1); padding: 0 var(--sp-3) var(--sp-3); }
+.cur__accbody .cur__p { max-width: 80ch; }
+
+/* ---------- crosslinks ---------- */
+.cur__crosslinks { margin-top: var(--sp-3); }
+.cur__crosslink { cursor: pointer; font-family: var(--font-util); font-size: 0.78rem; color: var(--cur-gold); background: color-mix(in srgb, var(--cur-gold) 8%, transparent); border: 1px solid color-mix(in srgb, var(--cur-gold) 28%, transparent); border-radius: 40px; padding: 0.4rem 0.85rem; transition: box-shadow var(--t-fast) var(--ease); }
+.cur__crosslink:hover { box-shadow: 0 0 12px color-mix(in srgb, var(--cur-gold) 30%, transparent); }
+
+/* ---------- responsive ---------- */
+@media (max-width: 700px) {
+  .cur__coinpick { width: 84px; }
+  .cur__principle span { font-size: 1.05rem; }
+}
