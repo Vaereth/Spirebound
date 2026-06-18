@@ -36,6 +36,17 @@ export function crumbsFor(parts) {
 
     const f1 = { route: '#/floors/1' };
     if (s2 === 'world') return [...out, { label: 'The Living World' }];
+    if (s2 === 'map') {
+      const REGION_LABELS = { dawnfields: 'The Dawnfields' };
+      const SETTLE_LABELS = { hearthvale: 'Hearthvale' };
+      const chain = [...out, { label: 'Map', route: '#/floors/1/map' }];
+      if (!s3) { chain[chain.length - 1] = { label: 'Map' }; return chain; }
+      const settleSeg = parts[4];
+      chain.push({ label: REGION_LABELS[s3] || s3, route: `#/floors/1/map/${s3}` });
+      if (settleSeg) chain.push({ label: SETTLE_LABELS[settleSeg] || settleSeg });
+      else chain[chain.length - 1] = { label: REGION_LABELS[s3] || s3 };
+      return chain;
+    }
     if (s2 === 'regions') return [...out, { label: 'Regions' }];
     if (s2 === 'fenrath') return [...out, { label: 'Fenrath' }];
     if (s2 === 'systems') return [...out, { label: 'Named Rares & Elites' }];
@@ -78,6 +89,9 @@ export function searchIndex() {
   idx.push({ label: 'Floor 1 · The Verdant Reach', kind: 'Floor', route: '#/floors/1' });
   idx.push({ label: 'Regions of the Reach', kind: 'Page', route: '#/floors/1/regions' });
   idx.push({ label: 'The Living World', kind: 'Page', route: '#/floors/1/world' });
+  idx.push({ label: 'Floor 1 Map', kind: 'Map', route: '#/floors/1/map' });
+  idx.push({ label: 'Map · The Dawnfields', kind: 'Map', route: '#/floors/1/map/dawnfields' });
+  idx.push({ label: 'Map · Hearthvale', kind: 'Map', route: '#/floors/1/map/dawnfields/hearthvale' });
   idx.push({ label: 'Bestiary', kind: 'Page', route: '#/floors/1/bestiary' });
   idx.push({ label: 'Named Rares & Regional Elites', kind: 'Page', route: '#/floors/1/systems' });
   idx.push({ label: 'Fenrath — The First Guardian', kind: 'Boss', route: '#/floors/1/fenrath' });

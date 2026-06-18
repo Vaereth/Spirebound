@@ -15,6 +15,7 @@ import CreaturePage from './components/CreaturePage.jsx';
 import NpcPage from './components/NpcPage.jsx';
 import ProfessionPage from './components/ProfessionPage.jsx';
 import FenrathPage from './components/FenrathPage.jsx';
+import MapPage from './components/MapPage.jsx';
 import SystemsPage from './components/SystemsPage.jsx';
 import DeepLorePage from './components/DeepLorePage.jsx';
 import TopBar from './components/TopBar.jsx';
@@ -39,6 +40,7 @@ function accentFor(parts) {
   const [s0, s1, s2] = parts;
   if (s0 === 'floors' && s1 === '1' && s2 === 'fenrath') return 'var(--accent-guardian)';
   if (s0 === 'floors' && s1 === '1' && s2 === 'sealed') return 'var(--accent-blood)';
+  if (s0 === 'floors' && s1 === '1' && s2 === 'map') return 'var(--accent-floor1)';
   if (s0 === 'floors') return 'var(--accent-floor1)';
   if (s0 === 'climbers' || s0 === 'heroes') return 'var(--accent-authority)';
   return 'var(--accent-interface)';
@@ -56,6 +58,9 @@ function RouteView({ route, navigate }) {
   if (seg0 === 'climbers') return (<><Cast navigate={navigate} /><Footer /></>);
 
   if (seg0 === 'floors' && seg1 === '1') {
+    if (seg2 === 'map') {
+      return <MapPage subParts={route.parts.slice(3)} navigate={navigate} />;
+    }
     if (seg2 === 'world') return <Floor1Page navigate={navigate} />;
     if (seg2 === 'regions') return <RegionsPage navigate={navigate} />;
     if (seg2 === 'fenrath') return <FenrathPage navigate={navigate} />;
