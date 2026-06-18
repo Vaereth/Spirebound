@@ -8,7 +8,6 @@ button.coin { cursor: pointer; }
   transition: transform 180ms ease, box-shadow 180ms ease;
 }
 .coin__letter { font-family: var(--font-display, Georgia, serif); font-weight: 800; font-size: 1.55rem; color: rgba(20,12,4,0.78); text-shadow: 0 1px 0 rgba(255,255,255,0.25); user-select: none; }
-.coin--apex .coin__letter { color: rgba(20,28,46,0.82); }
 
 /* SHAPES (distinct silhouette per denomination) */
 .coin--round .coin__face { border-radius: 50%; }
@@ -16,14 +15,48 @@ button.coin { cursor: pointer; }
 .coin--multisided .coin__face { clip-path: polygon(50% 0,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%); }
 .coin--cored .coin__face { border-radius: 50%; }
 .coin--cored .coin__face::after { content: ''; position: absolute; inset: 26%; border-radius: 50%; border: 2px solid rgba(0,0,0,0.28); box-shadow: inset 0 0 8px rgba(0,0,0,0.3); }
-.coin--pinnacle .coin__face { clip-path: polygon(50% 0,61% 20%,83% 12%,79% 35%,100% 47%,79% 60%,83% 83%,61% 75%,50% 100%,39% 75%,17% 83%,21% 60%,0 47%,21% 35%,17% 12%,39% 20%); }
+.coin--pinnacle .coin__face { border-radius: 50%; }
+/* STELLAR — round, ornate. Platinum-iridium luminous WHITE-GOLD body with an
+   engraved rim and Guild-seal ticks; a real celestial-blue Tower-metal core set
+   into the centre. Round and simple, per Spirebound canon (no star silhouette). */
+.coin--apex .coin__face {
+  border-radius: 50%;
+  background:
+    /* faint radial sheen lines, very subtle */
+    repeating-radial-gradient(circle at 50% 50%, transparent 0 6%, rgba(255,255,255,0.04) 6% 6.4%, transparent 6.4% 12%),
+    /* luminous white-gold body */
+    radial-gradient(130% 130% at 34% 26%, color-mix(in srgb, var(--coin) 60%, white 65%), var(--coin) 50%, color-mix(in srgb, var(--coin) 68%, #7a6534 55%));
+  box-shadow: inset 0 3px 9px rgba(255,255,255,0.55), inset 0 -6px 14px rgba(70,56,28,0.55), 0 4px 16px rgba(0,0,0,0.45);
+}
+/* two clean engraved rings (ornate but simple) */
+.coin--apex .coin__face::before {
+  content: ''; position: absolute; inset: 9%; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow: 0 0 0 1px rgba(110,88,46,0.45), inset 0 0 0 4px rgba(255,255,255,0.06), inset 0 0 0 5px rgba(110,88,46,0.3);
+  pointer-events: none;
+}
 
-/* APEX (Stellar) — celestial-blue core, shimmer only on selection */
-.coin--apex .coin__core { position: absolute; width: 34%; height: 34%; border-radius: 50%;
-  background: radial-gradient(circle at 40% 35%, color-mix(in srgb, var(--core) 70%, white 40%), var(--core) 60%, color-mix(in srgb, var(--core) 60%, black 40%));
-  box-shadow: inset 0 0 6px rgba(0,0,0,0.4); }
+/* celestial-blue Tower-metal core, set into the centre with a gold bezel */
+.coin--apex .coin__core { position: absolute; width: 52%; height: 52%; border-radius: 50%; z-index: 1;
+  background:
+    radial-gradient(circle at 40% 34%, color-mix(in srgb, var(--core) 45%, white 55%) 0%, var(--core) 45%, color-mix(in srgb, var(--core) 70%, #0a1830 60%) 100%);
+  box-shadow:
+    inset 0 2px 8px rgba(4,16,38,0.7), inset 0 -2px 5px rgba(255,255,255,0.25),
+    0 0 0 2px color-mix(in srgb, var(--coin) 70%, white 30%), 0 0 0 3px rgba(70,56,28,0.45);
+}
+.coin--apex .coin__core::after {
+  content: ''; position: absolute; inset: 0; border-radius: 50%; pointer-events: none; opacity: 0.5;
+  background:
+    radial-gradient(circle at 62% 30%, rgba(255,255,255,0.5) 0 1px, transparent 2px),
+    radial-gradient(circle at 30% 62%, rgba(255,255,255,0.35) 0 1px, transparent 2px),
+    radial-gradient(circle at 70% 70%, rgba(255,255,255,0.3) 0 1px, transparent 2px);
+}
+.coin--apex .coin__letter { position: relative; z-index: 2; color: rgba(255,255,255,0.95); text-shadow: 0 1px 3px rgba(6,16,36,0.85), 0 0 6px rgba(8,20,44,0.5); }
 .coin--apex.is-selected .coin__core { animation: coin-shimmer 1.1s ease; }
-@keyframes coin-shimmer { 0%,100% { box-shadow: inset 0 0 6px rgba(0,0,0,0.4); } 50% { box-shadow: inset 0 0 6px rgba(0,0,0,0.4), 0 0 16px color-mix(in srgb, var(--core) 70%, transparent); } }
+@keyframes coin-shimmer {
+  0%,100% { box-shadow: inset 0 2px 8px rgba(4,16,38,0.7), inset 0 -2px 5px rgba(255,255,255,0.25), 0 0 0 2px color-mix(in srgb, var(--coin) 70%, white 30%), 0 0 0 3px rgba(70,56,28,0.45); }
+  50% { box-shadow: inset 0 2px 8px rgba(4,16,38,0.7), inset 0 -2px 5px rgba(255,255,255,0.25), 0 0 0 2px color-mix(in srgb, var(--coin) 70%, white 30%), 0 0 0 3px rgba(70,56,28,0.45), 0 0 20px color-mix(in srgb, var(--core) 80%, transparent); }
+}
 
 /* hover / selected feedback (subtle catch-light tilt) */
 button.coin:hover .coin__face { transform: translateY(-2px) rotate(-2deg); box-shadow: inset 0 2px 6px rgba(255,255,255,0.4), inset 0 -4px 10px rgba(0,0,0,0.45), 0 8px 22px rgba(0,0,0,0.5); }

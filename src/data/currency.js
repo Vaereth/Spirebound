@@ -47,7 +47,7 @@ export const DENOMINATIONS = [
     colourLabel: 'Luminous white-gold body · celestial-blue core', silhouette: 'Ringed pinnacle',
     verification: 'Sealed Tower-metal core · highest-grade verification',
     flavour: 'The bridge between coin and recorded credit. Few will ever hold one.',
-    colorVar: '#f0e6cf', coreColorVar: '#5BA3D0', shapeKey: 'pinnacle', apex: true,
+    colorVar: '#e3d39a', coreColorVar: '#4E9FD6', shapeKey: 'pinnacle', apex: true,
   },
 ];
 
