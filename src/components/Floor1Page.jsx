@@ -153,6 +153,9 @@ export default function Floor1Page({ navigate }) {
                 <p className="f1quote__by">— {F.guild.appraiser.name}, {F.guild.appraiser.role}</p>
               </div>
               <p className="f1note"><strong>Monster turn-ins:</strong> {F.guild.turnins.join(', ')}.</p>
+              <div className="f1chips">
+                <button className="f1chip f1chip--link" onClick={() => navigate('#/world/currency')}>The Risen Light Coinage →</button>
+              </div>
             </Reveal>
             <Reveal className="f1col">
               <h4 className="f1subh">Adventurer Plates</h4>
